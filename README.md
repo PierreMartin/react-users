@@ -25,11 +25,24 @@ wonderful development experience !
 - Mutation ecrit en fonctions pure
 
 
+################################ FRONT END ################################
 => COMPOSANTS (envoie les données au "reducer" + definie les actions depuis les "actions" ) 
     => ACTIONS dispatche des objets au + fait les requetes serveur
         => REDUCERS met à jour le store 
             => COMPOSANTS
 
+################################ BACK END ################################
+server/index.js
+        => route 
+            => db/index 
+                =>  db/mongo/index
+                    => connect
+                    => controllers
+                        => db/mongo/controller/index
+                    => passport
+                    => session
+
+        
 
 ################################ START ################################
 ### development :
