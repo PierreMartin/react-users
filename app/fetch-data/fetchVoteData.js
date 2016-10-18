@@ -1,4 +1,4 @@
-import { voteService } from 'services';
+import { voteService } from '../services';
 
 const fetchData = () => {
   return voteService.getTopics()
