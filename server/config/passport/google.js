@@ -1,7 +1,8 @@
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import { google } from '../secrets';
 import unsupportedMessage from '../../db/unsupportedMessage';
-import { passport as dbPassport } from '../../db';
+// import { passport as dbPassport } from '../../db';
+import { passport as dbPassport } from '../../db/mongo';
 
 export default (passport) => {
   if (!dbPassport || !dbPassport.google || ! typeof dbPassport.google === 'function') {

@@ -4,7 +4,8 @@
  */
 
 import { Strategy as LocalStrategy } from 'passport-local';
-import { passport as dbPassport } from '../../db';
+// import { passport as dbPassport } from '../../db';
+import { passport as dbPassport } from '../../db/mongo';
 import unsupportedMessage from '../../db/unsupportedMessage';
 
 export default (passport) => {

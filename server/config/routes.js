@@ -2,7 +2,8 @@
 
 import passport from 'passport';
 import unsupportedMessage from '../db/unsupportedMessage';
-import { controllers, passport as passportConfig } from '../db';
+// import { controllers, passport as passportConfig } from '../db';
+import { controllers, passport as passportConfig } from '../db/mongo';
 
 const usersController = controllers && controllers.users;
 const topicsController = controllers && controllers.topics;

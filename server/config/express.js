@@ -8,7 +8,8 @@ import methodOverride from 'method-override';
 import unsupportedMessage from '../db/unsupportedMessage';
 import { sessionSecret } from './secrets';
 import { ENV } from './appConfig';
-import { session as dbSession } from '../db';
+// import { session as dbSession } from '../db';
+import { session as dbSession } from '../db/mongo';
 import gzip from 'compression';
 import helmet from 'helmet';
 

@@ -2,7 +2,8 @@
 import passport from 'passport';
 import local from './passport/local';
 import google from './passport/google';
-import { passport as dbPassport } from '../db';
+// import { passport as dbPassport } from '../db';
+import { passport as dbPassport } from '../db/mongo';
 import unsupportedMessage from '../db/unsupportedMessage';
 
 export default () => {

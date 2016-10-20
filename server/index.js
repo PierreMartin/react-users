@@ -1,7 +1,8 @@
 import express from 'express';
 import webpack from 'webpack';
 import { ENV } from './config/appConfig';
-import { connect } from './db';
+// import { connect } from './db';
+import { connect } from './db/mongo';
 import passportConfig from './config/passport';
 import expressConfig from './config/express';
 import routesConfig from './config/routes';
@@ -9,7 +10,7 @@ const App = require('../public/assets/server');
 const app = express();
 
 
-// Connection à MongoDB par mongoose + Models + Controllers + Sessions + Passwords (Auth) :
+// Connection à MongoDB par mongoose :
 connect();
 
 // Pour la persistence d'authentification par password :
