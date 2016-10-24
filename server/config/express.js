@@ -8,8 +8,7 @@ import methodOverride from 'method-override';
 import unsupportedMessage from '../db/unsupportedMessage';
 import { sessionSecret } from './secrets';
 import { ENV } from './appConfig';
-// import { session as dbSession } from '../db';
-import { session as dbSession } from '../db/mongo';
+import { session as dbSession } from '../db';
 import gzip from 'compression';
 import helmet from 'helmet';
 
@@ -80,7 +79,7 @@ export default (app) => {
     console.log(`===>  Listening on port: ${app.get('port')}`);
 
     if (ENV === 'production') {
-        console.log('===> 🚦  Note: In order for authentication to work in production');
+        console.log('===> Note: In order for authentication to work in production');
         console.log('===>           you will need a secure HTTPS connection');
         sess.cookie.secure = true; // Serve secure cookies
     }

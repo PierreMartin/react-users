@@ -1,8 +1,7 @@
 import express from 'express';
 import webpack from 'webpack';
 import { ENV } from './config/appConfig';
-// import { connect } from './db';
-import { connect } from './db/mongo';
+import { connect } from './db';
 import passportConfig from './config/passport';
 import expressConfig from './config/express';
 import routesConfig from './config/routes';
