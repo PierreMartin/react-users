@@ -2,14 +2,33 @@
 @import '../common/colors';
 @import '../common/layout';
 
-.topic-item {
-  display: flex;
-  justify-content: space-between;
+li.user-container {
+  border: 1px solid #b4bac1;
+  list-style: none;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.user-links {
+  text-decoration: none;
+  &:hover {
+    color: red;
+  }
+}
+
+
+.img-item {
+  height: 80px;
+  width: 80px;
 }
 
 .topic {
   @apply --flexNotMoreThan200;
   font-size: var(--fontMedium);
+}
+
+.count {
+  font-size: 10px;
 }
 
 .button {

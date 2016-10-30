@@ -6,7 +6,8 @@ const usersController   = controllers && controllers.users;
 const topicsController  = controllers && controllers.topics;
 
 export default (app) => {
-    // user routes
+
+    /** ROUTING AUTH : **/
     if (usersController) {
         app.post('/login',  usersController.login);
         app.post('/signup', usersController.signUp);
@@ -15,8 +16,8 @@ export default (app) => {
         console.warn(unsupportedMessage('users routes'));
     }
 
+    /** GOOGLE AUTH : **/
     if (passportConfig && passportConfig.google) {
-        // google auth
         // Redirect the user to Google for authentication. When complete, Google
         // will redirect the user back to the application at
         // /auth/google/return
@@ -34,13 +35,14 @@ export default (app) => {
         // Otherwise, the authentication has failed.
         app.get('/auth/google/callback',
             passport.authenticate('google', {
-                successRedirect: '/',
+                successRedirect: '/dashboard',                   //  TODO - auth : ICI la redirection lorqu'on se connecte via google (désactivé)
                 failureRedirect: '/login'
             })
         );
     }
 
-    // topic routes
+
+    /** ROUTING USERS : **/
     if (topicsController) {
         app.get('/topic',           topicsController.all);
         app.post('/topic/:id',      topicsController.add);

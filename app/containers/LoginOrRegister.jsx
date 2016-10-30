@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
-import { manualLogin, signUp, toggleLoginMode } from 'actions/users';
+import { manualLogin, signUp, toggleLoginMode } from '../actions/users';
 import styles from 'css/components/login';
 import hourGlassSvg from 'images/hourglass.svg';
 
@@ -18,9 +18,10 @@ class LoginOrRegister extends Component {
     handleOnSubmit(event) {
         event.preventDefault();
 
-        const { manualLogin, signUp, user: { isLogin } } = this.props;
-        const email = ReactDOM.findDOMNode(this.refs.email).value;
-        const password = ReactDOM.findDOMNode(this.refs.password).value;
+        const { manualLogin, signUp, user: { isLogin } } = this.props; // 'isLogin' est l'action au clique sur le boutton 'Login'
+
+        const email     = ReactDOM.findDOMNode(this.refs.email).value;
+        const password  = ReactDOM.findDOMNode(this.refs.password).value;
 
         if (isLogin) {
             manualLogin({email, password});
@@ -85,11 +86,6 @@ class LoginOrRegister extends Component {
                                 placeholder="password"
                             />
 
-                            <div className={cx('hint')}>
-                                <div>Hint</div>
-                                <div>email: example@ninja.com password: ninja</div>
-                            </div>
-
                             <p className={cx('message', {'message-show': message && message.length > 0})}>
                                 {message}
                             </p>
@@ -103,10 +99,10 @@ class LoginOrRegister extends Component {
                         </form>
                     </div>
 
-                    <div className={cx('google-container')}>
-                        <h1 className={cx('heading')}>Google Login Demo</h1>
+                    {/*<div className={cx('google-container')}>
+                        <h1 className={cx('heading')}>Login with Google</h1>
                         <a className={cx('button')} href="/auth/google">Login with Google</a>
-                    </div>
+                    </div>*/}
 
                 </div>
             </div>

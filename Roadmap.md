@@ -1,50 +1,81 @@
-## Moving to reactGo
+wonderful development experience !
 
-**Why**
+#### PACKAGES ####
+- react-transform-hmr (Deprecated)          résout certains problèmes de avec React Hot Loader et React Transform
+- CSS Module                                fichier css qui evite les conflit, pas de scope global, css réutilisable
+- test unitaires :                          webpack, karma, jsdom, mocha, sinon & enzyme
 
-This boilerplate has grown tremendously since its early days. 
+- PostCSS                                   post-processeur css avec javascript
+    - autoprefixer                          permet de nettoyer le CSS en enlevant les préfixes (-moz-, -webkit-, -ms-)
+    - CSS Modules                           permet d'associer une classe à un fichier css particulié (évite les conflits)
+    - cssnext                               permet d'utiliser les nouvelles propriétés css MEME si pas supporté pas les browsers
+- classnames                                assemblage des classes ensembles (permet en js d'ajouter ou non des classes via des boolean)
 
-The goal hasn't diverged from its original purpose - best practices and a wonderful development experience.
 
-We wish for this boilerplate to be **useful** to our users from two aspects:
-- building non-trivial applications rapidly
-- good examples of how to solve common problems - logging in, server-side authentication, etc.
 
-We've found **concrete examples** to be extremely valuable for our users. However, we are aware that this **decreases the efficiency of building a new project** rapidly.
 
-This issue has been raised in [#137](https://github.com/choonkending/react-webpack-node/issues/137), [#156](https://github.com/choonkending/react-webpack-node/issues/156) and [#372](https://github.com/choonkending/react-webpack-node/issues/372)
+#### DATABASE ####
+- Mongoose for MongoDB
+- Sequelize for Postgres
 
-**Solution**
 
-Our vision for [**reactGo**](https://github.com/reactGo/reactGo) is to be a minimal stateless boilerplate that you will be able to clone and start on work immediately.
+#### REDUX ####
+- Un seul store
+- Le state peut seulement etre lue (immutable)
+- Mutation ecrit en fonctions pure
 
-It will have the **_minimal_** set of features we think are vital to be **useful**:
-- universal Rendering React
-- Asynchronous data fetching support
-- Redux
-- React-router + react-router-redux
-- CSS modules + Css next
-- Tests with Enzyme
-- Deployment files
-- Offline support
-- Performance
-- Express server configuration
 
-Note: DB configuration will not supported in the minimal boilerplate, but we will be creating separate repositories within the reactGo organisation for more specific use-cases.
+################################ FRONT END ################################
+=> COMPOSANTS (envoie les données au "reducer" + definie les actions depuis les "actions" ) 
+    => ACTIONS dispatche des objets au + fait les requetes serveur
+        => REDUCERS met à jour le store 
+            => COMPOSANTS
 
-By reducing our minimal support, we can focus on improving the existing things we know and love.
+################################ BACK END ################################
+server/index.js
+        => route 
+            => db/index 
+                =>  db/mongo/index
+                    => connect
+                    => controllers
+                        => db/mongo/controller/index
+                    => passport
+                    => session
 
-## What's going to happen?
+        
 
-1. Migration to [**reactGo**](https://github.com/reactGo/reactGo)
-Existing react-webpack-node will be moved to that repository.
+################################ START ################################
+### development :
+$ sudo mongod
+$ npm run dev
 
-2. [**release stateless 2.0**](https://github.com/choonkending/react-webpack-node/pull/406) becomes master
 
-3. Other examples will be created as separate repositories (all based on master branch):
 
-- [ ] Server-side react-router authentication
-- [ ] MongoDB
-- [ ] Postgresql
-- [ ] Vote App example
+
+################################ TREE COMPONENTS ################################
+- client    store={store}    NE PAS TOUCHER 
+    - routes '/'
+        - App
+            - Navigation
+            - Message   ?? 
+            - Vote
+                - EntryBox
+                    - TopicTextInput
+                        <input />
+                - MainSection           (a gauche - Vote for your favorite hack day idea)
+                    - TopicItem         (1 topic)
+                    - TopicItem         (1 topic)
+                    - TopicItem         (1 topic)
+                    - TopicItem         (1 topic)
+                    ...
+                - Scoreboard            (a droite - Vote count)
+                    topic.text
+                    topic.text
+                    topic.text
+                    
+    - routes '/about'
+
+
+
+
 

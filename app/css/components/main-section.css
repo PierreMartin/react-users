@@ -2,9 +2,17 @@
 @import '../common/typography';
 @import '../common/card';
 
+.list-users-container {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
 .main-section {
   @apply --card;
-  width: 50%;
+  width: 100%;
   border-radius: var(--globalRadius);
 }
 
@@ -18,5 +26,9 @@
 .list {
   list-style: none;
   padding: 16px;
+}
+
+.table {
+  width: 100%;
 }
 
