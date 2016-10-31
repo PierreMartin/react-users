@@ -29,8 +29,7 @@ const BackListUsers = ({ topics, onIncrement, onDecrement, onDestroy }) => {
                 <tbody>
                     <tr className={cx('topic-item')}>
                         <th>Titre</th>
-                        <th>+</th>
-                        <th>-</th>
+                        <th>Donner une note</th>
                         <th>Supprimer</th>
                         <th>Nmbr de points</th>
                     </tr>

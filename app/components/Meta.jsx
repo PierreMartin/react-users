@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Helmet from 'react-helmet';
 
-import config from 'helmconfig.js';
+import config from '../helmconfig.js';
 
 // Remove stylesheets because we do not extract them into a css file
 // in development mode
@@ -13,7 +13,8 @@ if (__DEVSERVER__) {
 const Meta = () => (
   <Helmet
     htmlAttributes={{"lang": "fr", "amp": undefined}}
-    title="React Webpack Node" meta={config.meta}
+    title="React Webpack Node"
+    meta={config.meta}
     link={config.link}
   />
 );
