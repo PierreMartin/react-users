@@ -1,20 +1,16 @@
 import React, { PropTypes } from 'react';
-import StarRating from 'react-star-rating'
+import StarRatingComponent from 'react-star-rating-component';
 import classNames from 'classnames/bind';
 import styles from '../css/components/topic-item';
 
 const cx = classNames.bind(styles);
 
-const BackUser = ({ text, id, count, incrementCount, decrementCount, destroyTopic }) => {
+const BackUser = ({ text, id, count, decrementCount, destroyTopic }) => {
 
-    const handleRatingClick = (e, data) => {
-        console.log('You left a ' + data.rating + ' star rating for ' + data.caption);
-        //incrementCount(id);
+    const onStarClick = (nextValue, prevValue, name) => {
+        console.log(id, nextValue);
+        // decrementCount(id, valeurFromAttrValueFromProps);
     };
-
-    /*const onDecrement = () => {
-        decrementCount(id);
-    };*/
 
     const onDestroy = () => {
         destroyTopic(id);
@@ -24,7 +20,7 @@ const BackUser = ({ text, id, count, incrementCount, decrementCount, destroyTopi
         <tr className={cx('topic-item')} key={id}>
             <td><span className={cx('topic')}>{text}</span></td>
 
-            <td>aa</td>
+            <td><StarRatingComponent name={'starRating_'+id} starCount={5} value={3} onStarClick={onStarClick}/></td>
 
             <td><button className={cx('button', 'destroy')} onClick={onDestroy}>{String.fromCharCode(215)}</button></td>
             <td><span className={cx('count')}>{count}</span></td>
@@ -37,7 +33,6 @@ BackUser.propTypes = {
     text: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     count: PropTypes.number.isRequired,
-    incrementCount: PropTypes.func.isRequired,
     decrementCount: PropTypes.func.isRequired,
     destroyTopic: PropTypes.func.isRequired
 };

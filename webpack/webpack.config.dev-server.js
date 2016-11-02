@@ -3,32 +3,40 @@ var webpack = require('webpack');
 var assetsPath = path.join(__dirname, '..', 'public', 'assets');
 
 var commonLoaders = [
-  {
-    /*
-     * TC39 categorises proposals for babel in 4 stages
-     * Read more http://babeljs.io/docs/usage/experimental/
-     */
-    test: /\.js$|\.jsx$/,
-    loader: 'babel-loader',
-    // Reason why we put this here instead of babelrc
-    // https://github.com/gaearon/react-transform-hmr/issues/5#issuecomment-142313637
-    query: {
-      presets: ['es2015', 'react', 'stage-0'],
-      plugins: ['transform-decorators-legacy']
+    // ES6 + JSX
+    {
+        test: /\.js$|\.jsx$/,
+        loader: 'babel-loader',
+        // Reason why we put this here instead of babelrc :   https://github.com/gaearon/react-transform-hmr/issues/5#issuecomment-142313637
+        query: {
+            presets: ['es2015', 'react', 'stage-0'],
+            plugins: ['transform-decorators-legacy']
+        },
+        include: path.join(__dirname, '..', 'app'),             // normalement ici on charge .babelrc
+        exclude: path.join(__dirname, '..', 'node_modules')
     },
-    include: path.join(__dirname, '..', 'app'),
-    exclude: path.join(__dirname, '..', 'node_modules')
-  },
-  { test: /\.json$/, loader: 'json-loader' },
-  {
-    test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
-    loader: 'url',
-    query: {
-        name: '[hash].[ext]',
-        limit: 10000,
+
+    // JSON
+    {
+        test: /\.json$/,
+        loader: 'json-loader'
+    },
+
+    // IMAGES :
+    {
+        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
+        loader: 'url',
+        query: {
+            name: '[hash].[ext]',
+            limit: 10000
+        }
+    },
+
+    // HTML :
+    {
+        test: /\.html$/,
+        loader: 'html-loader'
     }
-  },
-  { test: /\.html$/, loader: 'html-loader' }
 ];
 
 module.exports = {
@@ -36,35 +44,39 @@ module.exports = {
     name: 'server-side rendering',
     context: path.join(__dirname, '..', 'app'),
     entry: {
-      server: './server'
+        server: './server'
     },
     target: 'node',
     output: {
-      // The output directory as absolute path
-      path: assetsPath,
-      // The filename of the entry chunk as relative path inside the output.path directory
-      filename: 'server.js',
-      // The output path from the view of the Javascript
-      publicPath: '/assets/',
-      libraryTarget: 'commonjs2'
+        // The output directory as absolute path
+        path: assetsPath,
+        // The filename of the entry chunk as relative path inside the output.path directory
+        filename: 'server.js',
+        // The output path from the view of the Javascript
+        publicPath: '/assets/',  // hotReload
+        libraryTarget: 'commonjs2'
     },
     module: {
-      loaders: commonLoaders.concat([
-           {
-              test: /\.css$/,
-              loader: 'css/locals?module&localIdentName=[name]__[local]___[hash:base64:5]'
-           }
-      ])
+        loaders: commonLoaders.concat([
+            // CSS (en dev, le css sera directement dans les style, mais en prod on generera un fichier css à part)
+            {
+                test: /\.css$/,
+                loader: 'css/locals?module&localIdentName=[name]__[local]___[hash:base64:5]'
+            }
+        ])
     },
     resolve: {
-      root: [path.join(__dirname, '..', 'app')],
-      extensions: ['', '.js', '.jsx', '.css'],
+        root: [path.join(__dirname, '..', 'app')],
+        extensions: ['', '.js', '.jsx', '.css']
     },
+
     plugins: [
         new webpack.DefinePlugin({
-          __DEVCLIENT__: false,
-          __DEVSERVER__: true
+            __DEVCLIENT__: false,
+            __DEVSERVER__: true
         }),
         new webpack.IgnorePlugin(/vertx/)
     ]
 };
+
+// 25:50

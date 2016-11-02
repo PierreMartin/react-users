@@ -5,44 +5,47 @@ var assetsPath = path.join(__dirname, '..', 'public', 'assets');
 var hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
 
 var commonLoaders = [
-  {
-    /*
-     * TC39 categorises proposals for babel in 4 stages
-     * Read more http://babeljs.io/docs/usage/experimental/
-     */
-    test: /\.js$|\.jsx$/,
-    loader: 'babel-loader',
-    // Reason why we put this here instead of babelrc
-    // https://github.com/gaearon/react-transform-hmr/issues/5#issuecomment-142313637
-    query: {
-      presets: ['react-hmre', 'es2015', 'react', 'stage-0'],
-      plugins: ['transform-decorators-legacy']
+    // ES6 + JSX
+    {
+        test: /\.js$|\.jsx$/,
+        loader: 'babel-loader',
+        // Reason why we put this here instead of babelrc :   https://github.com/gaearon/react-transform-hmr/issues/5#issuecomment-142313637
+        query: {
+            presets: ['react-hmre', 'es2015', 'react', 'stage-0'],
+            plugins: ['transform-decorators-legacy']
+        },
+        include: path.join(__dirname, '..', 'app'),              // normalement ici on charge .babelrc
+        exclude: path.join(__dirname, '..', 'node_modules')
     },
-    include: path.join(__dirname, '..', 'app'),
-    exclude: path.join(__dirname, '..', 'node_modules')
-  },
-  {
-    test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
-    loader: 'url',
-    query: {
-        name: '[hash].[ext]',
-        limit: 10000,
+
+    // IMAGES :
+    {
+        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
+        loader: 'url',
+        query: {
+            name: '[hash].[ext]',
+            limit: 10000,
+        }
+    },
+
+    // HTML :
+    {
+        test: /\.html$/,
+        loader: 'html-loader'
     }
-  },
-  { test: /\.html$/, loader: 'html-loader' }
 ];
 
 var postCSSConfig = function () {
-  return [
-    require('postcss-import')({
-      path: path.join(__dirname, '..', 'app', 'css'),
-      addDependencyTo: webpack // for hot-reloading
-    }),
-    require('postcss-cssnext')({
-      browsers: ['> 1%', 'last 2 versions']
-    }),
-    require('postcss-reporter')({ clearMessages: true })
-  ];
+    return [
+        require('postcss-import')({
+            path: path.join(__dirname, '..', 'app', 'css'),
+            addDependencyTo: webpack // for hot-reloading
+        }),
+        require('postcss-cssnext')({
+            browsers: ['> 1%', 'last 2 versions']
+        }),
+        require('postcss-reporter')({clearMessages: true})
+    ];
 };
 
 module.exports = {
@@ -73,38 +76,40 @@ module.exports = {
     // Multiple entry with hot loader
     // https://github.com/glenjamin/webpack-hot-middleware/blob/master/example/webpack.config.multientry.js
     entry: {
-      app: ['./client', hotMiddlewareScript]
+        app: ['./client', hotMiddlewareScript]
     },
     output: {
-      // The output directory as absolute path
-      path: assetsPath,
-      // The filename of the entry chunk as relative path inside the output.path directory
-      filename: '[name].js',
-      // The output path from the view of the Javascript
-      publicPath: '/assets/'
+        // The output directory as absolute path
+        path: assetsPath,
+        // The filename of the entry chunk as relative path inside the output.path directory
+        filename: '[name].js',
+        // The output path from the view of the Javascript
+        publicPath: '/assets/'  // hotReload
     },
     module: {
-      loaders: commonLoaders.concat([
-        { test: /\.css$/,
-          loader: 'style!css?module&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader'
-        }
-      ])
+        loaders: commonLoaders.concat([
+            // CSS (en dev, le css sera directement dans les styles, mais en prod on generera un fichier css à part)
+            {
+                test: /\.css$/,
+                loader: 'style!css?module&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader'
+            }
+        ])
     },
     resolve: {
-      root: [path.join(__dirname, '..', 'app')],
-      extensions: ['', '.js', '.jsx', '.css'],
+        root: [path.join(__dirname, '..', 'app')],
+        extensions: ['', '.js', '.jsx', '.css']
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
         new webpack.DefinePlugin({
-          __DEVCLIENT__: true,
-          __DEVSERVER__: false
+            __DEVCLIENT__: true,
+            __DEVSERVER__: false
         }),
         new styleLintPlugin({
-          configFile: path.join(__dirname, '..', '.stylelintrc'),
-          context: path.join(__dirname, '..', 'app'),
-          files: '**/*.?(sa|sc|c)ss'
+            configFile: path.join(__dirname, '..', '.stylelintrc'),
+            context: path.join(__dirname, '..', 'app'),
+            files: '**/*.?(sa|sc|c)ss'
         })
     ],
     postcss: postCSSConfig

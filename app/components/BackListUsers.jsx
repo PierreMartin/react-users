@@ -5,7 +5,7 @@ import styles from '../css/components/main-section';
 
 const cx = classNames.bind(styles);
 
-const BackListUsers = ({ topics, onIncrement, onDecrement, onDestroy }) => {
+const BackListUsers = ({ topics, onDecrement, onDestroy }) => {
     const users = topics.map((topic, key) => {
         return (
             <BackUser
@@ -14,7 +14,6 @@ const BackListUsers = ({ topics, onIncrement, onDecrement, onDestroy }) => {
                 key={key}
                 text={topic.text}
                 count={topic.count}
-                incrementCount={onIncrement}
                 decrementCount={onDecrement}
                 destroyTopic={onDestroy}
             />
@@ -45,7 +44,6 @@ const BackListUsers = ({ topics, onIncrement, onDecrement, onDestroy }) => {
 
 BackListUsers.propTypes = {
     topics: PropTypes.array.isRequired,
-    onIncrement: PropTypes.func.isRequired,
     onDecrement: PropTypes.func.isRequired,
     onDestroy: PropTypes.func.isRequired
 };
