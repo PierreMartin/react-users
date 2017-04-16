@@ -1,58 +1,126 @@
-wonderful development experience !
-
-#### PACKAGES ####
+##################################################### PACKAGES #####################################################
 - react-transform-hmr (Deprecated)          résout certains problèmes de avec React Hot Loader et React Transform
-- CSS Module                                fichier css qui evite les conflit, pas de scope global, css réutilisable
 - test unitaires :                          webpack, karma, jsdom, mocha, sinon & enzyme
 
 - PostCSS                                   post-processeur css avec javascript
     - autoprefixer                          permet de nettoyer le CSS en enlevant les préfixes (-moz-, -webkit-, -ms-)
-    - CSS Modules                           permet d'associer une classe à un fichier css particulié (évite les conflits)
+    - CSS Modules                           permet d'eviter les conflit, pas de scope global, css réutilisable -- associe une classe à un fichier css particulié
     - cssnext                               permet d'utiliser les nouvelles propriétés css MEME si pas supporté pas les browsers
 - classnames                                assemblage des classes ensembles (permet en js d'ajouter ou non des classes via des boolean)
 
 
 
 
-#### DATABASE ####
-- Mongoose for MongoDB
-- Sequelize for Postgres
-
-
-#### REDUX ####
-- Un seul store
-- Le state peut seulement etre lue (immutable)
-- Mutation ecrit en fonctions pure
-
-
-################################ FRONT END ################################
-=> COMPOSANTS (envoie les données au "reducer" + definie les actions depuis les "actions" ) 
-    => ACTIONS dispatche des objets au + fait les requetes serveur
-        => REDUCERS met à jour le store 
+##################################################### REDUX RECAP #####################################################
+=> COMPOSANTS (envoie les données au "reducer" + envoie les actions aux "actions" ) 
+    => ACTIONS dispatch des objets + fait les requetes serveur
+        => REDUCER met à jour le store 
             => COMPOSANTS
 
-################################ BACK END ################################
-server/index.js
-        => route 
-            => db/index 
-                =>  db/mongo/index
-                    => connect
-                    => controllers
-                        => db/mongo/controller/index
-                    => passport
-                    => session
 
-        
+############ 1) LES COMPOSANTS
+- c'est la Vue
+- envoie les données au "reducer" + envoie les actions aux "actions"
 
-################################ START ################################
+
+############ 2) LES ACTIONS
+- 1 Action => un objet (décrivant ce qui a changé dans l'application)
+- dispatch des objets + fait eventuellement des requetes serveur
+
+
+function voted(id, scoreValue) {
+    return {
+        type: 'RATING_USER',
+        id: id,
+        scoreValue: scoreValue
+    };
+}
+
+
+############ 3) LE REDUCER
+- C'est une fonction qui calcule le prochain state basé sur le précédent
+- Cette fonction dois être pur, de sorte qu'il doit retourner un NOUVEL objet
+
+- Le Reducer possede le "state" et l'"action" comme params et renvoie le state suivant
+`1 reducer peut être appelé par 1 autre reducer`
+
+
+const counter = (state = 0, action) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return state + 1;
+    case 'DECREMENT':
+      return state - 1;
+    default:
+      return state;
+  }
+}
+
+
+############ 4) LE STORE
+# store.getState()       => le state actuelle du store
+const store = createStore(counter);
+console.log(store.getState());
+
+
+# store.dispatch()       => Set le state en fonction de l'action
+store.dispatch({ type: 'INCREMENT' });
+console.log(store.getState());
+
+
+# store.subscribe() :    => rend (affiche) le state dispatché
+const render = () => {
+  document.body.innerText = store.getState();
+};
+
+store.subscribe(render);
+render();
+
+document.addEventListener('click', () => {
+  store.dispatch({ type: 'INCREMENT' });
+});
+
+
+
+############ X) LE STATE
+- state => données de l'app dans un big json
+- Un state ne peut pas être changer - il faudra dans ce cas envoyer une "action"
+
+
+############ X) React context (provider)
+Le composant "Provider" utilisera la fonction de React "context" pour rendre le store à la disposition de tout composant à l'intérieur, y compris les petits-enfants
+
+
+
+
+########################################################## START ##########################################################
 ### development :
 $ sudo mongod
 $ npm run dev
 
+### Mongo 
+$ mongo 
+$> show dbs
+$> use ReactWebpackNode
+$> show collections
+
+db.topics.find()
+db.topics.find({"text": "test 1"} , {_id:0}) 
+
+db.topics.remove({})
+db.topics.insert({text: "test 1", count: 1})
+db.topics.insert({text: "test 2", count: 8})
+db.topics.insert({text: "test 3", count: 4})
+
+user => créer un compte sur l'app (pierre@gmail.com 1234)
+db.users.find()
+
+
+/!!\ dans Mongoose on a 'Topic' (mongodb enleve le 's' et tout en minuscule)
 
 
 
-################################ TREE COMPONENTS ################################
+##################################################### TREE COMPONENTS #####################################################
 - client    store={store}    NE PAS TOUCHER 
     - routes '/'
         - App
@@ -77,5 +145,25 @@ $ npm run dev
 
 
 
+################################ ROUTES ################################
+Route	           POST	                        GET	                           PUT	                                  DELETE
+/api/user	        -	                    Get all users                   	-                                       -
+/api/user/:id	    -	                    Get a user	                Update a user	                                -
 
 
+
+
+##################################################### TODO #####################################################
+- mettre des commentaires en francais un peu partout
+- renommer les fichiers + props + variables (virer 'topics')
+
+- créer des fichiers 'admin' et 'front' + mettre les components parents en commentaires
+- déplacer les fichiers CSS'
+
+- Implémenter le systeme de vote de 1 à 5 (étoiles)
+
+- enlever la possibilité d'ajouter une personne - ajouter possibilité d'editer son profil
+- Ajouter des attribus dans le modele Mongo (Age, sexe, ville...) - désactiver la collection 'topics'
+- Prevoir un filtre d'affichage des personnes (par age, par ville)
+
++ Commiter avec des emojis
