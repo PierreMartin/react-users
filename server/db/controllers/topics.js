@@ -33,13 +33,16 @@ export function add(req, res) {
  * Update a topic
  */
 export function update(req, res) {
-    const query         = {id: req.params.id};
-    const isIncrement   = req.body.isIncrement;
-    const isFull        = req.body.isFull;
-    const omitKeys      = ['id', '_id', '_v', 'isIncrement', 'isFull'];
-    const data          = _.omit(req.body, omitKeys);
+    const query             = {id: req.params.id};
+    const score             = req.body.score;
+    const isAlreadyRated    = req.body.isAlreadyRated;
+    //const isIncrement     = req.body.isIncrement;
+    //const isFull          = req.body.isFull;
 
-    if (isFull) {
+    //const omitKeys        = ['id', '_id', '_v', 'isIncrement', 'isFull'];
+    //const data            = _.omit(req.body, omitKeys);
+
+    /*if (isFull) {
         Topic.findOneAndUpdate(query, data, (err) => {
             if (err) {
                 console.log('Error on save!');
@@ -57,7 +60,21 @@ export function update(req, res) {
 
             return res.status(200).send('Updated successfully');
         });
+    }*/
+
+    if (!isAlreadyRated) {
+        Topic.findOneAndUpdate(query, {$inc: {count: score}, isAlreadyRated: true}, (err) => {
+            if (err) {
+                console.log('Error on save!');
+                return res.status(500).send('We failed to save for some reason');
+            }
+
+            return res.status(200).send('Updated successfully');
+        });
+    } else {
+        return res.status(200).send('Already rated!');
     }
+
 }
 
 /**

@@ -4,7 +4,7 @@
 /** state               => une partie du 'state container' défini dans "mapStateToProps" du composant => connect(mapStateToProps, ...) **/
 
 import { combineReducers } from 'redux';
-import * as types from 'types';
+import * as types from '../types';
 
 const topic = (state = {}, action) => {
     switch (action.type) {
@@ -14,14 +14,9 @@ const topic = (state = {}, action) => {
                 count: action.count,
                 text: action.text
             };
-        case types.INCREMENT_COUNT:
+        case types.RATING_USER:
             if (state.id === action.id) {
-                return {...state, count: state.count + 1};
-            }
-            return state;
-        case types.DECREMENT_COUNT:
-            if (state.id === action.id) {
-                return {...state, count: state.count - 1};
+                return {...state, count: state.count + action.score};
             }
             return state;
         default:
@@ -41,8 +36,7 @@ const topics = (state = [], action) => {
             return state.filter(t => t.id !== action.id);
         case types.DESTROY_TOPIC:
             return state.filter(t => t.id !== action.id);
-        case types.INCREMENT_COUNT:
-        case types.DECREMENT_COUNT:
+        case types.RATING_USER:
             return state.map(t => topic(t, action));
         default:
             return state;

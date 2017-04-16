@@ -1,3 +1,4 @@
+// Parent : BackListUsers
 import React, { PropTypes } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
 import classNames from 'classnames/bind';
@@ -5,11 +6,12 @@ import styles from '../css/components/topic-item';
 
 const cx = classNames.bind(styles);
 
-const BackUser = ({ text, id, count, decrementCount, destroyTopic }) => {
+const BackUser = ({ text, id, count, ratingUser, destroyTopic, isAlreadyRated }) => {
 
     const onStarClick = (nextValue, prevValue, name) => {
-        console.log(id, nextValue);
-        // decrementCount(id, valeurFromAttrValueFromProps);
+        console.log(id, nextValue, isAlreadyRated);
+        // ratingUser(id, valeurFromAttrValueFromProps);
+        ratingUser(id, nextValue, isAlreadyRated); // fonction défini dans les actions
     };
 
     const onDestroy = () => {
@@ -33,7 +35,7 @@ BackUser.propTypes = {
     text: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     count: PropTypes.number.isRequired,
-    decrementCount: PropTypes.func.isRequired,
+    ratingUser: PropTypes.func.isRequired,
     destroyTopic: PropTypes.func.isRequired
 };
 

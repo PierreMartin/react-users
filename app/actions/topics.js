@@ -23,13 +23,17 @@ export function makeTopicRequest(method, id, data, api = '/topic') {
     return request[method](api + (id ? ('/' + id) : ''), data);
 }
 
-export function increment(id) {
-    return {type: types.INCREMENT_COUNT, id};
+export function rate(id, score) {
+    return {
+        type: types.RATING_USER,
+        id: id,
+        score: score
+    };
 }
 
-export function decrement(id) {
+/*export function decrement(id) {
     return {type: types.DECREMENT_COUNT, id};
-}
+}*/
 
 export function destroy(id) {
     return {type: types.DESTROY_TOPIC, id};
@@ -135,21 +139,10 @@ export function fetchTopics() {
 }
 
 
-export function incrementCount(id) {
+export function ratingUser(id, score, isAlreadyRated) {
     return dispatch => {
-        return makeTopicRequest('put', id, {isFull: false, isIncrement: true})
-            .then(() => dispatch(increment(id)))
-            .catch(() => dispatch(createTopicFailure({
-                id,
-                error: 'Oops! Something went wrong and we couldn\'t add your vote'
-            })));
-    };
-}
-
-export function decrementCount(id) {
-    return dispatch => {
-        return makeTopicRequest('put', id, {isFull: false, isIncrement: false})
-            .then(() => dispatch(decrement(id)))
+        return makeTopicRequest('put', id, {score: score, isAlreadyRated: isAlreadyRated})
+            .then(() => dispatch(rate(id, score)))
             .catch(() => dispatch(createTopicFailure({
                 id,
                 error: 'Oops! Something went wrong and we couldn\'t add your vote'

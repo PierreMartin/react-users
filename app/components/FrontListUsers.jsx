@@ -12,7 +12,7 @@ const FrontListUsers = ({ topics }) => {
         return (
             <FrontUser
                 index={key}
-                id={topic.id}
+                id={topic._id}
                 key={key}
                 text={topic.text}
                 count={topic.count}
