@@ -34,8 +34,9 @@ export function add(req, res) {
  */
 export function update(req, res) {
     const query             = {id: req.params.id};
-    const score             = req.body.score;
-    const isAlreadyRated    = req.body.isAlreadyRated;
+    const count             = req.body.count;
+    const isVoted           = req.body.isVoted;
+
     //const isIncrement     = req.body.isIncrement;
     //const isFull          = req.body.isFull;
 
@@ -62,18 +63,15 @@ export function update(req, res) {
         });
     }*/
 
-    if (!isAlreadyRated) {
-        Topic.findOneAndUpdate(query, {$inc: {count: score}, isAlreadyRated: true}, (err) => {
-            if (err) {
-                console.log('Error on save!');
-                return res.status(500).send('We failed to save for some reason');
-            }
+    Topic.findOneAndUpdate(query, {$inc: {count: count}, isVoted: isVoted}, (err) => {
+        if (err) {
+            console.log('Error on save!');
+            return res.status(500).send('We failed to save for some reason');
+        }
 
-            return res.status(200).send('Updated successfully');
-        });
-    } else {
-        return res.status(200).send('Already rated!');
-    }
+        return res.status(200).send('Updated successfully');
+    });
+
 
 }
 

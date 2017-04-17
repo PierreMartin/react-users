@@ -5,17 +5,18 @@ import styles from '../css/components/main-section';
 
 const cx = classNames.bind(styles);
 
-const BackListUsers = ({ topics, onRatingUser, onDestroy }) => {
+const BackListUsers = ({ topics, addStar, onDestroy }) => {
     const users = topics.map((topic, key) => {
         return (
             <BackUser
                 index={key}
-                id={topic._id}
+                id={topic.id}
                 key={key}
                 text={topic.text}
                 count={topic.count}
-                ratingUser={onRatingUser}
+                addStar={addStar}
                 isAlreadyRated={topic.isAlreadyRated}
+                isVoted={topic.isVoted}
                 destroyTopic={onDestroy}
             />
         );
@@ -45,7 +46,7 @@ const BackListUsers = ({ topics, onRatingUser, onDestroy }) => {
 
 BackListUsers.propTypes = {
     topics: PropTypes.array.isRequired,
-    onRatingUser: PropTypes.func.isRequired,
+    addStar: PropTypes.func.isRequired,
     onDestroy: PropTypes.func.isRequired
 };
 

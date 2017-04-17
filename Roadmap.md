@@ -155,12 +155,12 @@ Route	           POST	                        GET	                           PUT
 
 ##################################################### TODO #####################################################
 - mettre des commentaires en francais un peu partout
-- renommer les fichiers + props + variables (virer 'topics')
+- renommer les fichiers + props + variables (garder les topic mais ajouter createUser dans Register)
 
 - créer des fichiers 'admin' et 'front' + mettre les components parents en commentaires
 - déplacer les fichiers CSS'
 
-- Implémenter le systeme de vote de 1 à 5 (étoiles)
+- Implémenter le systeme d'étoile (une seul par topic, comme les dépots Github)
 
 - enlever la possibilité d'ajouter une personne - ajouter possibilité d'editer son profil
 - Ajouter des attribus dans le modele Mongo (Age, sexe, ville...) - désactiver la collection 'topics'

@@ -23,11 +23,12 @@ export function makeTopicRequest(method, id, data, api = '/topic') {
     return request[method](api + (id ? ('/' + id) : ''), data);
 }
 
-export function rate(id, score) {
+export function rate(id, count, isVoted) {
     return {
         type: types.RATING_USER,
-        id: id,
-        score: score
+        id,
+        count,
+        isVoted
     };
 }
 
@@ -56,7 +57,8 @@ export function createTopicRequest(data) {
         type: types.CREATE_TOPIC_REQUEST,
         id: data.id,
         count: data.count,
-        text: data.text
+        text: data.text,
+        isVoted: data.isVoted
     };
 }
 
@@ -94,9 +96,10 @@ export function createTopic(text) {
         // and `getState` as parameters
         const { topic } = getState();
         const data = {
-            count: 1,
+            count: 0,
             id,
-            text
+            text,
+            isVoted: false
         };
 
         // Conditional dispatch
@@ -139,10 +142,15 @@ export function fetchTopics() {
 }
 
 
-export function ratingUser(id, score, isAlreadyRated) {
+export function addStarCourse(id, count, isVoted) {
+    const data = {
+        count: count,
+        isVoted: isVoted
+    };
+
     return dispatch => {
-        return makeTopicRequest('put', id, {score: score, isAlreadyRated: isAlreadyRated})
-            .then(() => dispatch(rate(id, score)))
+        return makeTopicRequest('put', id, data)
+            .then(() => dispatch(rate(id, count, isVoted)))
             .catch(() => dispatch(createTopicFailure({
                 id,
                 error: 'Oops! Something went wrong and we couldn\'t add your vote'

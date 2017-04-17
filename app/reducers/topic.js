@@ -12,11 +12,12 @@ const topic = (state = {}, action) => {
             return {
                 id: action.id,
                 count: action.count,
-                text: action.text
+                text: action.text,
+                isVoted: action.isVoted
             };
         case types.RATING_USER:
             if (state.id === action.id) {
-                return {...state, count: state.count + action.score};
+                return {...state, count: state.count + action.count, isVoted: action.isVoted};
             }
             return state;
         default:

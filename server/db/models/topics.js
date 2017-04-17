@@ -4,7 +4,7 @@ const TopicSchema = new mongoose.Schema({
     id: String,
     text: String,
     count: {type: Number, min: 0},
-    isAlreadyRated: {type: Boolean, default: false},
+    isVoted: {type: Number, default: 0},
     date: {type: Date, default: Date.now}
 });
 
