@@ -3,9 +3,7 @@ npm-debug.log
 .tmp
 .idea
 public/assets
-public/css
 compiled
 .swp
 .vscode
 secrets.js
-images
