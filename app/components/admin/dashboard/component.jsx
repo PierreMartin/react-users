@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
-import BackAddUser from '../components/BackAddUser';
-import BackListUsers from '../components/BackListUsers';
-import { createTopic, typing, addStarCourse, destroyTopic, fetchTopics } from '../actions/topics';
-import styles from '../css/components/vote';
+import AddCours from './actions/addCours/add';
+import CoursList from './coursList/coursList';
+import { createTopic, typing, addStarCourse, destroyTopic, fetchTopics } from '../../../actions/topics';
+import styles from '../../../css/components/vote';
 
 const cx = classNames.bind(styles);
 
@@ -16,13 +16,13 @@ class Dashboard extends Component {
         return (
             <div className={cx('vote')}>
 
-                <BackAddUser
+                <AddCours
                     topic={newTopic}
                     onEntryChange={typing}
                     onEntrySave={createTopic}
                 />
 
-                <BackListUsers
+                <CoursList
                     topics={topics}
                     addStar={addStarCourse}
                     onDestroy={destroyTopic}

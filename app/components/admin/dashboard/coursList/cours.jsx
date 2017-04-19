@@ -1,11 +1,10 @@
-// Parent : BackListUsers
 import React, { PropTypes } from 'react';
 import classNames from 'classnames/bind';
-import styles from '../css/components/topic-item';
+import styles from './css/topic-item';
 
 const cx = classNames.bind(styles);
 
-const BackUser = ({ text, id, count, addStar, destroyTopic, isVoted }) => {
+const Cours = ({ text, id, count, addStar, destroyTopic, isVoted }) => {
     const disable   = {color: 'gray'};
     const enable    = {color: 'red'};
 
@@ -31,7 +30,7 @@ const BackUser = ({ text, id, count, addStar, destroyTopic, isVoted }) => {
     );
 };
 
-BackUser.propTypes = {
+Cours.propTypes = {
     text: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     count: PropTypes.number.isRequired,
@@ -39,4 +38,4 @@ BackUser.propTypes = {
     destroyTopic: PropTypes.func.isRequired
 };
 
-export default BackUser;
+export default Cours;

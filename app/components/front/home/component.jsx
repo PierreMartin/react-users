@@ -1,13 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
-import FrontListUsers from '../components/FrontListUsers';
-import styles from '../css/components/vote';
+import CoursList from './coursList/coursList';
+import styles from '../../../css/components/vote';
 
 const cx = classNames.bind(styles);
 
-class Home extends Component {
 
+class Home extends Component {
     render() {
         const { topics } = this.props;
 
@@ -15,7 +15,7 @@ class Home extends Component {
             <div className={cx('vote')}>
                 <h1>Bienvenue</h1>
 
-                <FrontListUsers topics={topics}/>
+                <CoursList topics={topics}/>
 
             </div>
         );

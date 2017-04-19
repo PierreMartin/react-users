@@ -1,16 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
-import FrontUser from '../components/FrontUser'
-import styles from '../css/components/main-section';
+import Cours from './cours';
+import styles from '../../../../css/components/main-section';
 
 const cx = classNames.bind(styles);
 
 
-const FrontListUsers = ({ topics }) => {
+const CoursList = ({ topics }) => {
     const users = topics.map((topic, key) => {
         return (
-            <FrontUser
+            <Cours
                 index={key}
                 id={topic._id}
                 key={key}
@@ -33,8 +33,8 @@ const FrontListUsers = ({ topics }) => {
 };
 
 
-FrontListUsers.propTypes = {
+CoursList.propTypes = {
     topics: PropTypes.array.isRequired
 };
 
-export default FrontListUsers;
+export default CoursList;

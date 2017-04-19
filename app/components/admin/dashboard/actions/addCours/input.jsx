@@ -1,4 +1,3 @@
-// Parent : BackAddUser
 import React, { Component, PropTypes } from 'react';
 const ENTER_KEY_CODE = 13;
 

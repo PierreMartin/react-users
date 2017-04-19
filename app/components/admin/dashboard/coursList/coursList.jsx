@@ -1,14 +1,14 @@
 import React, { PropTypes } from 'react';
-import BackUser from '../components/BackUser';
+import Cours from './cours';
 import classNames from 'classnames/bind';
-import styles from '../css/components/main-section';
+import styles from '../../../../css/components/main-section';
 
 const cx = classNames.bind(styles);
 
-const BackListUsers = ({ topics, addStar, onDestroy }) => {
+const CoursList = ({ topics, addStar, onDestroy }) => {
     const users = topics.map((topic, key) => {
         return (
-            <BackUser
+            <Cours
                 index={key}
                 id={topic.id}
                 key={key}
@@ -44,10 +44,10 @@ const BackListUsers = ({ topics, addStar, onDestroy }) => {
     );
 };
 
-BackListUsers.propTypes = {
+CoursList.propTypes = {
     topics: PropTypes.array.isRequired,
     addStar: PropTypes.func.isRequired,
     onDestroy: PropTypes.func.isRequired
 };
 
-export default BackListUsers;
+export default CoursList;

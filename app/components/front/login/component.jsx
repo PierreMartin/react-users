@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
-import { manualLogin, signUp, toggleLoginMode } from '../actions/users';
-import styles from 'css/components/login';
-import hourGlassSvg from 'images/hourglass.svg';
+import { manualLogin, signUp, toggleLoginMode } from '../../../actions/users';
+import styles from './css/style';
+import hourGlassSvg from './images/hourglass.svg';
 
 const cx = classNames.bind(styles);
 

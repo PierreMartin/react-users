@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import { fetchVoteData } from 'fetch-data';
-import App from 'containers/App';
-import About from 'containers/About';
-import LoginOrRegister from 'containers/LoginOrRegister';
-import Home from 'containers/Home';
-import Dashboard from 'containers/Dashboard';
+import App from 'components/App';
+import About from 'components/front/about/component';
+import LoginOrRegister from 'components/front/login/component';
+import Home from 'components/front/home/component';
+import Dashboard from 'components/admin/dashboard/component';
 
 /*
  * @param {Redux Store}

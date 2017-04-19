@@ -1,4 +1,4 @@
-@import '../common/typography';
+@import '../../../../css/common/typography';
 
 .header {
   @apply --heading;
