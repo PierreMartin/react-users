@@ -4,7 +4,7 @@ import styles from './css/cours-item';
 
 const cx = classNames.bind(styles);
 
-const Cours = ({ text, id, count, addStar, destroyTopic, isVoted }) => {
+const Cours = ({ text, id, count, addStar, destroyCours, isVoted }) => {
     const disable   = {color: 'gray'};
     const enable    = {color: 'red'};
 
@@ -17,7 +17,7 @@ const Cours = ({ text, id, count, addStar, destroyTopic, isVoted }) => {
     };
 
     const onDestroy = () => {
-        destroyTopic(id);
+        destroyCours(id);
     };
 
     return (
@@ -35,7 +35,7 @@ Cours.propTypes = {
     id: PropTypes.string.isRequired,
     count: PropTypes.number.isRequired,
     addStar: PropTypes.func.isRequired,
-    destroyTopic: PropTypes.func.isRequired
+    destroyCours: PropTypes.func.isRequired
 };
 
 export default Cours;

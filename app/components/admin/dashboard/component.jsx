@@ -3,27 +3,27 @@ import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
 import AddCours from './actions/addCours/add';
 import CoursList from './coursList/coursList';
-import { createTopic, typing, addStarCourse, destroyTopic, fetchTopics } from '../../../actions/topics';
+import { createCours, typing, addStarCourse, destroyCours, fetchTopics } from '../../../actions/courses';
 
 
 class Dashboard extends Component {
 
-    // {newTopic, ... } = this.props;   => valeur retourné des fonctions des reducers ET des actions
+    // {newCoursValue, ... } = this.props;   => valeur retourné des fonctions des reducers ET des actions
     render() {
-        const {newTopic, topics, typing, createTopic, destroyTopic, addStarCourse } = this.props;
+        const {newCoursValue, courses, typing, createCours, destroyCours, addStarCourse } = this.props;
         return (
             <div>
 
                 <AddCours
-                    topic={newTopic}
-                    onEntryChange={typing}
-                    onEntrySave={createTopic}
+                    newCoursValue={newCoursValue}
+                    typing={typing}
+                    createCours={createCours}
                 />
 
                 <CoursList
-                    topics={topics}
+                    courses={courses}
                     addStar={addStarCourse}
-                    onDestroy={destroyTopic}
+                    destroyCours={destroyCours}
                 />
 
             </div>
@@ -32,23 +32,23 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-    topics: PropTypes.array.isRequired,
+    courses: PropTypes.array.isRequired,
     typing: PropTypes.func.isRequired,
-    createTopic: PropTypes.func.isRequired,
-    destroyTopic: PropTypes.func.isRequired,
+    createCours: PropTypes.func.isRequired,
+    destroyCours: PropTypes.func.isRequired,
     addStarCourse: PropTypes.func.isRequired,
-    newTopic: PropTypes.string
+    newCoursValue: PropTypes.string
 };
 
 
 /** contient les data **/
 function mapStateToProps(state) {
     return {
-        topics: state.topic.topics, /** 'state.topic.topics'  défini ici les key + valeurs de notre state + cette partis du state sera utilisé dans les 'reducers' **/
-        newTopic: state.topic.newTopic
+        courses: state.cours.courses, /** 'state.cours.courses'  défini ici les propriétés et valeurs de notre state + cette partie du state sera utilisé dans les 'reducers' **/
+        newCoursValue: state.cours.newCoursValue
     };
 }
 
 
 /**           { les datas - reducers }  {                  les actions                }                                 **/
-export default connect(mapStateToProps, {createTopic, typing, addStarCourse, destroyTopic})(Dashboard);
+export default connect(mapStateToProps, {createCours, typing, addStarCourse, destroyCours})(Dashboard);

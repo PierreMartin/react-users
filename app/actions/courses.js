@@ -8,7 +8,7 @@ import * as types from '../types';
 
 polyfill();
 
-/*
+/**
  * Utility function to make AJAX requests using isomorphic fetch.
  * You can also use jquery's $.ajax({}) if you do not want to use the
  * /fetch API.
@@ -18,40 +18,32 @@ polyfill();
  * @param String HTTP method, e.g. post, get, put, delete
  * @param String endpoint
  * @return Promise
- */
-export function makeTopicRequest(method, id, data, api = '/topic') {
+ **/
+export function makeCoursRequest(method, id, data, api = '/topic') {
     return request[method](api + (id ? ('/' + id) : ''), data);
 }
 
-export function rate(id, count, isVoted) {
-    return {
-        type: types.RATING_USER,
-        id,
-        count,
-        isVoted
-    };
-}
 
-/*export function decrement(id) {
-    return {type: types.DECREMENT_COUNT, id};
+/***************************************** Fetch cours ********************************************/
+/*export function fetchTopics() {
+    return {
+        type: types.GET_TOPICS,
+        promise: makeCoursRequest('get')
+    };
 }*/
 
-export function destroy(id) {
-    return {type: types.DESTROY_TOPIC, id};
-}
 
 
+/***************************************** Create cours - typing text value ********************************************/
 export function typing(text) {
     return {
         type: types.TYPING,
-        newTopic: text
+        newCoursValue: text
     };
 }
 
-/*
- * @param data
- * @return a simple JS object
- */
+
+/***************************************** Create cours ********************************************/
 export function createTopicRequest(data) {
     return {
         type: types.CREATE_TOPIC_REQUEST,
@@ -82,19 +74,16 @@ export function createTopicDuplicate() {
     };
 }
 
-// This action creator returns a function,
-// which will get executed by Redux-Thunk middleware
-// This function does not need to be pure, and thus allowed
-// to have side effects, including executing asynchronous API calls.
-export function createTopic(text) {
+// Ce créateur d'action renvoie une fonction, qui sera exécuté par le middleware Redux-Thunk
+// Cette fonction n'a pas besoin d'être pure et donc autorise l'exécution d'appels API asynchrones.
+export function createCours(text) {
     return (dispatch, getState) => {
         // If the text box is empty
         if (text.trim().length <= 0) return;
 
         const id = md5.hash(text);
-        // Redux thunk's middleware receives the store methods `dispatch`
-        // and `getState` as parameters
-        const { topic } = getState();
+        // Redux thunk's middleware receives the store methods `dispatch` and `getState` as parameters
+        const { cours } = getState();
         const data = {
             count: 0,
             id,
@@ -104,7 +93,7 @@ export function createTopic(text) {
 
         // Conditional dispatch
         // If the topic already exists, make sure we emit a dispatch event
-        if (topic.topics.filter(topicItem => topicItem.id === id).length > 0) {
+        if (cours.courses.filter(coursItem => coursItem.id === id).length > 0) {
             // Currently there is no reducer that changes state for this
             // For production you would ideally have a message reducer that
             // notifies the user of a duplicate topic
@@ -114,7 +103,7 @@ export function createTopic(text) {
         // First dispatch an optimistic update
         dispatch(createTopicRequest(data));
 
-        return makeTopicRequest('post', id, data)
+        return makeCoursRequest('post', id, data)
             .then(res => {
                 if (res.status === 200) {
                     // We can actually dispatch a CREATE_TOPIC_SUCCESS
@@ -127,17 +116,37 @@ export function createTopic(text) {
             .catch(() => {
                 return dispatch(createTopicFailure({
                     id,
-                    error: 'Oops! Something went wrong and we couldn\'t create your topic'
+                    error: 'Oops! Something went wrong and we couldn\'t create your cours'
                 }));
             });
     };
 }
 
-// Fetch posts logic
-export function fetchTopics() {
+
+/***************************************** Destroy cours ********************************************/
+export function destroy(id) {
+    return {type: types.DESTROY_TOPIC, id};
+}
+
+export function destroyCours(id) {
+    return dispatch => {
+        return makeCoursRequest('delete', id)
+            .then(() => dispatch(destroy(id)))
+            .catch(() => dispatch(createTopicFailure({
+                id,
+                error: 'Oops! Something went wrong and we couldn\'t add your vote'
+            })));
+    };
+}
+
+
+/***************************************** Voting stars ********************************************/
+export function voteStars(id, count, isVoted) {
     return {
-        type: types.GET_TOPICS,
-        promise: makeTopicRequest('get')
+        type: types.RATING_USER,
+        id,
+        count,
+        isVoted
     };
 }
 
@@ -149,19 +158,8 @@ export function addStarCourse(id, count, isVoted) {
     };
 
     return dispatch => {
-        return makeTopicRequest('put', id, data)
-            .then(() => dispatch(rate(id, count, isVoted)))
-            .catch(() => dispatch(createTopicFailure({
-                id,
-                error: 'Oops! Something went wrong and we couldn\'t add your vote'
-            })));
-    };
-}
-
-export function destroyTopic(id) {
-    return dispatch => {
-        return makeTopicRequest('delete', id)
-            .then(() => dispatch(destroy(id)))
+        return makeCoursRequest('put', id, data)
+            .then(() => dispatch(voteStars(id, count, isVoted)))
             .catch(() => dispatch(createTopicFailure({
                 id,
                 error: 'Oops! Something went wrong and we couldn\'t add your vote'

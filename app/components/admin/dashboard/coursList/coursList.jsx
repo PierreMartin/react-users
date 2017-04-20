@@ -5,37 +5,36 @@ import styles from '../../../../css/common/main-section';
 
 const cx = classNames.bind(styles);
 
-const CoursList = ({ topics, addStar, onDestroy }) => {
-    const users = topics.map((topic, key) => {
+const CoursList = ({ courses, addStar, destroyCours }) => {
+    const coursesNode = courses.map((cours, key) => {
         return (
             <Cours
                 index={key}
-                id={topic.id}
+                id={cours.id}
                 key={key}
-                text={topic.text}
-                count={topic.count}
+                text={cours.text}
+                count={cours.count}
                 addStar={addStar}
-                isAlreadyRated={topic.isAlreadyRated}
-                isVoted={topic.isVoted}
-                destroyTopic={onDestroy}
+                isVoted={cours.isVoted}
+                destroyCours={destroyCours}
             />
         );
     });
 
     return (
         <div className={cx('main-section')}>
-            <h3 className={cx('header')}>Vote for your favorite hack day idea</h3>
+            <h3 className={cx('header')}>List of all the courses</h3>
 
             <table className={cx('table')}>
                 <tbody>
                     <tr className={cx('topic-item')}>
                         <th>Titre</th>
-                        <th>Donner une note</th>
+                        <th>Donner une etoile</th>
                         <th>Supprimer</th>
                         <th>Nmbr de points</th>
                     </tr>
 
-                    {users}
+                    {coursesNode}
 
                 </tbody>
             </table>
@@ -45,9 +44,9 @@ const CoursList = ({ topics, addStar, onDestroy }) => {
 };
 
 CoursList.propTypes = {
-    topics: PropTypes.array.isRequired,
+    courses: PropTypes.array.isRequired,
     addStar: PropTypes.func.isRequired,
-    onDestroy: PropTypes.func.isRequired
+    destroyCours: PropTypes.func.isRequired
 };
 
 export default CoursList;

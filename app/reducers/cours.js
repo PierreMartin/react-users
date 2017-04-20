@@ -1,12 +1,14 @@
-/** le reducer permet d'updater le 'state container' **/
+/**
+ * le reducer permet d'updater le 'state container'
+ **/
 
-/** action en params    => valeurs retourné dans les fichiers 'action' par un 'dispatch(...)'    exemple => return { type: types.TYPING, newTopic: text }; **/
+/** action en params    => valeurs retourné dans les fichiers 'action' par un 'dispatch(...)'    exemple => return { type: types.TYPING, newCours: text }; **/
 /** state               => une partie du 'state container' défini dans "mapStateToProps" du composant => connect(mapStateToProps, ...) **/
 
 import { combineReducers } from 'redux';
 import * as types from '../types';
 
-const topic = (state = {}, action) => {
+const cours = (state = {}, action) => {
     switch (action.type) {
         case types.CREATE_TOPIC_REQUEST:
             return {
@@ -26,30 +28,30 @@ const topic = (state = {}, action) => {
 };
 
 
-const topics = (state = [], action) => {
+const courses = (state = [], action) => {
     switch (action.type) {
         case types.REQUEST_SUCCESS:                                 // quand on charge la page, ou au changement d'url
             if (action.data) return action.data;
             return state;
         case types.CREATE_TOPIC_REQUEST:                            // quand on ajoute un nouveau topic
-            return [...state, topic(undefined, action)];            // topic() va retourner un objet correpondant au nouveau topic
+            return [...state, cours(undefined, action)];            // topic() va retourner un objet correpondant au nouveau topic
         case types.CREATE_TOPIC_FAILURE:                            // dans les actions, si CREATE_TOPIC_FAILURE est dispatché (à cause d'une rreur)
             return state.filter(t => t.id !== action.id);
         case types.DESTROY_TOPIC:
             return state.filter(t => t.id !== action.id);
         case types.RATING_USER:
-            return state.map(t => topic(t, action));
+            return state.map(t => cours(t, action));
         default:
             return state;
     }
 };
 
 
-// 'action.newTopic' permet de setter l'attribue html 'value' de l'input avant l'envoi :
-const newTopic = (state = '', action) => {
+// 'newCoursValue' sera la propriété dans l'objet state
+const newCoursValue = (state = '', action) => {
     switch (action.type) {
         case types.TYPING:                          // quand on est entrain d'ecrire
-            return action.newTopic;                     // on retourne la valeur dans le state
+            return action.newCoursValue;                     // on retourne la valeur dans le state
         case types.CREATE_TOPIC_REQUEST:            // quand on valide le nouveau topic, on vide cette valeur du state
             return '';
         default:
@@ -58,8 +60,8 @@ const newTopic = (state = '', action) => {
 };
 
 const topicReducer = combineReducers({
-    topics,
-    newTopic
+    courses,
+    newCoursValue
 });
 
 export default topicReducer;

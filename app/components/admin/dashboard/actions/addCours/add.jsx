@@ -10,17 +10,17 @@ const cx = classNames.bind(styles);
 // to grandchild. To make it cleaner, you could consider:
 // 1. moving `connect` down to this component so you could mapStateToProps and dispatch
 // 2. Move Input up to BackAddUser so it's less confusing
-const BackAddUser = ({onEntryChange, onEntrySave, topic}) => {
+const BackAddUser = ({typing, createCours, newCoursValue}) => {
     return (
         <div className={cx('entrybox')}>
             <h1 className={cx('header')}>Ajoute un utilisateur :</h1>
 
             <InputAddCours
                 className={cx('input')}
-                value={topic}
+                value={newCoursValue}
                 placeholder="Ajoute un cours"
-                onEntryChange={onEntryChange}
-                onEntrySave={onEntrySave}
+                typing={typing}
+                createCours={createCours}
             />
 
         </div>
@@ -28,9 +28,9 @@ const BackAddUser = ({onEntryChange, onEntrySave, topic}) => {
 };
 
 BackAddUser.propTypes = {
-    topic: PropTypes.string,
-    onEntryChange: PropTypes.func.isRequired,
-    onEntrySave: PropTypes.func.isRequired
+    newCoursValue: PropTypes.string,
+    typing: PropTypes.func.isRequired,
+    createCours: PropTypes.func.isRequired
 };
 
 export default BackAddUser;

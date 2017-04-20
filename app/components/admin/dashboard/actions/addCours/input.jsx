@@ -10,13 +10,13 @@ export default class BackAddUserInput extends Component {
     }
 
     onSave() {
-        const { onEntrySave, value } = this.props;
-        onEntrySave(value);
+        const { createCours, value } = this.props;
+        createCours(value);
     }
 
     onChange(event) {
-        const { onEntryChange } = this.props;
-        onEntryChange(event.target.value);
+        const { typing } = this.props;
+        typing(event.target.value);
     }
 
     onKeyDown(event) {
@@ -45,6 +45,6 @@ BackAddUserInput.propTypes = {
     className: PropTypes.string,
     placeholder: PropTypes.string,
     value: PropTypes.string,
-    onEntrySave: PropTypes.func,
+    createCours: PropTypes.func,
     onEntryChange: PropTypes.func
 };

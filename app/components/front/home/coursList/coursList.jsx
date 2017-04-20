@@ -7,15 +7,15 @@ import styles from '../../../../css/common/main-section';
 const cx = classNames.bind(styles);
 
 
-const CoursList = ({ topics }) => {
-    const users = topics.map((topic, key) => {
+const CoursList = ({ courses }) => {
+    const coursesNode = courses.map((cours, key) => {
         return (
             <Cours
                 index={key}
-                id={topic._id}
+                id={cours._id}
                 key={key}
-                text={topic.text}
-                count={topic.count}
+                text={cours.text}
+                count={cours.count}
             />
         );
     });
@@ -25,7 +25,7 @@ const CoursList = ({ topics }) => {
             <h3 className={cx('header')}>Liste des utilisateurs :</h3>
 
                 <ul className={cx('list-users-container')}>
-                    {users}
+                    {coursesNode}
                 </ul>
 
         </div>
@@ -34,7 +34,7 @@ const CoursList = ({ topics }) => {
 
 
 CoursList.propTypes = {
-    topics: PropTypes.array.isRequired
+    courses: PropTypes.array.isRequired
 };
 
 export default CoursList;

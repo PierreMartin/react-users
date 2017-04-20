@@ -155,7 +155,7 @@ Route	           POST	                        GET	                           PUT
 
 ##################################################### TODO #####################################################
 - mettre des commentaires en francais un peu partout
-- renommer les fichiers + props + variables
+- Backend + types - renommer les fichiers + props + variables
 
 - implementer création + edition des users
 - Ajouter des attribus dans le modele Mongo (Age, sexe, ville...) - renommer 'topics' en 'cours'

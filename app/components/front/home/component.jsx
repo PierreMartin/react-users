@@ -6,13 +6,13 @@ import CoursList from './coursList/coursList';
 
 class Home extends Component {
     render() {
-        const { topics } = this.props;
+        const { courses } = this.props;
 
         return (
             <div>
                 <h1>Bienvenue</h1>
 
-                <CoursList topics={topics}/>
+                <CoursList courses={courses}/>
 
             </div>
         );
@@ -20,14 +20,14 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-    topics: PropTypes.array.isRequired
+    courses: PropTypes.array.isRequired
 };
 
 
 /** contient les data **/
 function mapStateToProps(state) {
     return {
-        topics: state.topic.topics
+        courses: state.cours.courses
     };
 }
 
