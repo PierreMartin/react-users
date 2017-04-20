@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 const About = () => {
     return (
         <div className={cx('about')}>
-            <h1 className={cx('header')}>About Ninja Ocean</h1>
+            <h1 className={cx('header')}>About Course Notes</h1>
 
             <div className={cx('description')}>
                 <p>

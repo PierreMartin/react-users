@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { logOut } from '../../actions/users';
-
 import classNames from 'classnames/bind';
 import styles from './css/style';
 
