@@ -46,5 +46,5 @@ BackAddUserInput.propTypes = {
     placeholder: PropTypes.string,
     value: PropTypes.string,
     createCours: PropTypes.func,
-    onEntryChange: PropTypes.func
+    typing: PropTypes.func
 };
