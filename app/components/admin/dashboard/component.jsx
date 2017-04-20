@@ -4,9 +4,7 @@ import classNames from 'classnames/bind';
 import AddCours from './actions/addCours/add';
 import CoursList from './coursList/coursList';
 import { createTopic, typing, addStarCourse, destroyTopic, fetchTopics } from '../../../actions/topics';
-import styles from '../../../css/components/vote';
 
-const cx = classNames.bind(styles);
 
 class Dashboard extends Component {
 
@@ -14,7 +12,7 @@ class Dashboard extends Component {
     render() {
         const {newTopic, topics, typing, createTopic, destroyTopic, addStarCourse } = this.props;
         return (
-            <div className={cx('vote')}>
+            <div>
 
                 <AddCours
                     topic={newTopic}

@@ -1,5 +1,5 @@
-@import '../../../../../../css/common/typography';
-@import '../../../../../../css/common/input';
+@import '../../../../../../css/mixins/typography';
+@import '../../../../../../css/mixins/input';
 
 .entrybox {
   width: 100%;

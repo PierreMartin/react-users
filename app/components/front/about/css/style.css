@@ -1,4 +1,4 @@
-@import '../../../../css/common/typography';
+@import '../../../../css/mixins/typography';
 
 .header {
   @apply --heading;

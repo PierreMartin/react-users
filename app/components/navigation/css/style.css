@@ -1,5 +1,5 @@
-@import '../common/colors';
-@import '../common/typography';
+@import '../../../css/mixins/colors';
+@import '../../../css/mixins/typography';
 
 .navigation {
   padding: 0 28px;

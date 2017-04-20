@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import Navigation from '../components/Navigation';
-import Message from '../components/Message';
+import Navigation from '../components/navigation/component';
+import Message from '../components/message/component';
 import classNames from 'classnames/bind';
 import styles from '../css/main';
 

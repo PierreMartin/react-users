@@ -1,6 +1,6 @@
 @import '../settings';
-@import '../common/typography';
-@import '../common/card';
+@import '../mixins/typography';
+@import '../mixins/card';
 
 .list-users-container {
   padding: 0;
@@ -19,7 +19,7 @@
 .header {
   @apply --title;
   @apply --subHeading;
-  background: #ed193a;
+  background: #d86454;
   color: #fff;
 }
 

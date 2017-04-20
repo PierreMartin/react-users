@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import Cours from './cours';
 import classNames from 'classnames/bind';
-import styles from '../../../../css/components/main-section';
+import styles from '../../../../css/common/main-section';
 
 const cx = classNames.bind(styles);
 

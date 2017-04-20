@@ -1,6 +1,6 @@
-@import '../../../../../css/common/typography';
-@import '../../../../../css/common/colors';
-@import '../../../../../css/common/layout';
+@import '../../../../../css/mixins/typography';
+@import '../../../../../css/mixins/colors';
+@import '../../../../../css/mixins/layout';
 
 li.user-container {
   border: 1px solid #b4bac1;
