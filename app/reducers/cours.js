@@ -51,7 +51,7 @@ const courses = (state = [], action) => {
 const newCoursValue = (state = '', action) => {
     switch (action.type) {
         case types.TYPING:                          // quand on est entrain d'ecrire
-            return action.newCoursValue;                     // on retourne la valeur dans le state
+            return action.typingCurrentValue;                     // on retourne la valeur dans le state
         case types.CREATE_TOPIC_REQUEST:            // quand on valide le nouveau topic, on vide cette valeur du state
             return '';
         default:

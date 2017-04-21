@@ -38,7 +38,7 @@ export function makeCoursRequest(method, id, data, api = '/topic') {
 export function typing(text) {
     return {
         type: types.TYPING,
-        newCoursValue: text
+        typingCurrentValue: text
     };
 }
 
