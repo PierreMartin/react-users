@@ -44,7 +44,7 @@ describe('Topic Actions', () => {
     it('dispatches request and success actions when status is 200', done => {
       const expectedActions = [
         {
-          type: types.CREATE_TOPIC_REQUEST,
+          type: types.CREATE_COURS_REQUEST,
           id,
           count: 1,
           text: data.text
@@ -66,7 +66,7 @@ describe('Topic Actions', () => {
     it('dispatches request and failed actions when status is NOT 200', done => {
       const expectedActions = [
         {
-          type: types.CREATE_TOPIC_REQUEST,
+          type: types.CREATE_COURS_REQUEST,
           id,
           count: 1,
           text: data.text
@@ -247,7 +247,7 @@ describe('Topic Actions', () => {
 
     it('should create an action object with a new topic request', () => {
       const expectedAction = {
-        type: types.CREATE_TOPIC_REQUEST,
+        type: types.CREATE_COURS_REQUEST,
         id: data.id,
         count: data.count,
         text: data.text

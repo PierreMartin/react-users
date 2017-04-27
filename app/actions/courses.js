@@ -44,9 +44,9 @@ export function typing(text) {
 
 
 /***************************************** Create cours ********************************************/
-export function createTopicRequest(data) {
+export function createCoursSuccess(data) {
     return {
-        type: types.CREATE_TOPIC_REQUEST,
+        type: types.CREATE_COURS_SUCCESS,
         id: data.id,
         count: data.count,
         text: data.text,
@@ -54,34 +54,28 @@ export function createTopicRequest(data) {
     };
 }
 
-export function createTopicSuccess() {
+export function createCoursFailure(data) {
     return {
-        type: types.CREATE_TOPIC_SUCCESS
-    };
-}
-
-export function createTopicFailure(data) {
-    return {
-        type: types.CREATE_TOPIC_FAILURE,
+        type: types.CREATE_COURS_FAILURE,
         id: data.id,
         error: data.error
     };
 }
 
-export function createTopicDuplicate() {
+export function createCoursDuplicate() {
     return {
-        type: types.CREATE_TOPIC_DUPLICATE
+        type: types.CREATE_COURS_DUPLICATE
     };
 }
 
-// Ce créateur d'action renvoie une fonction, qui sera exécuté par le middleware Redux-Thunk
-// Cette fonction n'a pas besoin d'être pure et donc autorise l'exécution d'appels API asynchrones.
+// Ce créateur d'action renvoie une fonction, qui sera exécuté par le middleware Redux-Thunk - Cette fonction n'a pas besoin d'être pure et donc autorise l'exécution d'appels API asynchrones.
 export function createCours(text) {
     return (dispatch, getState) => {
         // If the text box is empty
         if (text.trim().length <= 0) return;
 
         const id = md5.hash(text);
+
         // Redux thunk's middleware receives the store methods `dispatch` and `getState` as parameters
         const { cours } = getState();
         const data = {
@@ -91,30 +85,18 @@ export function createCours(text) {
             isVoted: false
         };
 
-        // Conditional dispatch
-        // If the topic already exists, make sure we emit a dispatch event
+        // if cours duplicate :
         if (cours.courses.filter(coursItem => coursItem.id === id).length > 0) {
-            // Currently there is no reducer that changes state for this
-            // For production you would ideally have a message reducer that
-            // notifies the user of a duplicate topic
-            return dispatch(createTopicDuplicate());
+            return dispatch(createCoursDuplicate());
         }
 
-        // First dispatch an optimistic update
-        dispatch(createTopicRequest(data));
-
+        // request :
         return makeCoursRequest('post', id, data)
             .then(res => {
-                if (res.status === 200) {
-                    // We can actually dispatch a CREATE_TOPIC_SUCCESS
-                    // on success, but I've opted to leave that out
-                    // since we already did an optimistic update
-                    // We could return res.json();
-                    return dispatch(createTopicSuccess());
-                }
+                if (res.status === 200) return dispatch(createCoursSuccess(data));
             })
             .catch(() => {
-                return dispatch(createTopicFailure({
+                return dispatch(createCoursFailure({
                     id,
                     error: 'Oops! Something went wrong and we couldn\'t create your cours'
                 }));
@@ -124,15 +106,27 @@ export function createCours(text) {
 
 
 /***************************************** Destroy cours ********************************************/
-export function destroy(id) {
-    return {type: types.DESTROY_TOPIC, id};
+export function destroySuccess(id) {
+    return {
+        type: types.DESTROY_COURS_SUCCESS,
+        id
+    };
 }
+
+export function destroyFailure(data) {
+    return {
+        type: types.DESTROY_COURS_FAILURE,
+        id: data.id,
+        error: data.error
+    };
+}
+
 
 export function destroyCours(id) {
     return dispatch => {
         return makeCoursRequest('delete', id)
-            .then(() => dispatch(destroy(id)))
-            .catch(() => dispatch(createTopicFailure({
+            .then(() => dispatch(destroySuccess(id)))
+            .catch(() => dispatch(destroyFailure({
                 id,
                 error: 'Oops! Something went wrong and we couldn\'t add your vote'
             })));
@@ -141,12 +135,20 @@ export function destroyCours(id) {
 
 
 /***************************************** Voting stars ********************************************/
-export function voteStars(id, count, isVoted) {
+export function addStarSuccess(id, count, isVoted) {
     return {
-        type: types.RATING_USER,
+        type: types.RATING_COURS_SUCCESS,
         id,
         count,
         isVoted
+    };
+}
+
+export function addStarFailure(data) {
+    return {
+        type: types.RATING_COURS_FAILURE,
+        id: data.id,
+        error: data.error
     };
 }
 
@@ -159,8 +161,8 @@ export function addStarCourse(id, count, isVoted) {
 
     return dispatch => {
         return makeCoursRequest('put', id, data)
-            .then(() => dispatch(voteStars(id, count, isVoted)))
-            .catch(() => dispatch(createTopicFailure({
+            .then(() => dispatch(addStarSuccess(id, count, isVoted)))
+            .catch(() => dispatch(addStarFailure({
                 id,
                 error: 'Oops! Something went wrong and we couldn\'t add your vote'
             })));

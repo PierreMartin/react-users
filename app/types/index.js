@@ -1,21 +1,33 @@
+/***************************************** Messages ********************************************/
 export const DISMISS_MESSAGE = 'DISMISS_MESSAGE';
 
+/***************************************** Request server ********************************************/
 export const CREATE_REQUEST = 'CREATE_REQUEST';
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';
 export const REQUEST_FAILURE = 'REQUEST_FAILURE';
 
-export const CREATE_TOPIC_REQUEST = 'CREATE_TOPIC_REQUEST';
-export const CREATE_TOPIC_FAILURE = 'CREATE_TOPIC_FAILURE';
-export const CREATE_TOPIC_SUCCESS = 'CREATE_TOPIC_SUCCESS';
-export const CREATE_TOPIC_DUPLICATE = 'CREATE_TOPIC_DUPLICATE';
+/***************************************** Create cours ********************************************/
+export const TYPING = 'TYPING';
+
+export const CREATE_COURS_SUCCESS = 'CREATE_COURS_SUCCESS';
+export const CREATE_COURS_FAILURE = 'CREATE_COURS_FAILURE';
+export const CREATE_COURS_DUPLICATE = 'CREATE_COURS_DUPLICATE';
+
+/***************************************** Get cours ********************************************/
 export const GET_TOPICS = 'GET_TOPICS';
 export const GET_TOPICS_REQUEST = 'GET_TOPICS_REQUEST';
 export const GET_TOPICS_SUCCESS = 'GET_TOPICS_SUCCESS';
 export const GET_TOPICS_FAILURE = 'GET_TOPICS_FAILURE';
-export const RATING_USER = 'RATING_USER';
-export const DESTROY_TOPIC = 'DESTROY_TOPIC';
-export const TYPING = 'TYPING';
 
+/***************************************** Delete cours ********************************************/
+export const DESTROY_COURS_SUCCESS = 'DESTROY_COURS_SUCCESS';
+export const DESTROY_COURS_FAILURE = 'DESTROY_COURS_FAILURE';
+
+/***************************************** Voting Cours ********************************************/
+export const RATING_COURS_SUCCESS = 'RATING_COURS_SUCCESS';
+export const RATING_COURS_FAILURE = 'RATING_COURS_FAILURE';
+
+/***************************************** Users ********************************************/
 export const TOGGLE_LOGIN_MODE = 'TOGGLE_LOGIN_MODE';
 export const MANUAL_LOGIN_USER = 'MANUAL_LOGIN_USER';
 export const LOGIN_SUCCESS_USER = 'LOGIN_SUCCESS_USER';

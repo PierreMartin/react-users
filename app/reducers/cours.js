@@ -10,14 +10,14 @@ import * as types from '../types';
 
 const cours = (state = {}, action) => {
     switch (action.type) {
-        case types.CREATE_TOPIC_REQUEST:
+        case types.CREATE_COURS_SUCCESS:
             return {
                 id: action.id,
                 count: action.count,
                 text: action.text,
                 isVoted: action.isVoted
             };
-        case types.RATING_USER:
+        case types.RATING_COURS_SUCCESS:
             if (state.id === action.id) {
                 return {...state, count: state.count + action.count, isVoted: action.isVoted};
             }
@@ -30,16 +30,16 @@ const cours = (state = {}, action) => {
 
 const courses = (state = [], action) => {
     switch (action.type) {
-        case types.REQUEST_SUCCESS:                                 // quand on charge la page, ou au changement d'url
+        case types.REQUEST_SUCCESS:                                 // la gestion de toutes les requets
             if (action.data) return action.data;
             return state;
-        case types.CREATE_TOPIC_REQUEST:                            // quand on ajoute un nouveau topic
+        case types.CREATE_COURS_SUCCESS:                            // quand on ajoute un nouveau topic
             return [...state, cours(undefined, action)];            // topic() va retourner un objet correpondant au nouveau topic
-        case types.CREATE_TOPIC_FAILURE:                            // dans les actions, si CREATE_TOPIC_FAILURE est dispatché (à cause d'une rreur)
+        case types.CREATE_COURS_FAILURE:                            // dans les actions, si CREATE_COURS_FAILURE est dispatché (à cause d'une rreur)
             return state.filter(t => t.id !== action.id);
-        case types.DESTROY_TOPIC:
+        case types.DESTROY_COURS_SUCCESS:
             return state.filter(t => t.id !== action.id);
-        case types.RATING_USER:
+        case types.RATING_COURS_SUCCESS:
             return state.map(t => cours(t, action));
         default:
             return state;
@@ -52,16 +52,16 @@ const newCoursValue = (state = '', action) => {
     switch (action.type) {
         case types.TYPING:                          // quand on est entrain d'ecrire
             return action.typingCurrentValue;                     // on retourne la valeur dans le state
-        case types.CREATE_TOPIC_REQUEST:            // quand on valide le nouveau topic, on vide cette valeur du state
+        case types.CREATE_COURS_SUCCESS:            // quand on valide le nouveau topic, on vide cette valeur du state
             return '';
         default:
             return state;
     }
 };
 
-const topicReducer = combineReducers({
+const coursReducer = combineReducers({
     courses,
     newCoursValue
 });
 
-export default topicReducer;
+export default coursReducer;

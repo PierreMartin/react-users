@@ -30,7 +30,7 @@
 
 function voted(id, scoreValue) {
     return {
-        type: 'RATING_USER',
+        type: 'RATING_COURS_SUCCESS',
         id: id,
         scoreValue: scoreValue
     };
@@ -154,11 +154,13 @@ Route	           POST	                        GET	                           PUT
 
 
 ##################################################### TODO #####################################################
-- mettre des commentaires en francais un peu partout
-- Backend + types - renommer les fichiers + props + variables
+- voir si on pourrait utiliser les GET_TOPICS (surement remplacé par 'CREATE_REQUEST', 'REQUEST_SUCCESS')
+- Backend - renommer les fichiers + variables
 
 - implementer création + edition des users
 - Ajouter des attribus dans le modele Mongo (Age, sexe, ville...) - renommer 'topics' en 'cours'
 - Prevoir un filtre d'affichage des personnes (par age, par ville)
+
+- gerer tous les messages (succes et d'erreurs) de facon generique - reducer 'popupMessage'
 
 + Commiter avec des emojis

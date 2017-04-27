@@ -48,7 +48,7 @@ describe('Topics reducer', () => {
   it('Should add a new topic to an empty initial state', () => {
     expect(
       reducer(undefined, {
-        type: types.CREATE_TOPIC_REQUEST,
+        type: types.CREATE_COURS_REQUEST,
         id: data.id,
         count: 1,
         text: topic
@@ -100,7 +100,7 @@ describe('Topics reducer', () => {
     });
   });
 
-  it('Should handle CREATE_TOPIC_REQUEST', () => {
+  it('Should handle CREATE_COURS_REQUEST', () => {
     const topics = createTopics(20);
     const newTopics = [...topics, data];
     expect(
@@ -108,7 +108,7 @@ describe('Topics reducer', () => {
         topics
       },
       {
-        type: types.CREATE_TOPIC_REQUEST,
+        type: types.CREATE_COURS_REQUEST,
         id: data.id,
         count: data.count,
         text: data.text
