@@ -1,6 +1,6 @@
-import topics from './topics';
+import courses from './courses';
 import users from './users';
 
-export { topics, users };
+export { courses, users };
 
-export default {topics, users};
+export default {courses, users};

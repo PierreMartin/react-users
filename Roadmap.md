@@ -99,24 +99,30 @@ $ sudo mongod
 $ npm run dev
 
 ### Mongo 
+- db: 'ReactGo'
+- collections: 'sessions', 'users', 'cours'
+
+
 $ mongo 
 $> show dbs
-$> use ReactWebpackNode
+$> use ReactGo
 $> show collections
 
-db.topics.find()
-db.topics.find({"text": "test 1"} , {_id:0}) 
+db.cours.find()
+db.cours.find({"text": "test 1"} , {_id:0}) 
 
-db.topics.remove({})
-db.topics.insert({text: "test 1", count: 1})
-db.topics.insert({text: "test 2", count: 8})
-db.topics.insert({text: "test 3", count: 4})
+db.cours.remove({})
+db.cours.insert({text: "test 1", count: 0})
+
 
 user => créer un compte sur l'app (pierre@gmail.com 1234)
 db.users.find()
 
+mongod --shutdown
 
-/!!\ dans Mongoose on a 'Topic' (mongodb enleve le 's' et tout en minuscule)
+
+
+/!!\ dans Mongoose on a   model('Cours', CoursSchema)   => mongodb rajoute un 's' dans les collections + met tout en minuscule (sauf si déja un 's' a la fin, ce qui est le cas)
 
 
 

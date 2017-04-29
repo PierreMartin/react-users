@@ -1,7 +1,7 @@
 import { voteService } from '../services';
 
 const fetchData = () => {
-  return voteService.getTopics()
+  return voteService.getCourses()
           .then(res => res.data);
 };
 
