@@ -22,7 +22,7 @@ const CoursList = ({ courses }) => {
 
     return (
         <div className={cx('main-section')}>
-            <h3 className={cx('header')}>Liste des utilisateurs :</h3>
+            <h3 className={cx('header')}>Liste des cours :</h3>
 
                 <ul className={cx('list-users-container')}>
                     {coursesNode}

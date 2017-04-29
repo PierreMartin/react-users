@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import { db } from './constants';
 
 export default () => {
-    // Find the appropriate database to connect to, default to localhost if not found.
     const connect = () => {
         mongoose.connect(db, (err) => {
             if (err) {

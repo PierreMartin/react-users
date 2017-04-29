@@ -17,7 +17,7 @@ polyfill();
  * @param {String} api - endpoint
  * @return {Promise}
  **/
-export function makeCoursRequest(method, id, data, api = '/cours') {
+export function makeCoursRequest(method, id, data, api = '/api/cours') {
     return request[method](api + (id ? ('/' + id) : ''), data);
 }
 

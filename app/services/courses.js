@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const service = {
-  getCourses: () => axios.get('/cours')
+  getCourses: () => axios.get('/api/cours')
 };
 
 export default service;

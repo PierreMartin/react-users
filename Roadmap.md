@@ -161,12 +161,14 @@ Route	           POST	                        GET	                           PUT
 
 ##################################################### TODO #####################################################
 - voir si on pourrait utiliser les GET_TOPICS (surement remplacé par 'CREATE_REQUEST', 'REQUEST_SUCCESS')
-- Backend - renommer les fichiers + variables
+- voir passport js
+- changer tout les 'courses' par 'cours'
 
-- implementer création + edition des users
+- implementer CRUD des users
 - Ajouter des attribus dans le modele Mongo (Age, sexe, ville...) - renommer 'topics' en 'cours'
 - Prevoir un filtre d'affichage des personnes (par age, par ville)
 
 - gerer tous les messages (succes et d'erreurs) de facon generique - reducer 'popupMessage'
+- implementer Webpack2
 
 + Commiter avec des emojis

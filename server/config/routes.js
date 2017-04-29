@@ -44,10 +44,10 @@ export default (app) => {
 
     /** ROUTING COURSES : **/
     if (coursesController) {
-        app.get('/cours',           coursesController.all);
-        app.post('/cours/:id',      coursesController.add);
-        app.put('/cours/:id',       coursesController.update);
-        app.delete('/cours/:id',    coursesController.remove);
+        app.get('/api/cours',           coursesController.all);
+        app.post('/api/cours/:id',      coursesController.add);
+        app.put('/api/cours/:id',       coursesController.update);
+        app.delete('/api/cours/:id',    coursesController.remove);
     } else {
         console.warn(unsupportedMessage('topics routes'));
     }
