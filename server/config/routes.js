@@ -44,10 +44,10 @@ export default (app) => {
 
     /** ROUTING USERS : **/
     if (topicsController) {
-        app.get('/topic',           topicsController.all);
-        app.post('/topic/:id',      topicsController.add);
-        app.put('/topic/:id',       topicsController.update);
-        app.delete('/topic/:id',    topicsController.remove);
+        app.get('/cours',           topicsController.all);
+        app.post('/cours/:id',      topicsController.add);
+        app.put('/cours/:id',       topicsController.update);
+        app.delete('/cours/:id',    topicsController.remove);
     } else {
         console.warn(unsupportedMessage('topics routes'));
     }
