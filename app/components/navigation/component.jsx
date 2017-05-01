@@ -16,6 +16,11 @@ const Navigation = ({ user, logOut }) => {
                   activeClassName={cx('active')}>Ninja Ocean
             </Link>
 
+            <Link to="/userslist"
+                  className={cx('item')}
+                  activeClassName={cx('active')}>Users
+            </Link>
+
             { user.authenticated ? (
             <Link onClick={logOut}
                   className={cx('item')} to="/">Logout</Link>

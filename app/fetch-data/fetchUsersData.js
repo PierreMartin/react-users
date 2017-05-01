@@ -1,7 +1,7 @@
-import { voteService } from '../services';
+import { usersService } from '../services';
 
 const fetchData = () => {
-  return voteService.getCourses()
+  return usersService.getUsers()
           .then(res => res.data);
 };
 

@@ -2,7 +2,22 @@ import User from '../models/user';
 import passport from 'passport';
 
 /**
- * POST /login
+ * POST /api/usersList
+ */
+export function getUsersList(req, res) {
+    User.find({}).exec((err, users) => {
+        if (err) {
+            console.log('Error in first query');
+            return res.status(500).send('Something went wrong getting the data');
+        }
+
+        return res.json(users);
+    });
+}
+
+
+/**
+ * POST /api/login
  */
 export function login(req, res, next) {
     // Do email and password validation for the server
@@ -27,8 +42,9 @@ export function login(req, res, next) {
     })(req, res, next);
 }
 
+
 /**
- * POST /logout
+ * POST /api/logout
  */
 export function logout(req, res) {
     // Do email and password validation for the server
@@ -36,9 +52,9 @@ export function logout(req, res) {
     res.redirect('/');
 }
 
+
 /**
- * POST /signup
- * Create a new local account
+ * POST /api/signup
  */
 export function signUp(req, res, next) {
     const user = new User({
@@ -66,5 +82,6 @@ export function signUp(req, res, next) {
 export default {
     login,
     logout,
-    signUp
+    signUp,
+    getUsersList
 };

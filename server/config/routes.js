@@ -7,11 +7,12 @@ const coursesController     = controllers && controllers.courses;
 
 export default (app) => {
 
-    /** ROUTING AUTH : **/
+    /** ROUTING USERS : **/
     if (usersController) {
-        app.post('/login',  usersController.login);
-        app.post('/signup', usersController.signUp);
-        app.post('/logout', usersController.logout);
+        app.post('/api/login',          usersController.login);
+        app.post('/api/signup',         usersController.signUp);
+        app.post('/api/logout',         usersController.logout);
+        app.post('/api/usersList',      usersController.getUsersList);
     } else {
         console.warn(unsupportedMessage('users routes'));
     }
