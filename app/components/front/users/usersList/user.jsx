@@ -5,16 +5,14 @@ import avatar from '../../../../images/apple-ninja152-precomposed.png';
 
 const cx = classNames.bind(styles);
 
-const User = ({ id, name, gender }) => {
+const User = ({ id, email }) => {
     return (
         <li className={cx('user-container')} key={id}>
             <a href="#" className={cx('user-links')}>
                 <figure>
                     <img src={avatar} alt="" className={cx('img-item')}/>
                     <figcaption>
-                        <span className={cx('topic')}>{name}</span>
-                        <br/>
-                        <span className={cx('topic')}>{gender}</span>
+                        <span className={cx('topic')}>{email}</span>
                     </figcaption>
                 </figure>
             </a>
@@ -24,8 +22,7 @@ const User = ({ id, name, gender }) => {
 
 User.propTypes = {
     id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    gender: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired
 };
 
 export default User;

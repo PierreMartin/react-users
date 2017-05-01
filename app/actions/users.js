@@ -2,6 +2,7 @@ import { polyfill } from 'es6-promise';
 import request from 'axios';
 import { push } from 'react-router-redux';
 import * as types from 'types';
+import md5 from 'spark-md5';
 
 polyfill();
 
@@ -18,10 +19,11 @@ export function beginLogin() {
     return {type: types.MANUAL_LOGIN_USER};
 }
 
-export function loginSuccess(message) {
+export function loginSuccess(datas, message) {
     return {
         type: types.LOGIN_SUCCESS_USER,
-        message
+        message,
+        datas
     };
 }
 
@@ -34,10 +36,11 @@ export function loginError(message) {
 
 
 /***************************************** Sign Up ********************************************/
-export function signUpError(message) {
+export function signUpError(datas, message) {
     return {
         type: types.SIGNUP_ERROR_USER,
-        message
+        message,
+        id: datas.id
     };
 }
 
@@ -45,10 +48,38 @@ export function beginSignUp() {
     return {type: types.SIGNUP_USER};
 }
 
-export function signUpSuccess(message) {
+export function signUpSuccess(datas, message) {
     return {
         type: types.SIGNUP_SUCCESS_USER,
-        message
+        message,
+        id: datas.id,
+        email: datas.email
+    };
+}
+
+export function signUp(data) {
+    return dispatch => {
+        dispatch(beginSignUp());
+
+        const id = md5.hash(data.email);
+
+        const datas = {
+            id,
+            email: data.email
+        };
+
+        return makeUserRequest('post', data, '/api/signup')
+            .then(response => {
+                if (response.status === 200) {
+                    dispatch(signUpSuccess(datas, response.data.message));
+                    dispatch(push('/'));
+                } else {
+                    dispatch(signUpError(datas, 'Oops! Something went wrong'));
+                }
+            })
+            .catch(err => {
+                dispatch(signUpError(datas, getMessage(err)));
+            });
     };
 }
 
@@ -77,7 +108,7 @@ export function manualLogin(data) {
         return makeUserRequest('post', data, '/api/login')
             .then(response => {
                 if (response.status === 200) {
-                    dispatch(loginSuccess(response.data.message)); // "response.data.message" => from server
+                    dispatch(loginSuccess(response.data.message));
                     dispatch(push('/dashboard')); // TODO - auth : ici on défini la redirection
                 } else {
                     dispatch(loginError('Oops! Something went wrong!'));
@@ -89,24 +120,6 @@ export function manualLogin(data) {
     };
 }
 
-export function signUp(data) {
-    return dispatch => {
-        dispatch(beginSignUp());
-
-        return makeUserRequest('post', data, '/api/signup')
-            .then(response => {
-                if (response.status === 200) {
-                    dispatch(signUpSuccess(response.data.message));
-                    dispatch(push('/'));
-                } else {
-                    dispatch(signUpError('Oops! Something went wrong'));
-                }
-            })
-            .catch(err => {
-                dispatch(signUpError(getMessage(err)));
-            });
-    };
-}
 
 export function logOut() {
     return dispatch => {

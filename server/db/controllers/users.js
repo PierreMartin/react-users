@@ -2,9 +2,9 @@ import User from '../models/user';
 import passport from 'passport';
 
 /**
- * POST /api/usersList
+ * GET /api/usersList
  */
-export function getUsersList(req, res) {
+export function all(req, res) {
     User.find({}).exec((err, users) => {
         if (err) {
             console.log('Error in first query');
@@ -83,5 +83,5 @@ export default {
     login,
     logout,
     signUp,
-    getUsersList
+    all
 };

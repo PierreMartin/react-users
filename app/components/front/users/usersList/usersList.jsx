@@ -14,8 +14,7 @@ const UsersList = ({ usersList }) => {
                 index={key}
                 id={user._id}
                 key={key}
-                name={user.name}
-                gender={user.gender}
+                email={user.email}
             />
         );
     });

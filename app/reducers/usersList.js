@@ -3,12 +3,10 @@ import * as types from '../types';
 
 const user = (state = {}, action) => {
     switch (action.type) {
-        case types.CREATE_COURS_SUCCESS:
+        case types.SIGNUP_SUCCESS_USER:
             return {
                 id: action.id,
-                count: action.count,
-                text: action.text,
-                isVoted: action.isVoted
+                email: action.email
             };
         default:
             return state;
@@ -21,9 +19,9 @@ const users = (state = [], action) => {
         case types.REQUEST_SUCCESS:
             if (action.data) return action.data;
             return state;
-        case types.CREATE_COURS_SUCCESS:    // GET_USERS_SUCCESS
+        case types.SIGNUP_SUCCESS_USER:
             return [...state, user(undefined, action)];
-        case types.CREATE_COURS_FAILURE:    // GET_USERS_FAILURE
+        case types.SIGNUP_ERROR_USER:
             return state.filter(t => t.id !== action.id);
         default:
             return state;

@@ -12,7 +12,7 @@ export default (app) => {
         app.post('/api/login',          usersController.login);
         app.post('/api/signup',         usersController.signUp);
         app.post('/api/logout',         usersController.logout);
-        app.post('/api/usersList',      usersController.getUsersList);
+        app.get('/api/usersList',       usersController.all);
     } else {
         console.warn(unsupportedMessage('users routes'));
     }
