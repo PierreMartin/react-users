@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import { fetchCoursData, fetchUsersData } from 'fetch-data';
+import { fetchCoursData, fetchUsersData } from './fetch-data';
 import App from 'components/App';
 import About from 'components/front/about/component';
 import LoginOrRegister from 'components/front/login/component';

@@ -16,7 +16,7 @@ const user = (state = {}, action) => {
 
 const users = (state = [], action) => {
     switch (action.type) {
-        case types.REQUEST_SUCCESS:
+        case types.REQUEST_SUCCESS: // TODO voir ici si enlever
             if (action.data) return action.data;
             return state;
         case types.SIGNUP_SUCCESS_USER:
