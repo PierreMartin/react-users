@@ -43,15 +43,15 @@ export default (store) => {
 
     return (
         <Route path="/" component={App}>
-            <IndexRoute component={Home} fetchData={fetchCoursData}/>
-            <Route path="/userslist" component={Users} fetchData={fetchUsersData}/>
+            <IndexRoute component={Home} fetchMyDatas={fetchCoursData}/>
+            <Route path="/userslist" component={Users} fetchMyDatas={fetchUsersData}/>
             {/*
-            <IndexRoute component={Users} fetchData={fetchUser}>
+            <IndexRoute component={Users} fetchMyDatas={fetchUser}>
                <Route path="/:userId" component={User}/>
             </IndexRoute>
             */}
 
-            <Route path="dashboard" component={Dashboard} fetchData={fetchCoursData} onEnter={requireAuth}/>
+            <Route path="dashboard" component={Dashboard} fetchMyDatas={fetchCoursData} onEnter={requireAuth}/>
             <Route path="login" component={LoginOrRegister} onEnter={redirectAuth}/>
             <Route path="about" component={About}/>
         </Route>
