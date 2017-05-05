@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import createRoutes from 'routes';
 import configureStore from 'store/configureStore';
 import * as types from 'types';
-import preRenderMiddleware from 'middlewares/preRenderMiddleware';
+import fetchDataForRoute from './middlewares/fetchDataForRoute';
 import header from 'components/Meta';
 
 const clientConfig = {
@@ -91,7 +91,7 @@ export default function render(req, res) {
             // This method waits for all render component
             // promises to resolve before returning to browser
             store.dispatch({type: types.CREATE_REQUEST});
-            preRenderMiddleware(props)
+            fetchDataForRoute(props)
                 .then(data => {
                     store.dispatch({type: types.REQUEST_SUCCESS, data});
                     const componentHTML = renderToString(

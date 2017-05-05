@@ -160,7 +160,7 @@ Route	           POST	                        GET	                           PUT
 
 
 ##################################################### TODO #####################################################
-- voir si on pourrait utiliser les GET_TOPICS (surement remplacé par 'CREATE_REQUEST', 'REQUEST_SUCCESSXX')
+- voir si on pourrait utiliser les GET_TOPICS (surement remplacé par 'CREATE_REQUEST', 'REQUEST_SUCCES')
 - voir passport js
 - changer tout les 'courses' par 'cours'
 

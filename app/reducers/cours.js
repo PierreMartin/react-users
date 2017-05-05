@@ -30,12 +30,12 @@ const cours = (state = {}, action) => {
 
 const courses = (state = [], action) => {
     switch (action.type) {
-        case types.REQUEST_SUCCESS:                                 // la gestion de toutes les requets
+        case types.REQUEST_SUCCESS:
             if (action.data) return action.data;
             return state;
-        case types.CREATE_COURS_SUCCESS:                            // quand on ajoute un nouveau topic
-            return [...state, cours(undefined, action)];            // topic() va retourner un objet correpondant au nouveau topic
-        case types.CREATE_COURS_FAILURE:                            // dans les actions, si CREATE_COURS_FAILURE est dispatché (à cause d'une rreur)
+        case types.CREATE_COURS_SUCCESS:
+            return [...state, cours(undefined, action)];
+        case types.CREATE_COURS_FAILURE:
             return state.filter(t => t.id !== action.id);
         case types.DESTROY_COURS_SUCCESS:
             return state.filter(t => t.id !== action.id);
