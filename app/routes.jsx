@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import { fetchCoursData, fetchUsersData } from './fetch-data';
+import { fetchMainData } from './fetch-data';
 import App from 'components/App';
 import About from 'components/front/about/component';
 import LoginOrRegister from 'components/front/login/component';
@@ -43,15 +43,15 @@ export default (store) => {
 
     return (
         <Route path="/" component={App}>
-            <IndexRoute component={Home} fetchMyDatas={fetchCoursData}/>
-            <Route path="/userslist" component={Users} fetchMyDatas={fetchUsersData}/>
+            <IndexRoute component={Home} fetchMyDatas={fetchMainData}/>
+            <Route path="/userslist" component={Users} />
             {/*
             <IndexRoute component={Users} fetchMyDatas={fetchUser}>
                <Route path="/:userId" component={User}/>
             </IndexRoute>
             */}
 
-            <Route path="dashboard" component={Dashboard} fetchMyDatas={fetchCoursData} onEnter={requireAuth}/>
+            <Route path="dashboard" component={Dashboard} fetchMyDatas={fetchMainData} onEnter={requireAuth}/>
             <Route path="login" component={LoginOrRegister} onEnter={redirectAuth}/>
             <Route path="about" component={About}/>
         </Route>

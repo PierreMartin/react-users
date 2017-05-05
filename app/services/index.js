@@ -1,3 +1,2 @@
-export { default as coursService } from './courses';
-export { default as usersService } from './users';
+export { default as datasService } from './courses';
 
