@@ -31,11 +31,14 @@ function onUpdate() {
         return;
     }
 
-    store.dispatch({type: types.CREATE_REQUEST});
+    // store.dispatch({type: types.CREATE_REQUEST});
 
-    fetchDataForRoute(this.state)
+    fetchDataForRoute(this.state, store)
         .then(data => {
-            return store.dispatch({type: types.REQUEST_SUCCESS, data});
+            return store.dispatch({ type: types.REQUEST_SUCCESS, data: data });
+        })
+        .catch(error => {
+            return store.dispatch({ type: types.REQUEST_FAILURE, data: error});
         });
 }
 

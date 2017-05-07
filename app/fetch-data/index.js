@@ -1,1 +1,1 @@
-export { default as fetchMainData } from './fetchMainData';
+export { default as fetchCoursData } from './fetchMainData';

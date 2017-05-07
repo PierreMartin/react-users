@@ -1,10 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
+import { fetchUsers } from '../../../actions/usersList';
 import UsersList from './usersList/usersList';
 
 
 class UsersPage extends Component {
+
+    /*componentDidMount() {
+        fetchUsers();
+    }
+
+    componentDidUpdate() {
+        fetchUsers();
+    }*/
+
     render() {
         const { users } = this.props;
 

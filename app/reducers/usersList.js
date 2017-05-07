@@ -3,10 +3,10 @@ import * as types from '../types';
 
 const user = (state = {}, action) => {
     switch (action.type) {
-        case types.SIGNUP_SUCCESS_USER:
+        case types.GET_USERS_SUCCESS:
             return {
-                id: action.id,
-                email: action.email
+                id: action.data.id,
+                email: action.data.email
             };
         default:
             return state;
@@ -16,21 +16,18 @@ const user = (state = {}, action) => {
 
 const users = (state = [], action) => {
     switch (action.type) {
-        case types.REQUEST_SUCCESS: // TODO voir ici si enlever
-            if (action.data) return action.data;
-            return state;
-        case types.SIGNUP_SUCCESS_USER:
+        case types.GET_USERS_SUCCESS:
             return [...state, user(undefined, action)];
-        case types.SIGNUP_ERROR_USER:
-            return state.filter(t => t.id !== action.id);
+        case types.GET_USERS_FAILURE:
+            return state.filter(t => t.id !== action.data.id);
         default:
             return state;
     }
 };
 
 
-const coursReducer = combineReducers({
+const usersReducer = combineReducers({
     users
 });
 
-export default coursReducer;
+export default usersReducer;

@@ -1,10 +1,14 @@
 import { datasService } from '../services';
+import * as types from 'types';
 
-const fetchMainData = () => {
+const fetchCoursData = (params, store) => {
   return datasService().getCourses()
-    .then(res => res.data)
+    .then((res) => {
+        store.dispatch({type: types.GET_COURS_SUCCESS, data: res.data});
+        return res.data
+    })
     .catch(() => []);
 };
 
-export default fetchMainData;
+export default fetchCoursData;
 
