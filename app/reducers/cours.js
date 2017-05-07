@@ -29,13 +29,17 @@ const cours = (state = {}, action) => {
 
 
 const courses = (state = [], action) => {
+    /*
     console.log('---- courses action.data ----');
     console.log('type   => ', action.type);
     console.log('params => ', action.data);
+    */
 
     switch (action.type) {
         case types.GET_COURS_SUCCESS:
             if (action.data) return action.data;
+            return state;
+        case types.GET_COURS_FAILURE:
             return state;
         case types.CREATE_COURS_SUCCESS:
             return [...state, cours(undefined, action)];

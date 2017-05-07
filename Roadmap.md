@@ -160,12 +160,13 @@ Route	           POST	                        GET	                           PUT
 
 
 ##################################################### TODO #####################################################
-- voir si on pourrait utiliser les GET_TOPICS (surement remplacé par 'CREATE_REQUEST', 'REQUEST_SUCCES')
 - voir passport js
 - changer tout les 'courses' par 'cours'
 
-- implementer CRUD des users
-- Ajouter des attribus dans le modele Mongo (Age, sexe, ville...) - renommer 'topics' en 'cours'
+- renommée user -> userMe
+- userMe : page 'mon profil'
+- implementer CRUD des users (GET: DONE, POST, PUT, DELET)
+- Ajouter des attribus dans le modele Mongo (Age, sexe, ville...)
 - Prevoir un filtre d'affichage des personnes (par age, par ville)
 
 - gerer tous les messages (succes et d'erreurs) de facon generique - reducer 'popupMessage'

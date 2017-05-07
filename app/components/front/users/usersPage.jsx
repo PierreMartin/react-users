@@ -1,20 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
-import { fetchUsers } from '../../../actions/usersList';
 import UsersList from './usersList/usersList';
 
 
 class UsersPage extends Component {
-
-    /*componentDidMount() {
-        fetchUsers();
-    }
-
-    componentDidUpdate() {
-        fetchUsers();
-    }*/
-
     render() {
         const { users } = this.props;
 
@@ -37,7 +27,7 @@ UsersPage.propTypes = {
 /** contient les data **/
 function mapStateToProps(state) {
     return {
-        users: state.usersList.users    // [{}, {}, {}]  // TODO pas vraiment utile car quand on créer un new compte user, on verra pas de suite la liste
+        users: state.usersList.users    // [{}, {}, {}]
         // userMe: state.usersMe.me     // {}
     };
 }

@@ -1,25 +1,20 @@
 import { combineReducers } from 'redux';
 import * as types from '../types';
 
-const user = (state = {}, action) => {
-    switch (action.type) {
-        case types.GET_USERS_SUCCESS:
-            return {
-                id: action.data.id,
-                email: action.data.email
-            };
-        default:
-            return state;
-    }
-};
-
 
 const users = (state = [], action) => {
+    /*
+    console.log('---- users action.data ----');
+    console.log('type   => ', action.type);
+    console.log('params => ', action.data);
+    */
+
     switch (action.type) {
         case types.GET_USERS_SUCCESS:
-            return [...state, user(undefined, action)];
+            if (action.data) return action.data;
+            return state;
         case types.GET_USERS_FAILURE:
-            return state.filter(t => t.id !== action.data.id);
+            return state;
         default:
             return state;
     }

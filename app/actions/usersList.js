@@ -10,7 +10,7 @@ export function makeUsersRequest(method, id, data, api = '/api/usersList') {
 }
 
 
-/***************************************** Fetch users ********************************************/
+/***************************************** GET users ********************************************/
 /*export function fetchUsers() {
     return {
         type: types.GET_USERS_SUCCESS,
@@ -19,6 +19,7 @@ export function makeUsersRequest(method, id, data, api = '/api/usersList') {
 }*/
 
 
+/*
 export function createCoursSuccess(data) {
     return {
         type: types.GET_USERS_SUCCESS,
@@ -49,3 +50,5 @@ export function fetchUsers() {
             });
     };
 }
+*/
+

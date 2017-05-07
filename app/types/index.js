@@ -14,8 +14,6 @@ export const CREATE_COURS_FAILURE = 'CREATE_COURS_FAILURE';
 export const CREATE_COURS_DUPLICATE = 'CREATE_COURS_DUPLICATE';
 
 /***************************************** Get cours ********************************************/
-export const GET_COURS = 'GET_COURS';
-export const GET_COURS_REQUEST = 'GET_COURS_REQUEST';
 export const GET_COURS_SUCCESS = 'GET_COURS_SUCCESS';
 export const GET_COURS_FAILURE = 'GET_COURS_FAILURE';
 
