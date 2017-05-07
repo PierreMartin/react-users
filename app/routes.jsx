@@ -7,6 +7,7 @@ import LoginOrRegister from 'components/front/login/component';
 import Home from 'components/front/home/component';
 import Users from 'components/front/users/usersPage';
 import Dashboard from 'components/admin/dashboard/component';
+import Myprofil from 'components/admin/myprofil/myProfilPage';
 
 /*
  * @param {Redux Store}
@@ -54,6 +55,7 @@ export default (store) => {
 
             <Route path="dashboard" component={Dashboard} fetchMyDatas={getCours} onEnter={requireAuth}/>
             <Route path="login" component={LoginOrRegister} onEnter={redirectAuth}/>
+            <Route path="myprofil" component={Myprofil} onEnter={redirectAuth}/>
             <Route path="about" component={About}/>
         </Route>
     );
