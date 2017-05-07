@@ -6,7 +6,7 @@ import classNames from 'classnames/bind';
 // import { createCours, typing, destroyCours } from '../../../actions/courses';
 
 
-class Dashboard extends Component {
+class MyProfilPage extends Component {
     render() {
         const { userMe } = this.props;
         return (
@@ -18,17 +18,17 @@ class Dashboard extends Component {
                     createCours={createCours}
                 />*/}
 
-                <MyCours
+                {/*<MyCours
                     courses={courses}
                     destroyCours={destroyCours}
-                />
+                />*/}
 
             </div>
         );
     }
 }
 
-Dashboard.propTypes = {
+MyProfilPage.propTypes = {
     userMe: PropTypes.array.isRequired,
 };
 
@@ -40,4 +40,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, null)(Dashboard);
+export default connect(mapStateToProps, null)(MyProfilPage);

@@ -55,7 +55,7 @@ export default (store) => {
 
             <Route path="dashboard" component={Dashboard} fetchMyDatas={getCours} onEnter={requireAuth}/>
             <Route path="login" component={LoginOrRegister} onEnter={redirectAuth}/>
-            <Route path="myprofil" component={Myprofil} onEnter={redirectAuth}/>
+            <Route path="myprofil" component={Myprofil} onEnter={requireAuth}/>
             <Route path="about" component={About}/>
         </Route>
     );
