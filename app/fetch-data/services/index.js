@@ -36,6 +36,10 @@ export function apiUsers() {
         getUsers: () => client.request({
             method: 'GET',
             url: '/api/usersList'
+        }),
+        getUser: ({ id }) => client.request({
+            method: 'GET',
+            url: '/api/user'
         })
         /*
         deleteUsers: ({ id }) => client.request({

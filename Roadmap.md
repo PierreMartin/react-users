@@ -160,11 +160,11 @@ Route	           POST	                        GET	                           PUT
 
 
 ##################################################### TODO #####################################################
-- voir passport js
-- changer tout les 'courses' par 'cours'
+`- voir passport js`
+`- changer tout les 'courses' par 'cours'`
 
 - mettre le composant 'users' dans admin
-- renommée user -> userCurrent
+- renommée user -> userSingle
 - page single user
 - page 'mon profil'
 - implementer CRUD des users (GET: DONE, POST, PUT, DELET)

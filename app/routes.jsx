@@ -7,7 +7,7 @@ import LoginOrRegister from 'components/front/login/component';
 import Home from 'components/front/home/component';
 import Users from 'components/front/users/usersPage';
 import Dashboard from 'components/admin/dashboard/component';
-import Myprofil from 'components/admin/myprofil/myProfilPage';
+import Myprofil from 'components/admin/userSingle/userSinglePage';
 
 /*
  * @param {Redux Store}

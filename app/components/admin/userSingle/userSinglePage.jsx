@@ -8,7 +8,7 @@ import classNames from 'classnames/bind';
 
 class MyProfilPage extends Component {
     render() {
-        const { userMe } = this.props;
+        const { user } = this.props;
         return (
             <div>
 
@@ -29,13 +29,13 @@ class MyProfilPage extends Component {
 }
 
 MyProfilPage.propTypes = {
-    userMe: PropTypes.array.isRequired,
+    user: PropTypes.array.isRequired,
 };
 
 
 function mapStateToProps(state) {
     return {
-        userMe: state.cours.userMe
+        user: state.userSingle.user
     };
 }
 
