@@ -1,0 +1,34 @@
+@import '../../../../../css/mixins/typography';
+@import '../../../../../css/mixins/colors';
+@import '../../../../../css/mixins/layout';
+
+li.user-container {
+	border: 1px solid #b4bac1;
+	list-style: none;
+	margin-bottom: 12px;
+	text-align: center;
+}
+
+.img-item {
+	height: 80px;
+	width: 80px;
+}
+
+.topic {
+	@apply --flexNotMoreThan200;
+	font-size: var(--fontMedium);
+}
+
+.count {
+	font-size: 10px;
+}
+
+.button {
+	font-size: var(--fontMedium);
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	border: none;
+	margin: 0 28px;
+	color: #fff;
+}

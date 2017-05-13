@@ -1,13 +1,17 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import { getCours, getUsers } from './fetch-data';
+import { getCours, getUsers, getUser } from './fetch-data';
+
 import App from 'components/App';
 import About from 'components/front/about/component';
 import LoginOrRegister from 'components/front/login/component';
 import Home from 'components/front/home/component';
-import Users from 'components/admin/users/usersPage';
-import Dashboard from 'components/admin/dashboard/component';
+
+import Users from 'components/admin/usersList/usersPage';
+import User from 'components/admin/userSingle/userSinglePage';
 import Myprofil from 'components/admin/userSingle/userSinglePage';
+
+import Dashboard from 'components/admin/dashboard/component';
 
 /*
  * @param {Redux Store}
@@ -46,12 +50,11 @@ export default (store) => {
         <Route path="/" component={App}>
             <IndexRoute component={Home} fetchMyDatas={getCours}/>
             <Route path="/userslist" component={Users} fetchMyDatas={getUsers} onEnter={requireAuth} />
+            <Route path='/user/:id' component={User} fetchMyDatas={getUser} />
 
-            {/*
-            <IndexRoute component={Users} fetchMyDatas={fetchUser}>
-               <Route path="/:userId" component={User}/>
-            </IndexRoute>
-            */}
+            {/*<Route path="/userslist" component={Users} fetchMyDatas={getUsers} onEnter={requireAuth} >
+               <Route path=":userId" component={User}/>
+            </Route>*/}
 
             <Route path="dashboard" component={Dashboard} fetchMyDatas={getCours} onEnter={requireAuth}/>
             <Route path="login" component={LoginOrRegister} onEnter={redirectAuth}/>

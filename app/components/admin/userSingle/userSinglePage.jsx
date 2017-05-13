@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
+import User from './user/user';
 // import AddCour from './actions/addCours/add';
-// import MyCours from './MyCours/MyCours';
+// import CoursListByUser from '../../front/home/coursList/coursList';
 // import { createCours, typing, destroyCours } from '../../../actions/courses';
 
 
@@ -12,13 +13,17 @@ class MyProfilPage extends Component {
         return (
             <div>
 
+                <User
+                    email={user.email}
+                />
+
                 {/*<AddCour
                     newCoursValue={newCoursValue}
                     typing={typing}
                     createCours={createCours}
                 />*/}
 
-                {/*<MyCours
+                {/*<CoursListByUser
                     courses={courses}
                     destroyCours={destroyCours}
                 />*/}
