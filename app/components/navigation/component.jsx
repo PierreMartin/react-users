@@ -11,26 +11,12 @@ const cx = classNames.bind(styles);
 const Navigation = ({ user, logOut }) => {
     return (
         <nav className={cx('navigation')} role="navigation">
-            <Link to="/"
-                  className={cx('item', 'logo')}
-                  activeClassName={cx('active')}>Ninja Ocean
-            </Link>
-
-            <Link to="/userslist"
-                  className={cx('item')}
-                  activeClassName={cx('active')}>Users
-            </Link>
-
-            { user.authenticated ? (
-            <Link onClick={logOut}
-                  className={cx('item')} to="/">Logout</Link>
-                ) : (
-            <Link className={cx('item')} to="/login">Log in</Link>
-            )}
-
-            <Link className={cx('item')} to="/dashboard">Dashboard</Link>
-            <Link to="/myprofil" className={cx('item')} activeClassName={cx('active')}>My profil</Link>
+            <Link to="/" className={cx('item', 'logo')} activeClassName={cx('active')}>Home</Link>
+            { user.authenticated ? (<Link to="/userslist" className={cx('item')} activeClassName={cx('active')}>Users</Link>) : ''}
+            { user.authenticated ? (<Link to="/dashboard" className={cx('item')} >Dashboard</Link>) : ''}
+            { user.authenticated ? (<Link to="/myprofil" className={cx('item')} activeClassName={cx('active')}>My profil</Link>) : ''}
             <Link to="/about" className={cx('item')} activeClassName={cx('active')}>About</Link>
+            { user.authenticated ? (<Link onClick={logOut} className={cx('item')} to="/">Logout</Link>) : (<Link className={cx('item')} to="/login">Log in</Link>)}
         </nav>
     );
 };

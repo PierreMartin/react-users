@@ -5,7 +5,7 @@ import App from 'components/App';
 import About from 'components/front/about/component';
 import LoginOrRegister from 'components/front/login/component';
 import Home from 'components/front/home/component';
-import Users from 'components/front/users/usersPage';
+import Users from 'components/admin/users/usersPage';
 import Dashboard from 'components/admin/dashboard/component';
 import Myprofil from 'components/admin/userSingle/userSinglePage';
 
@@ -45,7 +45,7 @@ export default (store) => {
     return (
         <Route path="/" component={App}>
             <IndexRoute component={Home} fetchMyDatas={getCours}/>
-            <Route path="/userslist" component={Users} fetchMyDatas={getUsers} />
+            <Route path="/userslist" component={Users} fetchMyDatas={getUsers} onEnter={requireAuth} />
 
             {/*
             <IndexRoute component={Users} fetchMyDatas={fetchUser}>

@@ -163,7 +163,6 @@ Route	           POST	                        GET	                           PUT
 `- voir passport js`
 `- changer tout les 'courses' par 'cours'`
 
-- mettre le composant 'users' dans admin
 - renommée user -> userSingle
 - page single user
 - page 'mon profil'
