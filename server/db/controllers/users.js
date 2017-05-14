@@ -2,7 +2,7 @@ import User from '../models/user';
 import passport from 'passport';
 
 /**
- * GET /api/usersList
+ * GET /api/user/all
  */
 export function all(req, res) {
     User.find({}).exec((err, users) => {
@@ -12,6 +12,27 @@ export function all(req, res) {
         }
 
         return res.json(users);
+    });
+}
+
+
+/**
+ * GET /api/user/:id
+ */
+export function single(req, res) {
+    const id = req.params.id;
+
+    User.findOne({'_id' : id}).exec((err, user) => {
+        if (err) {
+            console.log('Error in first query');
+            return res.status(500).send('Something went wrong getting the data');
+        }
+
+        if (!user) {
+            return res.status(404).send({ message: 'user non trouvé.' });
+        }
+
+        return res.json(user); // res.send(pokemon);
     });
 }
 
@@ -83,5 +104,6 @@ export default {
     login,
     logout,
     signUp,
-    all
+    all,
+    single,
 };

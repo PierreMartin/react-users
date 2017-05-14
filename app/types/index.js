@@ -37,6 +37,9 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 export const LOGOUT_SUCCESS_USER = 'LOGOUT_SUCCESS_USER';
 export const LOGOUT_ERROR_USER = 'LOGOUT_ERROR_USER';
 
-/***************************************** Users List ********************************************/
+/***************************************** Users ********************************************/
 export const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS';
 export const GET_USERS_FAILURE = 'GET_USERS_FAILURE';
+
+export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
+export const GET_USER_FAILURE = 'GET_USER_FAILURE';

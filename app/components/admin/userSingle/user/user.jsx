@@ -17,7 +17,7 @@ const User = ({ email }) => {
 };
 
 User.propTypes = {
-    email: PropTypes.string.isRequired
+    email: PropTypes.string
 };
 
 export default User;

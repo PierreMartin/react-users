@@ -163,7 +163,8 @@ Route	           POST	                        GET	                           PUT
 `- voir passport js`
 `- changer tout les 'courses' par 'cours'`
 
-- renommée user -> userMe
+- renommée userList -> user (dans actions et reducer)
+- renommée users -> userMe || userAuth (dans actions et reducer)
 - page single user
 - page 'mon profil'
 - implementer CRUD des users (GET: DONE, POST, PUT, DELET)

@@ -1,54 +1,38 @@
 import { polyfill } from 'es6-promise';
-import request from 'axios';
 import * as types from '../types';
+import { api } from '../fetch-data';
 
 polyfill();
 
 
-export function makeUsersRequest(method, id, data, api = '/api/usersList') {
-    return request[method](api + (id ? ('/' + id) : ''), data);
-}
-
-
-/***************************************** GET users ********************************************/
-/*export function fetchUsers() {
+/***************************************** GET user ********************************************/
+export function getUserSuccess(data) {
     return {
-        type: types.GET_USERS_SUCCESS,
-        data: makeUsersRequest('get')
-    };
-}*/
-
-
-/*
-export function createCoursSuccess(data) {
-    return {
-        type: types.GET_USERS_SUCCESS,
+        type: types.GET_USER_SUCCESS,
         data: data
     };
 }
 
-export function createCoursFailure() {
+export function getUserFailure(id) {
     return {
-        type: types.GET_USERS_FAILURE,
+        type: types.GET_USER_FAILURE,
+        id: id,
         error: 'Oops! Something went wrong and we couldn\'t create your cours'
     };
 }
 
+export function getUser(id) {
+    return (dispatch) => {
+        if (!id) return;
 
-export function fetchUsers() {
-    console.log('TESTT');
-    return (dispatch, getState) => {
-
-        // request :
-        return makeUsersRequest('get')
-            .then(res => {
-                console.log(res);
-                if (res.status === 200) return dispatch(createCoursSuccess(res.data));
+        return api().getUser({ id })
+            .then((res) => {
+                if (res.status === 200) {
+                    return dispatch(getUserSuccess(res.data));
+                }
             })
             .catch(() => {
-                return dispatch(createCoursFailure());
+                return dispatch(getUserFailure(id));
             });
     };
 }
-*/
-

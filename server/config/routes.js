@@ -9,10 +9,11 @@ export default (app) => {
 
     /** ROUTING USERS : **/
     if (usersController) {
-        app.post('/api/login',          usersController.login);
-        app.post('/api/signup',         usersController.signUp);
-        app.post('/api/logout',         usersController.logout);
-        app.get('/api/usersList',       usersController.all);
+        app.post('/api/login',      usersController.login);
+        app.post('/api/signup',     usersController.signUp);
+        app.post('/api/logout',     usersController.logout);
+        app.get('/api/user/all',    usersController.all);
+        app.get('/api/user/:id',    usersController.single);
     } else {
         console.warn(unsupportedMessage('users routes'));
     }

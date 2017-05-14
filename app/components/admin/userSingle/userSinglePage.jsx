@@ -4,10 +4,15 @@ import classNames from 'classnames/bind';
 import User from './user/user';
 // import AddCour from './actions/addCours/add';
 // import CoursListByUser from '../../front/home/coursList/coursList';
-// import { createCours, typing, destroyCours } from '../../../actions/courses';
+import { getUser } from '../../../actions/usersList';
 
 
-class MyProfilPage extends Component {
+class userSinglePage extends Component {
+    componentDidMount() {
+        const { params } = this.props;
+        getUser(params.id_user);
+    }
+
     render() {
         const { user } = this.props;
         return (
@@ -33,8 +38,8 @@ class MyProfilPage extends Component {
     }
 }
 
-MyProfilPage.propTypes = {
-    user: PropTypes.array.isRequired,
+userSinglePage.propTypes = {
+    user: PropTypes.object.isRequired,
 };
 
 
@@ -45,4 +50,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, null)(MyProfilPage);
+export default connect(mapStateToProps, {getUser})(userSinglePage);
