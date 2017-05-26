@@ -166,7 +166,17 @@ Route	           POST	                        GET	                           PUT
 - terminer page single user (ajouter name, age...)
 - page 'mon profil'
 
-- implementer CRUD des users (GET: DONE, POST, PUT, DELET)
+- cours => page single - et renomer dans reducer :
+    - state.cour.courSingle
+    - state.cour.coursAll
+    - state.cour.coursByUser
+    
+- users => renomer dans reducer :
+    - state.user.userSingle
+    - state.user.usersAll
+    - state.user.usersByFriends    
+    
+- finir CRUD des users + cours (GET: DONE, POST, PUT, DELET)
 - Ajouter des attribus dans le modele Mongo (Age, sexe, ville...)
 - Prevoir un filtre d'affichage des personnes (par age, par ville)
 
