@@ -114,6 +114,7 @@ db.cours.find({"text": "test 1"} , {_id:0})
 db.cours.remove({})
 db.cours.insert({text: "test 1", count: 0})
 
+db.users.update({email: "pierre@gmail.com"} , {$set : {profile: {name: "Pierre Martin", gender: "male", picture: "http://localhost:3000/xxx"}} })  
 
 user => créer un compte sur l'app (pierre@gmail.com 1234)
 db.users.find()

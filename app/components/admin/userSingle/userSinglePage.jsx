@@ -4,15 +4,9 @@ import classNames from 'classnames/bind';
 import User from './user/user';
 // import AddCour from './actions/addCours/add';
 // import CoursListByUser from '../../front/home/coursList/coursList';
-import { getUser } from '../../../actions/users';
 
 
 class userSinglePage extends Component {
-    componentDidMount() {
-        const { params } = this.props;
-        getUser(params.id_user);
-    }
-
     render() {
         const { user } = this.props;
         return (
@@ -20,6 +14,9 @@ class userSinglePage extends Component {
 
                 <User
                     email={user.email}
+                    name={user.name}
+                    gender={user.gender}
+                    picture={user.picture}
                 />
 
                 {/*<AddCour
@@ -39,7 +36,7 @@ class userSinglePage extends Component {
 }
 
 userSinglePage.propTypes = {
-    user: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired
 };
 
 
@@ -50,4 +47,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, {getUser})(userSinglePage);
+export default connect(mapStateToProps, null)(userSinglePage);
