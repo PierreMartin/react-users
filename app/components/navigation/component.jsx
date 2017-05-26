@@ -1,34 +1,34 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { logOut } from '../../actions/users';
+import { logOut } from '../../actions/userAuth';
 import classNames from 'classnames/bind';
 import styles from './css/style';
 
 const cx = classNames.bind(styles);
 
 
-const Navigation = ({ user, logOut }) => {
+const Navigation = ({ userAuth, logOut }) => {
     return (
         <nav className={cx('navigation')} role="navigation">
             <Link to="/" className={cx('item', 'logo')} activeClassName={cx('active')}>Home</Link>
-            { user.authenticated ? (<Link to="/userslist" className={cx('item')} activeClassName={cx('active')}>Users</Link>) : ''}
-            { user.authenticated ? (<Link to="/dashboard" className={cx('item')} >Dashboard</Link>) : ''}
-            { user.authenticated ? (<Link to="/myprofil" className={cx('item')} activeClassName={cx('active')}>My profil</Link>) : ''}
+            { userAuth.authenticated ? (<Link to="/userslist" className={cx('item')} activeClassName={cx('active')}>Users</Link>) : ''}
+            { userAuth.authenticated ? (<Link to="/dashboard" className={cx('item')} >Dashboard</Link>) : ''}
+            { userAuth.authenticated ? (<Link to="/myprofil" className={cx('item')} activeClassName={cx('active')}>My profil</Link>) : ''}
             <Link to="/about" className={cx('item')} activeClassName={cx('active')}>About</Link>
-            { user.authenticated ? (<Link onClick={logOut} className={cx('item')} to="/">Logout</Link>) : (<Link className={cx('item')} to="/login">Log in</Link>)}
+            { userAuth.authenticated ? (<Link onClick={logOut} className={cx('item')} to="/">Logout</Link>) : (<Link className={cx('item')} to="/login">Log in</Link>)}
         </nav>
     );
 };
 
 Navigation.propTypes = {
-    user: PropTypes.object,
+    userAuth: PropTypes.object,
     logOut: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
     return {
-        user: state.user
+        userAuth: state.userAuth
     };
 }
 

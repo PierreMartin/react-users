@@ -1,140 +1,38 @@
 import { polyfill } from 'es6-promise';
-import request from 'axios';
-import { push } from 'react-router-redux';
-import * as types from 'types';
-import md5 from 'spark-md5';
+import * as types from '../types';
+import { api } from '../fetch-data';
 
 polyfill();
 
-const getMessage = res => res.response && res.response.data && res.response.data.message;
 
-
-function makeUserRequest(method, data, api = '/api/login') {
-    return request[method](api, data);
-}
-
-
-/***************************************** Log In ********************************************/
-export function beginLogin() {
-    return {type: types.MANUAL_LOGIN_USER};
-}
-
-export function loginSuccess(datas, message) {
+/***************************************** GET user ********************************************/
+export function getUserSuccess(data) {
     return {
-        type: types.LOGIN_SUCCESS_USER,
-        message,
-        datas
+        type: types.GET_USER_SUCCESS,
+        data: data
     };
 }
 
-export function loginError(message) {
+export function getUserFailure(id) {
     return {
-        type: types.LOGIN_ERROR_USER,
-        message
+        type: types.GET_USER_FAILURE,
+        id: id,
+        error: 'Oops! Something went wrong and we couldn\'t create your cours'
     };
 }
 
+export function getUser(id) {
+    return (dispatch) => {
+        if (!id) return;
 
-/***************************************** Sign Up ********************************************/
-export function signUpError(datas, message) {
-    return {
-        type: types.SIGNUP_ERROR_USER,
-        message,
-        id: datas.id
-    };
-}
-
-export function beginSignUp() {
-    return {type: types.SIGNUP_USER};
-}
-
-export function signUpSuccess(datas, message) {
-    return {
-        type: types.SIGNUP_SUCCESS_USER,
-        message,
-        id: datas.id,
-        email: datas.email
-    };
-}
-
-export function signUp(data) {
-    return dispatch => {
-        dispatch(beginSignUp());
-
-        const id = md5.hash(data.email);
-
-        const datas = {
-            id,
-            email: data.email
-        };
-
-        return makeUserRequest('post', data, '/api/signup')
-            .then(response => {
-                if (response.status === 200) {
-                    dispatch(signUpSuccess(datas, response.data.message));
-                    dispatch(push('/'));
-                } else {
-                    dispatch(signUpError(datas, 'Oops! Something went wrong'));
+        return api().getUser({ id })
+            .then((res) => {
+                if (res.status === 200) {
+                    return dispatch(getUserSuccess(res.data));
                 }
             })
-            .catch(err => {
-                dispatch(signUpError(datas, getMessage(err)));
+            .catch(() => {
+                return dispatch(getUserFailure(id));
             });
     };
 }
-
-
-/***************************************** Log Out ********************************************/
-export function beginLogout() {
-    return {type: types.LOGOUT_USER};
-}
-
-export function logoutSuccess() {
-    return {type: types.LOGOUT_SUCCESS_USER};
-}
-
-export function logoutError() {
-    return {type: types.LOGOUT_ERROR_USER};
-}
-
-export function toggleLoginMode() {
-    return {type: types.TOGGLE_LOGIN_MODE};
-}
-
-export function manualLogin(data) {
-    return dispatch => {
-        dispatch(beginLogin());
-
-        return makeUserRequest('post', data, '/api/login')
-            .then(response => {
-                if (response.status === 200) {
-                    dispatch(loginSuccess(response.data.message));
-                    dispatch(push('/dashboard')); // TODO - auth : ici on défini la redirection
-                } else {
-                    dispatch(loginError('Oops! Something went wrong!'));
-                }
-            })
-            .catch(err => {
-                dispatch(loginError(getMessage(err)));
-            });
-    };
-}
-
-
-export function logOut() {
-    return dispatch => {
-        dispatch(beginLogout());
-
-        return makeUserRequest('post', null, '/api/logout')
-            .then(response => {
-                if (response.status === 200) {
-                    dispatch(logoutSuccess());
-                } else {
-                    dispatch(logoutError());
-                }
-            });
-    };
-}
-
-
-/***************************************** UPDATE user ********************************************/

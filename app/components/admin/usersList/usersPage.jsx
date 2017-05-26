@@ -27,8 +27,8 @@ UsersPage.propTypes = {
 /** contient les data **/
 function mapStateToProps(state) {
     return {
-        users: state.usersList.users    // [{}, {}, {}]
-        // userMe: state.usersMe.me     // {}
+        users: state.user.usersList    // [{}, {}, {}]
+        // usersAuth: state.userAuth  // {}
     };
 }
 

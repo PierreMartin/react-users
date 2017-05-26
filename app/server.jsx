@@ -52,7 +52,7 @@ export default function render(req, res) {
     const authenticated = req.isAuthenticated();
     const history = createMemoryHistory();
     const store = configureStore({
-        user: {
+        userAuth: {
             authenticated,
             isWaiting: false,
             message: '',

@@ -9,7 +9,6 @@ import Home from 'components/front/home/component';
 
 import Users from 'components/admin/usersList/usersPage';
 import User from 'components/admin/userSingle/userSinglePage';
-import Myprofil from 'components/admin/userSingle/userSinglePage';
 
 import Dashboard from 'components/admin/dashboard/component';
 
@@ -21,7 +20,7 @@ import Dashboard from 'components/admin/dashboard/component';
 export default (store) => {
 
     const requireAuth = (nextState, replace, callback) => {
-        const { user: { authenticated }} = store.getState();
+        const { userAuth: { authenticated }} = store.getState();
 
         if (!authenticated) {
             replace({
@@ -35,7 +34,7 @@ export default (store) => {
 
 
     const redirectAuth = (nextState, replace, callback) => {
-        const { user: { authenticated }} = store.getState();
+        const { userAuth: { authenticated }} = store.getState();
 
         if (authenticated) {
             replace({
@@ -58,7 +57,7 @@ export default (store) => {
 
             <Route path="dashboard" component={Dashboard} fetchMyDatas={getCours} onEnter={requireAuth}/>
             <Route path="login" component={LoginOrRegister} onEnter={redirectAuth}/>
-            <Route path="myprofil" component={Myprofil} onEnter={requireAuth}/>
+            <Route path="myprofil" component={User} onEnter={requireAuth}/>
             <Route path="about" component={About}/>
         </Route>
     );

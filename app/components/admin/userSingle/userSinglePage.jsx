@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import User from './user/user';
 // import AddCour from './actions/addCours/add';
 // import CoursListByUser from '../../front/home/coursList/coursList';
-import { getUser } from '../../../actions/usersList';
+import { getUser } from '../../../actions/users';
 
 
 class userSinglePage extends Component {
@@ -45,7 +45,7 @@ userSinglePage.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        user: state.userSingle.user
+        user: state.user.userSingle
     };
 }
 

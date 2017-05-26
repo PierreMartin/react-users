@@ -163,10 +163,9 @@ Route	           POST	                        GET	                           PUT
 `- voir passport js`
 `- changer tout les 'courses' par 'cours'`
 
-- renommée userList -> user (dans actions et reducer)
-- renommée users -> userMe || userAuth (dans actions et reducer)
-- page single user
+- terminer page single user (ajouter name, age...)
 - page 'mon profil'
+
 - implementer CRUD des users (GET: DONE, POST, PUT, DELET)
 - Ajouter des attribus dans le modele Mongo (Age, sexe, ville...)
 - Prevoir un filtre d'affichage des personnes (par age, par ville)

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
-import { manualLogin, signUp, toggleLoginMode } from '../../../actions/users';
+import { manualLogin, signUp, toggleLoginMode } from '../../../actions/userAuth';
 import styles from './css/style';
 import hourGlassSvg from './images/hourglass.svg';
 
@@ -18,7 +18,7 @@ class LoginOrRegister extends Component {
     handleOnSubmit(event) {
         event.preventDefault();
 
-        const { manualLogin, signUp, user: { isLogin } } = this.props; // 'isLogin' est l'action au clique sur le boutton 'Login'
+        const { manualLogin, signUp, userAuth: { isLogin } } = this.props; // 'isLogin' est l'action au clique sur le boutton 'Login'
 
         const email     = ReactDOM.findDOMNode(this.refs.email).value;
         const password  = ReactDOM.findDOMNode(this.refs.password).value;
@@ -31,7 +31,7 @@ class LoginOrRegister extends Component {
     }
 
     renderHeader() {
-        const { user: { isLogin } , toggleLoginMode } = this.props;
+        const { userAuth: { isLogin } , toggleLoginMode } = this.props;
 
         if (isLogin) {
             return (
@@ -61,7 +61,7 @@ class LoginOrRegister extends Component {
     }
 
     render() {
-        const { isWaiting, message, isLogin } = this.props.user;
+        const { isWaiting, message, isLogin } = this.props.userAuth;
 
         return (
             <div className={cx('login', {waiting: isWaiting})}>
@@ -111,7 +111,7 @@ class LoginOrRegister extends Component {
 }
 
 LoginOrRegister.propTypes = {
-    user: PropTypes.object,
+    userAuth: PropTypes.object,
     manualLogin: PropTypes.func.isRequired,
     signUp: PropTypes.func.isRequired,
     toggleLoginMode: PropTypes.func.isRequired
@@ -119,9 +119,9 @@ LoginOrRegister.propTypes = {
 
 // Function passed in to `connect` to subscribe to Redux store updates.
 // Any time it updates, mapStateToProps is called.
-function mapStateToProps({user}) {
+function mapStateToProps({userAuth}) {
     return {
-        user
+        userAuth
     };
 }
 
