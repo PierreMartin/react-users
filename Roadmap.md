@@ -158,13 +158,15 @@ Route	           POST	                        GET	                           PUT
 /api/user/:id	    -	                    Get a user	                Update a user	                                -
 
 
+GET usersList   => GET userSingle(usersList[0]._id)     -> user
+GET auth        => GET usersMe(auth._id)                -> userMe
+
 
 
 ##################################################### TODO #####################################################
 `- voir passport js`
 `- changer tout les 'courses' par 'cours'`
 
-- terminer page single user (ajouter name, age...)
 - page 'mon profil'
 
 - cours => page single - et renomer dans reducer :

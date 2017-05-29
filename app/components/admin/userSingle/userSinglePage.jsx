@@ -1,22 +1,33 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import classNames from 'classnames/bind';
+import styles from './user/css/user';
 import User from './user/user';
 // import AddCour from './actions/addCours/add';
 // import CoursListByUser from '../../front/home/coursList/coursList';
+const cx = classNames.bind(styles);
 
 
 class userSinglePage extends Component {
     render() {
-        const { user } = this.props;
+        const { userSingle, userAuth } = this.props;
+
+        let buttonEditNode = '';
+
+        if (userSingle._id === userAuth._id) {
+          buttonEditNode = <Link to={'/user/edit'} className={cx('user-links')}><button>Editer mon profil</button></Link>;
+        }
+
         return (
             <div>
+                {buttonEditNode}
 
                 <User
-                    email={user.email}
-                    name={user.name}
-                    gender={user.gender}
-                    picture={user.picture}
+                    email={userSingle.email}
+                    name={userSingle.name}
+                    gender={userSingle.gender}
+                    picture={userSingle.picture}
                 />
 
                 {/*<AddCour
@@ -36,13 +47,15 @@ class userSinglePage extends Component {
 }
 
 userSinglePage.propTypes = {
-    user: PropTypes.object.isRequired
+  userSingle: PropTypes.object.isRequired,
+  userAuth: PropTypes.object
 };
 
 
 function mapStateToProps(state) {
     return {
-        user: state.user.userSingle
+      userSingle: state.user.userSingle,
+      userAuth: state.userAuth.userObj
     };
 }
 

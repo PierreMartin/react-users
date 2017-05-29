@@ -19,11 +19,11 @@ export function beginLogin() {
     return {type: types.MANUAL_LOGIN_USER};
 }
 
-export function loginSuccess(datas, message) {
+export function loginSuccess(message, userObj) {
     return {
         type: types.LOGIN_SUCCESS_USER,
         message,
-        datas
+        userObj
     };
 }
 
@@ -32,6 +32,25 @@ export function loginError(message) {
         type: types.LOGIN_ERROR_USER,
         message
     };
+}
+
+export function manualLogin(data) {
+  return dispatch => {
+    dispatch(beginLogin());
+
+    return makeUserRequest('post', data, '/api/login')
+      .then(response => {
+        if (response.status === 200) {
+          dispatch(loginSuccess(response.data.message, response.data.userObj));
+          dispatch(push('/dashboard')); // TODO - auth : ici on défini la redirection
+        } else {
+          dispatch(loginError('Oops! Something went wrong!'));
+        }
+      })
+      .catch(err => {
+        dispatch(loginError(getMessage(err)));
+      });
+  };
 }
 
 
@@ -48,12 +67,13 @@ export function beginSignUp() {
     return {type: types.SIGNUP_USER};
 }
 
-export function signUpSuccess(datas, message) {
+export function signUpSuccess(datas, message, userObj) {
     return {
         type: types.SIGNUP_SUCCESS_USER,
         message,
         id: datas.id,
-        email: datas.email
+        email: datas.email,
+        userObj
     };
 }
 
@@ -71,7 +91,7 @@ export function signUp(data) {
         return makeUserRequest('post', data, '/api/signup')
             .then(response => {
                 if (response.status === 200) {
-                    dispatch(signUpSuccess(datas, response.data.message));
+                    dispatch(signUpSuccess(datas, response.data.message, response.data.userObj));
                     dispatch(push('/'));
                 } else {
                     dispatch(signUpError(datas, 'Oops! Something went wrong'));
@@ -100,26 +120,6 @@ export function logoutError() {
 export function toggleLoginMode() {
     return {type: types.TOGGLE_LOGIN_MODE};
 }
-
-export function manualLogin(data) {
-    return dispatch => {
-        dispatch(beginLogin());
-
-        return makeUserRequest('post', data, '/api/login')
-            .then(response => {
-                if (response.status === 200) {
-                    dispatch(loginSuccess(response.data.message));
-                    dispatch(push('/dashboard')); // TODO - auth : ici on défini la redirection
-                } else {
-                    dispatch(loginError('Oops! Something went wrong!'));
-                }
-            })
-            .catch(err => {
-                dispatch(loginError(getMessage(err)));
-            });
-    };
-}
-
 
 export function logOut() {
     return dispatch => {

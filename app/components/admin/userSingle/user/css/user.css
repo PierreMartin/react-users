@@ -9,6 +9,19 @@ li.user-container {
 	text-align: center;
 }
 
+.user-links button {
+	font-size: 18px;
+	cursor: pointer;
+	height: 28px;
+	border: none;
+	margin: 0 28px;
+	color: #fff;
+	transition: 0.1s background-color ease;
+	&:hover {
+		background-color: #aa6055;
+ }
+}
+
 .img-item {
 	height: 80px;
 	width: 80px;

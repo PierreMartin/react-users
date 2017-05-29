@@ -55,7 +55,8 @@ export function login(req, res, next) {
             if (loginErr) return res.status(401).json({message: loginErr});
 
             return res.status(200).json({
-                message: 'Tu es maintenant authentifié.' // envoyé aux actions Redux
+                message: 'Tu es maintenant authentifié.',
+                userObj: user
             });
 
         });
@@ -93,7 +94,8 @@ export function signUp(req, res, next) {
             return req.logIn(user, (loginErr) => {
                 if (loginErr) return res.status(401).json({message: loginErr});
                 return res.status(200).json({
-                    message: 'You have been successfully logged in.'
+                    message: 'Tu es maintenant authentifié.',
+                    userObj: user
                 });
             });
         });
