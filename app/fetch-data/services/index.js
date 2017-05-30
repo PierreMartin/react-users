@@ -41,10 +41,10 @@ export function apiUsers() {
             method: 'GET',
             url: '/api/user/' + id
         }),
-				updateUser: ({ id, data }) => client.request({
+				updateUser: (param) => client.request({
 					method: 'PUT',
-					url: '/api/user/' + id,
-					data
+					url: '/api/user/' + param.id,
+					data: param
 				})
         /*
         deleteUsers: (id) => client.request({

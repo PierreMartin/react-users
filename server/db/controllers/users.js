@@ -107,20 +107,28 @@ export function signUp(req, res, next) {
  * PUT /api/user/:id
  */
 export function update(req, res, next) {
-	User.findOne({email: req.body.email}, (findErr, existingUser) => {
-		if (!existingUser) {
-			return res.status(409).json({message: 'Account with this email address don\'t exists!'});
+	const data = req.body;
+
+	if (!data && !data.id && !data.email) {
+		return res.status(400).json({message: 'We failed to save for some reason'});
+	}
+
+	const dataForRequest = {
+		email: data.email,
+		picture: data.picture,
+		name: data.name
+	};
+
+	User.findOneAndUpdate({email: data.email}, dataForRequest, (err) => {
+		if (err) {
+			console.log('Error on save!');
+			return res.status(500).json({message: 'We failed to save for some reason'});
 		}
 
-		return user.save((saveErr) => {
-			if (saveErr) return next(saveErr);
-			return req.logIn(user, (loginErr) => {
-				if (loginErr) return res.status(401).json({message: loginErr});
-				return res.status(200).json({
-					message: 'Tu es maintenant authentifié.',
-					userObj: user
-				});
-			});
+		// TODO gerer l'afichage du message (et des erreurs)
+		return res.status(200).json({
+			message: 'Updated successfully',
+			userObj: data
 		});
 	});
 }

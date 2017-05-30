@@ -8,8 +8,8 @@ export const getCours = (params, store) => {
             store.dispatch({type: types.GET_COURS_SUCCESS, data: res.data});
             return res.data; // le return sert a rien car on dispatch juste avant
         })
-        .catch(() => {
-            store.dispatch({type: types.GET_COURS_FAILURE, data: res.data});
+        .catch((err) => {
+            store.dispatch({type: types.GET_COURS_FAILURE, message: err.message});
             return [];
         });
 };
@@ -22,8 +22,8 @@ export const getUsers = (params, store) => {
             store.dispatch({type: types.GET_USERS_SUCCESS, data: res.data});
             return res.data; // le return sert a rien car on dispatch juste avant
         })
-        .catch(() => {
-            store.dispatch({type: types.GET_USERS_FAILURE, data: res.data});
+        .catch((err) => {
+            store.dispatch({type: types.GET_USERS_FAILURE, message: err.message});
             return [];
         });
 };
@@ -35,23 +35,20 @@ export const getUser = (params, store) => {
             store.dispatch({type: types.GET_USER_SUCCESS, data: res.data});
             return res.data; // le return sert a rien car on dispatch juste avant
         })
-        .catch(() => {
-            store.dispatch({type: types.GET_USER_FAILURE, data: res.data});
-            return [];
+        .catch((err) => {
+            store.dispatch({type: types.GET_USER_FAILURE, message: err.message});
+            return {};
         });
 };
 
 export const updateUser = (params, store) => {
-	console.log('params ===> ', params);
-	// debugger;
-
 	return apiUsers().updateUser(params)
 		.then((res) => {
-			store.dispatch({type: types.UPDATE_USER_SUCCESS, data: res.data});
+			store.dispatch({type: types.UPDATE_USER_SUCCESS, userObj: res.data.userObj});
 			return res.data; // le return sert a rien car on dispatch juste avant
 		})
-		.catch(() => {
-			store.dispatch({type: types.UPDATE_USER_FAILURE, data: res.data});
-			return [];
+		.catch((err) => {
+			store.dispatch({type: types.UPDATE_USER_FAILURE, message: err.message});
+			return {};
 		});
 };

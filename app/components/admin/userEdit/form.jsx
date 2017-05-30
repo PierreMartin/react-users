@@ -15,14 +15,13 @@ class FormEditUser extends Component {
 	handleOnSubmit(event) {
 		event.preventDefault();
 
-		const { updateUser, userObj: { _id } } = this.props;
+		const { updateUser, userObj: { _id }, userObj } = this.props;
 
-		const email = ReactDOM.findDOMNode(this.refs.email).value;
+		const email = (ReactDOM.findDOMNode(this.refs.email).value !== '') ? ReactDOM.findDOMNode(this.refs.email).value : userObj.email;
 		const name = ReactDOM.findDOMNode(this.refs.name).value;
 		const picture = ReactDOM.findDOMNode(this.refs.picture).value;
-		debugger;
 
-		if (email) {
+		if (email !== '') {
 			updateUser({email, name, picture, id: _id});
 		}
 	}
