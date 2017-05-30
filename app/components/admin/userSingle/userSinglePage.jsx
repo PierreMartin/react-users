@@ -16,7 +16,7 @@ class userSinglePage extends Component {
         let buttonEditNode = '';
 
         if (userSingle._id === userAuth._id) {
-          buttonEditNode = <Link to={'/user/edit'} className={cx('user-links')}><button>Editer mon profil</button></Link>;
+          buttonEditNode = <Link to={'/user/edit/' + userAuth._id} className={cx('user-links')}><button>Editer mon profil</button></Link>;
         }
 
         return (

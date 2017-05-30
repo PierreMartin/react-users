@@ -9,6 +9,7 @@ import Home from 'components/front/home/component';
 
 import Users from 'components/admin/usersList/usersPage';
 import User from 'components/admin/userSingle/userSinglePage';
+import UserEdit from 'components/admin/userEdit/userEditPage';
 
 import Dashboard from 'components/admin/dashboard/component';
 
@@ -49,7 +50,8 @@ export default (store) => {
         <Route path="/" component={App}>
             <IndexRoute component={Home} fetchMyDatas={getCours}/>
             <Route path="/userslist" component={Users} fetchMyDatas={getUsers} onEnter={requireAuth} />
-            <Route path='/user/:id' component={User} fetchMyDatas={getUser} />
+            <Route path='/user/:id' component={User} fetchMyDatas={getUser} onEnter={requireAuth} />
+            <Route path='/user/edit/:id' component={UserEdit} fetchMyDatas={getUser} onEnter={requireAuth} />
 
             {/*<Route path="/userslist" component={Users} fetchMyDatas={getUsers} onEnter={requireAuth} >
                <Route path=":userId" component={User}/>

@@ -138,3 +138,41 @@ export function logOut() {
 
 
 /***************************************** UPDATE user ********************************************/
+/*
+export function updateUserError(datas, message) {
+	return {
+		type: types.SIGNUP_ERROR_USER,
+		message,
+		id: datas.id
+	};
+}
+
+export function updateUserSuccess(datas, message, userObj) {
+	return {
+		type: types.SIGNUP_SUCCESS_USER,
+		message,
+		id: datas.id,
+		email: datas.email,
+		userObj
+	};
+}
+
+export function updateUser(data) {
+	return dispatch => {
+
+		return makeUserRequest('put', data, '/api/user/:id')
+			.then(response => {
+				if (response.status === 200) {
+					dispatch(updateUserSuccess(datas, response.data.message, response.data.userObj));
+					dispatch(push('/'));
+				} else {
+					dispatch(updateUserError(datas, 'Oops! Something went wrong'));
+				}
+			})
+			.catch(err => {
+				dispatch(updateUserError(datas, getMessage(err)));
+			});
+	};
+
+}
+*/

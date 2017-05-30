@@ -14,6 +14,7 @@ export default (app) => {
         app.post('/api/logout',     usersController.logout);
         app.get('/api/user/all',    usersController.all);
         app.get('/api/user/:id',    usersController.single);
+        app.put('/api/user/:id',    usersController.update);
     } else {
         console.warn(unsupportedMessage('users routes'));
     }

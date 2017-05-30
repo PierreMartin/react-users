@@ -40,16 +40,16 @@ export function apiUsers() {
         getUser: (id) => client.request({
             method: 'GET',
             url: '/api/user/' + id
-        })
+        }),
+				updateUser: ({ id, data }) => client.request({
+					method: 'PUT',
+					url: '/api/user/' + id,
+					data
+				})
         /*
         deleteUsers: (id) => client.request({
             method: 'DELETE',
             url: '/api/user/' + id
-        }),
-        updateUsers: ({ id, data }) => client.request({
-            method: 'PUT',
-            url: '/api/user/' + id,
-            data
         }),
         createUsers: ({ id, data }) => client.request({
             method: 'POST',

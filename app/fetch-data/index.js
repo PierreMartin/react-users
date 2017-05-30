@@ -41,3 +41,17 @@ export const getUser = (params, store) => {
         });
 };
 
+export const updateUser = (params, store) => {
+	console.log('params ===> ', params);
+	// debugger;
+
+	return apiUsers().updateUser(params)
+		.then((res) => {
+			store.dispatch({type: types.UPDATE_USER_SUCCESS, data: res.data});
+			return res.data; // le return sert a rien car on dispatch juste avant
+		})
+		.catch(() => {
+			store.dispatch({type: types.UPDATE_USER_FAILURE, data: res.data});
+			return [];
+		});
+};

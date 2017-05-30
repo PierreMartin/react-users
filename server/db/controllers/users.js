@@ -102,10 +102,34 @@ export function signUp(req, res, next) {
     });
 }
 
+
+/**
+ * PUT /api/user/:id
+ */
+export function update(req, res, next) {
+	User.findOne({email: req.body.email}, (findErr, existingUser) => {
+		if (!existingUser) {
+			return res.status(409).json({message: 'Account with this email address don\'t exists!'});
+		}
+
+		return user.save((saveErr) => {
+			if (saveErr) return next(saveErr);
+			return req.logIn(user, (loginErr) => {
+				if (loginErr) return res.status(401).json({message: loginErr});
+				return res.status(200).json({
+					message: 'Tu es maintenant authentifié.',
+					userObj: user
+				});
+			});
+		});
+	});
+}
+
 export default {
     login,
     logout,
     signUp,
     all,
     single,
+		update,
 };
