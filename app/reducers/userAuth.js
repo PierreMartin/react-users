@@ -99,12 +99,23 @@ const userObj = (state = {}, action) => {
   }
 };
 
+// TODO finir:
+const formValuesOnUpdate = (state = {}, action) => {
+  switch (action.type) {
+    case types.SUBMIT_UPDATE_USER_SUCCESS:
+      return {};
+    default:
+      return state;
+  }
+};
+
 const userReducer = combineReducers({
   isLogin,
   isWaiting,
   authenticated,
   message,
-  userObj
+  userObj,
+  formValuesOnUpdate
 });
 
 export default userReducer;

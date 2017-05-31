@@ -10,15 +10,16 @@ import { updateUserAction } from '../../../actions/userAuth';
 
 class UserEditPage extends Component {
 	render() {
-		const { userObj, updateUserAction } = this.props;
+		const { userObj, updateUserAction, formValuesOnUpdate } = this.props;
 
 		return (
 			<div>
 				<h1>Completer mon profil</h1>
 
 				<FormEditUser
-					user={userObj}
+					userObj={userObj}
 					updateUser={updateUserAction}
+					formValuesOnUpdate={formValuesOnUpdate}
 				/>
 
 			</div>
@@ -33,7 +34,8 @@ UserEditPage.propTypes = {
 
 function mapStateToProps(state) {
 	return {
-		userObj: state.userAuth.userObj
+		userObj: state.userAuth.userObj,
+    formValuesOnUpdate: state.userAuth.formValuesOnUpdate
 	};
 }
 

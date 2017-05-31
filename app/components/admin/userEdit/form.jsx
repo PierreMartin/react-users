@@ -6,7 +6,7 @@ import classNames from 'classnames/bind';
 
 // const cx = classNames.bind(styles);
 
-class FormEditUser extends Component {
+export default class FormEditUser extends Component {
 	constructor(props) {
 		super(props);
 		this.handleOnSubmit = this.handleOnSubmit.bind(this);
@@ -15,7 +15,7 @@ class FormEditUser extends Component {
 	handleOnSubmit(event) {
 		event.preventDefault();
 
-		const { updateUser, userObj: { _id }, userObj } = this.props;
+		const { updateUser, userObj: { _id }, userObj, formValuesOnUpdate } = this.props;
 
 		const email = (ReactDOM.findDOMNode(this.refs.email).value !== '') ? ReactDOM.findDOMNode(this.refs.email).value : userObj.email;
 		const name = ReactDOM.findDOMNode(this.refs.name).value;
@@ -27,7 +27,7 @@ class FormEditUser extends Component {
 	}
 
 	render() {
-		const { user } = this.props;
+		const { userObj, formValuesOnUpdate } = this.props; // value={formValuesOnUpdate.email}
 
 		return (
 			<form className='form-horizontal' onSubmit={this.handleOnSubmit}>
@@ -35,21 +35,21 @@ class FormEditUser extends Component {
 				<div className="form-group">
 					<label className="col-sm-2 control-label">Email</label>
 					<div className="col-sm-10">
-						<input type="email" ref="email" className="form-control" id="inputEmail3" placeholder={user.email}/>
+						<input type="email" ref="email" className="form-control" id="inputEmail3" placeholder={userObj.email} />
 					</div>
 				</div>
 
 				<div className="form-group">
 					<label className="col-sm-2 control-label">Name</label>
 					<div className="col-sm-10">
-						<input type="text" ref="name" className="form-control" id="inputPassword3" placeholder={user.name}/>
+						<input type="text" ref="name" className="form-control" id="inputPassword3" placeholder={userObj.name}/>
 					</div>
 				</div>
 
 				<div className="form-group">
 					<label className="col-sm-2 control-label">Picture</label>
 					<div className="col-sm-10">
-						<input type="text" ref="picture" className="form-control" id="inputPassword3" placeholder={user.picture}/>
+						<input type="text" ref="picture" className="form-control" id="inputPassword3" placeholder={userObj.picture}/>
 					</div>
 				</div>
 
@@ -66,13 +66,5 @@ class FormEditUser extends Component {
 
 FormEditUser.propTypes = {
 	updateUser: PropTypes.func,
+  userObj: PropTypes.object.isRequired
 };
-
-
-function mapStateToProps(state) {
-	return {
-		userObj: state.userAuth.userObj
-	};
-}
-
-export default connect(mapStateToProps, null)(FormEditUser);
