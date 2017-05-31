@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
 // import styles from './css/style';
 import FormEditUser from './form';
-import { updateUser } from '../../../fetch-data';
+import { updateUserAction } from '../../../actions/userAuth';
 
 // const cx = classNames.bind(styles);
 
 
 class UserEditPage extends Component {
 	render() {
-		const { userObj, updateUser } = this.props;
+		const { userObj, updateUserAction } = this.props;
 
 		return (
 			<div>
@@ -18,7 +18,7 @@ class UserEditPage extends Component {
 
 				<FormEditUser
 					user={userObj}
-					updateUser={updateUser}
+					updateUser={updateUserAction}
 				/>
 
 			</div>
@@ -28,7 +28,7 @@ class UserEditPage extends Component {
 
 UserEditPage.propTypes = {
 	userObj: PropTypes.object.isRequired,
-	updateUser: PropTypes.func
+	updateUserAction: PropTypes.func
 };
 
 function mapStateToProps(state) {
@@ -38,4 +38,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, {updateUser})(UserEditPage);
+export default connect(mapStateToProps, {updateUserAction})(UserEditPage);

@@ -19,3 +19,8 @@
   background-color: var(--colorSalem);
   color: var(--colorWhite);
 }
+
+.error {
+    background-color: var(--colorPunch);
+    color: var(--colorWhite);
+}

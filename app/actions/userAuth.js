@@ -1,5 +1,6 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
+import { updateUser } from './../fetch-data';
 import { push } from 'react-router-redux';
 import * as types from 'types';
 import md5 from 'spark-md5';
@@ -138,41 +139,34 @@ export function logOut() {
 
 
 /***************************************** UPDATE user ********************************************/
-/*
-export function updateUserError(datas, message) {
+export function updateUserError(message) {
 	return {
-		type: types.SIGNUP_ERROR_USER,
-		message,
-		id: datas.id
+		type: types.UPDATE_USER_FAILURE,
+		message
 	};
 }
 
-export function updateUserSuccess(datas, message, userObj) {
+export function updateUserSuccess(res) {
 	return {
-		type: types.SIGNUP_SUCCESS_USER,
-		message,
-		id: datas.id,
-		email: datas.email,
-		userObj
+		type: types.UPDATE_USER_SUCCESS,
+		message : res.message,
+		userObj: res.userObj
 	};
 }
 
-export function updateUser(data) {
+export function updateUserAction(data) {
 	return dispatch => {
-
-		return makeUserRequest('put', data, '/api/user/:id')
-			.then(response => {
+		return updateUser(data)
+			.then((response) => {
 				if (response.status === 200) {
-					dispatch(updateUserSuccess(datas, response.data.message, response.data.userObj));
-					dispatch(push('/'));
+					dispatch(updateUserSuccess(response.data));
 				} else {
-					dispatch(updateUserError(datas, 'Oops! Something went wrong'));
+					dispatch(updateUserError(response.data.message));
 				}
 			})
-			.catch(err => {
-				dispatch(updateUserError(datas, getMessage(err)));
+			.catch((err) => {
+				dispatch(updateUserError(getMessage(err)));
 			});
 	};
-
 }
-*/
+

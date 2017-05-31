@@ -106,11 +106,11 @@ export function signUp(req, res, next) {
 /**
  * PUT /api/user/:id
  */
-export function update(req, res, next) {
+export function update(req, res) {
 	const data = req.body;
 
 	if (!data && !data.id && !data.email) {
-		return res.status(400).json({message: 'We failed to save for some reason'});
+		return res.status(400).json({message: 'Une erreur est survenue lors de votre mise à jour de votre profile'});
 	}
 
 	const dataForRequest = {
@@ -121,13 +121,13 @@ export function update(req, res, next) {
 
 	User.findOneAndUpdate({email: data.email}, dataForRequest, (err) => {
 		if (err) {
-			console.log('Error on save!');
-			return res.status(500).json({message: 'We failed to save for some reason'});
+			return res.status(500).json({
+				message: 'Une erreur est survenue lors de votre mise à jour de votre profile'
+			});
 		}
 
-		// TODO gerer l'afichage du message (et des erreurs)
 		return res.status(200).json({
-			message: 'Updated successfully',
+			message: 'Votre profile à bien été mis à jour',
 			userObj: data
 		});
 	});

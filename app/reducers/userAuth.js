@@ -75,13 +75,23 @@ const authenticated = (
 const userObj = (state = {}, action) => {
   switch (action.type) {
     case types.LOGIN_SUCCESS_USER:
-    case types.UPDATE_USER_SUCCESS:
     case types.SIGNUP_SUCCESS_USER:
       if (action.userObj) return action.userObj;
       return state;
+		case types.UPDATE_USER_SUCCESS:
+			if (action.userObj) {
+				return {
+					...state,
+					name: action.userObj.name,
+					picture: action.userObj.picture,
+					email: action.userObj.email
+				};
+			}
+			return state;
+		case types.UPDATE_USER_FAILURE:
+			return state;
     case types.LOGIN_ERROR_USER:
     case types.SIGNUP_ERROR_USER:
-    case types.UPDATE_USER_FAILURE:
     case types.LOGOUT_SUCCESS_USER:
       return {};
     default:

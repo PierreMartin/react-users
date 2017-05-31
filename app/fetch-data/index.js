@@ -41,14 +41,13 @@ export const getUser = (params, store) => {
         });
 };
 
-export const updateUser = (params, store) => {
-	return apiUsers().updateUser(params)
+// dispatch define in actions/userAuth :
+export const updateUser = (data) => {
+	return apiUsers().updateUser(data)
 		.then((res) => {
-			store.dispatch({type: types.UPDATE_USER_SUCCESS, userObj: res.data.userObj});
-			return res.data; // le return sert a rien car on dispatch juste avant
+			return res;
 		})
-		.catch((err) => {
-			store.dispatch({type: types.UPDATE_USER_FAILURE, message: err.message});
+		.catch(() => {
 			return {};
 		});
 };
