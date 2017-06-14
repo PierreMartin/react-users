@@ -38,7 +38,7 @@ export default class FormEditUser extends Component {
 
 		const { updateUser, userObj: { _id }, userObj } = this.props;
 
-		this.email = (ReactDOM.findDOMNode(this.refs.email).value !== '') ? ReactDOM.findDOMNode(this.refs.email).value : userObj.email;
+		const email = (ReactDOM.findDOMNode(this.refs.email).value !== '') ? ReactDOM.findDOMNode(this.refs.email).value : userObj.email;
 		const name = ReactDOM.findDOMNode(this.refs.name).value;
 		const picture = ReactDOM.findDOMNode(this.refs.picture).value;
 
