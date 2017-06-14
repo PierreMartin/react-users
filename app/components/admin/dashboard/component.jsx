@@ -7,17 +7,15 @@ import { createCours, typing, addStarCourse, destroyCours, fetchTopics } from '.
 
 
 class Dashboard extends Component {
-
-    // {newCoursValue, ... } = this.props;   => valeur retourné des fonctions des reducers ET des actions
     render() {
         const {newCoursValue, courses, typing, createCours, destroyCours, addStarCourse } = this.props;
         return (
             <div>
 
                 <AddCours
-                    newCoursValue={newCoursValue}
-                    typing={typing}
-                    createCours={createCours}
+                    typing={typing}               // 1) for update the new state
+                    newCoursValue={newCoursValue} // 2) from new state in REAL TIME - for the displaying in the fields
+                    createCours={createCours}     // 3) at SUBMIT - contains 'newCoursValue'
                 />
 
                 <CoursList

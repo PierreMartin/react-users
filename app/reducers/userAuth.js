@@ -100,7 +100,7 @@ const userObj = (state = {}, action) => {
 };
 
 // TODO finir:
-const formValuesOnUpdate = (state = {}, action) => {
+const formValuesOnUpdateUser = (state = {}, action) => {
   switch (action.type) {
     case types.SUBMIT_UPDATE_USER_SUCCESS:
       return {};
@@ -115,7 +115,7 @@ const userReducer = combineReducers({
   authenticated,
   message,
   userObj,
-  formValuesOnUpdate
+  formValuesOnUpdateUser
 });
 
 export default userReducer;

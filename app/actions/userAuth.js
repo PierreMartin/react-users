@@ -139,6 +139,17 @@ export function logOut() {
 
 
 /***************************************** UPDATE user ********************************************/
+export function typingEmailAction(text) {
+  console.log(text);
+  debugger;
+  return {
+    type: types.typingEmailAction,
+    typingEmailAction: text
+  };
+}
+
+
+/*****  *****/
 export function updateUserError(message) {
 	return {
 		type: types.UPDATE_USER_FAILURE,
