@@ -72,6 +72,20 @@ const authenticated = (
   }
 };
 
+/************* updating userObj - typing *************/
+const typingUpdateUserState = (state = {}, action) => {
+	switch (action.type) {
+		case types.TYPING_UPDATE_USER_ACTION:
+			return Object.assign({}, state, action.data);
+		case types.UPDATE_USER_SUCCESS:
+		case types.UPDATE_USER_FAILURE:
+			return state;
+		default:
+			return state;
+	}
+};
+
+/************* set userObj - submit / login / signup *************/
 const userObj = (state = {}, action) => {
   switch (action.type) {
     case types.LOGIN_SUCCESS_USER:
@@ -99,15 +113,6 @@ const userObj = (state = {}, action) => {
   }
 };
 
-// TODO finir:
-const formValuesOnUpdateUser = (state = {}, action) => {
-  switch (action.type) {
-    case types.SUBMIT_UPDATE_USER_SUCCESS:
-      return {};
-    default:
-      return state;
-  }
-};
 
 const userReducer = combineReducers({
   isLogin,
@@ -115,7 +120,7 @@ const userReducer = combineReducers({
   authenticated,
   message,
   userObj,
-  formValuesOnUpdateUser
+	typingUpdateUserState
 });
 
 export default userReducer;

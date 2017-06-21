@@ -139,17 +139,15 @@ export function logOut() {
 
 
 /***************************************** UPDATE user ********************************************/
-export function typingEmailAction(text) {
-  console.log(text);
-  debugger;
+export function typingUpdateUserAction(nameField, valueField) {
   return {
-    type: types.typingEmailAction,
-    typingEmailAction: text
+    type: types.TYPING_UPDATE_USER_ACTION,
+		data: {
+			[nameField]: valueField
+		}
   };
 }
 
-
-/*****  *****/
 export function updateUserError(message) {
 	return {
 		type: types.UPDATE_USER_FAILURE,

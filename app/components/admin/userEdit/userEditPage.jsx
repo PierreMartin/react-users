@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
 // import styles from './css/style';
 import FormEditUser from './form';
-import { typingEmailAction, updateUserAction } from '../../../actions/userAuth';
+import { typingUpdateUserAction, updateUserAction } from '../../../actions/userAuth';
 
 // const cx = classNames.bind(styles);
 
 
 class UserEditPage extends Component {
 	render() {
-		const { userObj, updateUserAction, formValuesOnUpdateUser, typingEmailAction } = this.props;
+		const { userObj, updateUserAction, typingUpdateUserState, typingUpdateUserAction } = this.props;
 
 		return (
 			<div>
@@ -19,14 +19,9 @@ class UserEditPage extends Component {
 				<FormEditUser
 					userObj={userObj} 																	// from new state NOT in real time - after the SUBMIT action
 
-					// SEARCH onchange on many fields redux
-
-					typingEmailAction={typingEmailAction}								// 1) for update the new state
-					// typingNameAction={typingNameAction}									// 1) for update the new state
-					// typingPictureAction={typingPictureAction}						// 1) for update the new state
-
-					formValuesOnUpdateUser={formValuesOnUpdateUser}			// 2) from new state in REAL TIME for the displaying in the fields
-					updateUser={updateUserAction}												// 3) at SUBMIT - contains 'formValuesOnUpdateUser'    || POUR L'INSTANT ON A  => updateUser({email, name, picture, id: _id})
+					typingUpdateUserAction={typingUpdateUserAction}			// 1) for update the new state
+					typingUpdateUserState={typingUpdateUserState}				// 2) from new state in REAL TIME for the displaying in the fields
+					updateUser={updateUserAction}												// 3) at SUBMIT - contains 'typingUpdateUserState'    || POUR L'INSTANT ON A  => updateUser({email, name, picture, id: _id})
 				/>
 
 			</div>
@@ -36,17 +31,17 @@ class UserEditPage extends Component {
 
 UserEditPage.propTypes = {
 	userObj: PropTypes.object.isRequired,
-  typingEmailAction: PropTypes.func.isRequired,
-  formValuesOnUpdateUser: PropTypes.object.isRequired,
+	typingUpdateUserAction: PropTypes.func.isRequired,
+	typingUpdateUserState: PropTypes.object.isRequired,
 	updateUserAction: PropTypes.func
 };
 
 function mapStateToProps(state) {
 	return {
 		userObj: state.userAuth.userObj,
-    formValuesOnUpdateUser: state.userAuth.formValuesOnUpdateUser
+		typingUpdateUserState: state.userAuth.typingUpdateUserState
 	};
 }
 
 
-export default connect(mapStateToProps, {updateUserAction, typingEmailAction})(UserEditPage);
+export default connect(mapStateToProps, {updateUserAction, typingUpdateUserAction})(UserEditPage);

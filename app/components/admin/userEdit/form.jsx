@@ -9,29 +9,16 @@ import classNames from 'classnames/bind';
 export default class FormEditUser extends Component {
 	constructor(props) {
 		super(props);
-    this.onChangeEmail   		= this.onChangeEmail.bind(this);
-    this.onChangeName 			= this.onChangeName.bind(this);
-    this.onChangePicture 		= this.onChangePicture.bind(this);
-
+    this.handleInputChange  = this.handleInputChange.bind(this);
     this.handleOnSubmit 		= this.handleOnSubmit.bind(this);
+		this.isChanged = {};
 	}
 
-
-  onChangeEmail(event) {
-    const { typingEmailAction } = this.props;
-    typingEmailAction(event.target.value);
+	handleInputChange(event) {
+		this.isChanged[event.target.name] = true;
+    const { typingUpdateUserAction } = this.props;
+		typingUpdateUserAction(event.target.name, event.target.value);
   }
-
-  onChangeName(event) {
-    const { typingNameAction } = this.props;
-    typingNameAction(event.target.value);
-  }
-
-  onChangePicture(event) {
-    const { typingPictureAction } = this.props;
-    typingPictureAction(event.target.value);
-  }
-
 
 	handleOnSubmit(event) {
 		event.preventDefault();
@@ -45,10 +32,12 @@ export default class FormEditUser extends Component {
 		if (email !== '') {
 			updateUser({email, name, picture, id: _id});
 		}
+
+		this.isChanged[event.target.name] = false;
 	}
 
 	render() {
-		const { userObj, formValuesOnUpdateUser } = this.props;
+		const { userObj, typingUpdateUserState } = this.props;
 
 		return (
 			<form className='form-horizontal' onSubmit={this.handleOnSubmit}>
@@ -56,21 +45,21 @@ export default class FormEditUser extends Component {
 				<div className="form-group">
 					<label className="col-sm-2 control-label">Email</label>
 					<div className="col-sm-10">
-						<input type="email" ref="email" className="form-control" placeholder="Pierre" value={userObj.email || formValuesOnUpdateUser.email} onChange={this.onChangeEmail} />
+						<input type="email" ref="email" name="email" className="form-control" placeholder="Votre email" value={this.isChanged.email ? typingUpdateUserState.email : userObj.email} onChange={this.handleInputChange} />
 					</div>
 				</div>
 
 				<div className="form-group">
 					<label className="col-sm-2 control-label">Name</label>
 					<div className="col-sm-10">
-						<input type="text" ref="name" className="form-control" placeholder="Votre nom" value={userObj.name || formValuesOnUpdateUser.name} onChange={this.onChangeName} />
+						<input type="text" ref="name" name="name" className="form-control" placeholder="Votre nom" value={this.isChanged.name ? typingUpdateUserState.name : userObj.name} onChange={this.handleInputChange} />
 					</div>
 				</div>
 
 				<div className="form-group">
 					<label className="col-sm-2 control-label">Picture</label>
 					<div className="col-sm-10">
-						<input type="text" ref="picture" className="form-control" placeholder="Test/aaa/bbb" value={userObj.picture || formValuesOnUpdateUser.picture} onChange={this.onChangePicture} />
+						<input type="text" ref="picture" name="picture" className="form-control" placeholder="Test/aaa/bbb" value={this.isChanged.picture ? typingUpdateUserState.picture : userObj.picture} onChange={this.handleInputChange} />
 					</div>
 				</div>
 
@@ -88,5 +77,5 @@ export default class FormEditUser extends Component {
 FormEditUser.propTypes = {
 	updateUser: PropTypes.func,
   userObj: PropTypes.object.isRequired,
-  formValuesOnUpdateUser: PropTypes.object.isRequired
+	typingUpdateUserState: PropTypes.object.isRequired
 };

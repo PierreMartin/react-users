@@ -22,16 +22,6 @@ export function makeCoursRequest(method, id, data, api = '/api/cours') {
 }
 
 
-/***************************************** Fetch cours ********************************************/
-/*export function fetchTopics() {
-    return {
-        type: types.GET_TOPICS,
-        promise: makeCoursRequest('get')
-    };
-}*/
-
-
-
 /***************************************** Create cours - typing text value ********************************************/
 export function typing(text) {
     return {
