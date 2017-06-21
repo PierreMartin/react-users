@@ -23,9 +23,9 @@ export function makeCoursRequest(method, id, data, api = '/api/cours') {
 
 
 /***************************************** Create cours - typing text value ********************************************/
-export function typing(text) {
+export function typingCreateCourAction(text) {
     return {
-        type: types.TYPING,
+        type: types.TYPING_CREATE_COUR_ACTION,
         typingCurrentValue: text
     };
 }

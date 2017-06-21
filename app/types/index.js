@@ -7,7 +7,7 @@ export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';
 export const REQUEST_FAILURE = 'REQUEST_FAILURE';
 
 /***************************************** Create cours ********************************************/
-export const TYPING = 'TYPING';
+export const TYPING_CREATE_COUR_ACTION = 'TYPING_CREATE_COUR_ACTION';
 
 export const CREATE_COURS_SUCCESS = 'CREATE_COURS_SUCCESS';
 export const CREATE_COURS_FAILURE = 'CREATE_COURS_FAILURE';

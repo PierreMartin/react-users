@@ -167,7 +167,7 @@ GET auth        => GET usersMe(auth._id)                -> userMe
 `- voir passport js`
 `- changer tout les 'courses' par 'cours'`
 
-- page 'mon profil'
+- page 'mon profil' -> ajouter des champs (prenom, age, ville, ...)
 
 - cours => page single - et renomer dans reducer :
     - state.cour.courSingle

@@ -2,7 +2,7 @@
  * le reducer permet d'updater le 'state container'
  **/
 
-/** action en params    => valeurs retourné dans les fichiers 'action' par un 'dispatch(...)'    exemple => return { type: types.TYPING, newCours: text }; **/
+/** action en params    => valeurs retourné dans les fichiers 'action' par un 'dispatch(...)'    exemple => return { type: types.TYPING_CREATE_COUR_ACTION, newCours: text }; **/
 /** state               => une partie du 'state container' défini dans "mapStateToProps" du composant => connect(mapStateToProps, ...) **/
 
 import { combineReducers } from 'redux';
@@ -55,12 +55,12 @@ const courses = (state = [], action) => {
 };
 
 
-// 'newCoursValue' sera la propriété dans l'objet state
-const newCoursValue = (state = '', action) => {
+// 'typingCreateCourState' sera la propriété dans l'objet state
+const typingCreateCourState = (state = '', action) => {
     switch (action.type) {
-        case types.TYPING:                          // quand on est entrain d'ecrire
-            return action.typingCurrentValue;                     // on retourne la valeur dans le state
-        case types.CREATE_COURS_SUCCESS:            // quand on valide le nouveau topic, on vide cette valeur du state
+        case types.TYPING_CREATE_COUR_ACTION:
+            return action.typingCurrentValue;
+        case types.CREATE_COURS_SUCCESS:
             return '';
         default:
             return state;
@@ -69,7 +69,7 @@ const newCoursValue = (state = '', action) => {
 
 const coursReducer = combineReducers({
     courses,
-    newCoursValue
+		typingCreateCourState
 });
 
 export default coursReducer;

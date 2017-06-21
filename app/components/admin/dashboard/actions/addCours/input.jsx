@@ -15,8 +15,8 @@ export default class BackAddUserInput extends Component {
     }
 
     onChange(event) {
-        const { typing } = this.props;
-        typing(event.target.value);
+        const { typingCreateCourAction } = this.props;
+				typingCreateCourAction(event.target.value);
     }
 
     onKeyDown(event) {
@@ -46,5 +46,5 @@ BackAddUserInput.propTypes = {
     placeholder: PropTypes.string,
     value: PropTypes.string,
     createCours: PropTypes.func,
-    typing: PropTypes.func
+		typingCreateCourAction: PropTypes.func
 };
