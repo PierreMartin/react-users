@@ -8,6 +8,15 @@ import * as types from 'types';
 import configureStore from 'store/configureStore';
 import fetchDataForRoute from './middlewares/fetchDataForRoute';
 
+
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { cyan700, grey600, pinkA100, pinkA200, pinkA400, fullWhite } from 'material-ui/styles/colors';
+import { fade } from 'material-ui/utils/colorManipulator';
+
+injectTapEventPlugin();
+
 // Grab the state from a global injected into
 // server-generated HTML
 const initialState = window.__INITIAL_STATE__;
@@ -15,6 +24,31 @@ const initialState = window.__INITIAL_STATE__;
 const store     = configureStore(initialState, browserHistory);
 const history   = syncHistoryWithStore(browserHistory, store);
 const routes    = createRoutes(store);
+
+const muiTheme = getMuiTheme({
+		borderRadius: 2,
+		palette: {
+				primary1Color: cyan700,
+				primary2Color: cyan700,
+				primary3Color: grey600,
+				accent1Color: pinkA200,
+				accent2Color: pinkA400,
+				accent3Color: pinkA100,
+				textColor: fullWhite,
+				secondaryTextColor: fade(fullWhite, 0.7),
+				alternateTextColor: '#303030',
+				canvasColor: '#303030',
+				borderColor: fade(fullWhite, 0.3),
+				disabledColor: fade(fullWhite, 0.3),
+				pickerHeaderColor: fade(fullWhite, 0.12),
+				clockCircleColor: fade(fullWhite, 0.12),
+		},
+},
+{
+		avatar: {
+				borderColor: null
+		},
+});
 
 /**
  * Callback function handling frontend route changes.
@@ -46,10 +80,12 @@ function onUpdate() {
 // Router converts <Route> element hierarchy to a route config:
 // Read more https://github.com/rackt/react-router/blob/latest/docs/Glossary.md#routeconfig
 render(
-    <Provider store={store}>
-        <Router history={history} onUpdate={onUpdate}>
-            {routes}
-        </Router>
-    </Provider>,
-    document.getElementById('app')
+		<MuiThemeProvider muiTheme={muiTheme}>
+				<Provider store={store}>
+						<Router history={history} onUpdate={onUpdate}>
+								{routes}
+						</Router>
+				</Provider>
+		</MuiThemeProvider>,
+		document.getElementById('app')
 );

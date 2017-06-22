@@ -9,6 +9,15 @@ import * as types from 'types';
 import fetchDataForRoute from './middlewares/fetchDataForRoute';
 import header from 'components/Meta';
 
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { cyan700, grey600, pinkA100, pinkA200, pinkA400, fullWhite } from 'material-ui/styles/colors';
+import { fade } from 'material-ui/utils/colorManipulator';
+
+injectTapEventPlugin();
+
+
 const clientConfig = {
     host: process.env.HOSTNAME || 'localhost',
     port: process.env.PORT || '3000'
@@ -96,10 +105,38 @@ export default function render(req, res) {
                 .then(data => {
                     // store.dispatch({type: types.REQUEST_SUCCESS, data: data});
 
+										const muiTheme = getMuiTheme({
+												borderRadius: 2,
+												palette: {
+														primary1Color: cyan700,
+														primary2Color: cyan700,
+														primary3Color: grey600,
+														accent1Color: pinkA200,
+														accent2Color: pinkA400,
+														accent3Color: pinkA100,
+														textColor: fullWhite,
+														secondaryTextColor: fade(fullWhite, 0.7),
+														alternateTextColor: '#303030',
+														canvasColor: '#303030',
+														borderColor: fade(fullWhite, 0.3),
+														disabledColor: fade(fullWhite, 0.3),
+														pickerHeaderColor: fade(fullWhite, 0.12),
+														clockCircleColor: fade(fullWhite, 0.12),
+												},
+										},
+										{
+												avatar: {
+														borderColor: null
+												},
+												userAgent: req.headers['user-agent'],
+										});
+
                     const componentHTML = renderToString(
-                        <Provider store={store}>
-                            <RouterContext {...props} />
-                        </Provider>
+												<MuiThemeProvider muiTheme={muiTheme}>
+														<Provider store={store}>
+																<RouterContext {...props} />
+														</Provider>
+												</MuiThemeProvider>
                     );
 
                     const initialState = store.getState();

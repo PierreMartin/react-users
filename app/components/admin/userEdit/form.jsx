@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
-import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
+import TextField from 'material-ui/TextField';
 // import styles from './css/entrybox';
 
 // const cx = classNames.bind(styles);
@@ -41,6 +41,18 @@ export default class FormEditUser extends Component {
 
 		return (
 			<form className='form-horizontal' onSubmit={this.handleOnSubmit}>
+
+				<div>
+					<TextField hintText="Hint Text"/><br />
+					<TextField hintText="The hint text can be as long as you want, it will wrap."/><br />
+					<TextField id="text-field-default" defaultValue="Default Value"/><br />
+					<TextField hintText="Hint Text" floatingLabelText="Floating Label Text"/><br />
+					<TextField defaultValue="Default Value" floatingLabelText="Floating Label Text"/><br />
+					<TextField hintText="Hint Text" floatingLabelText="Fixed Floating Label Text" floatingLabelFixed={true}/><br />
+					<TextField hintText="Password Field" floatingLabelText="Password" type="password"/><br />
+					<TextField hintText="MultiLine with rows: 2 and rowsMax: 4" multiLine={true} rows={2} rowsMax={4}/><br />
+					<TextField hintText="Message Field" floatingLabelText="MultiLine and FloatingLabel" multiLine={true} rows={2}/><br />
+				</div>
 
 				<div className="form-group">
 					<label className="col-sm-2 control-label">Email</label>
