@@ -180,7 +180,6 @@ GET auth        => GET usersMe(auth._id)                -> userMe
     - state.user.usersByFriends    
     
 - finir CRUD des users + cours (GET: DONE, POST, PUT, DELET)
-- Ajouter des attribus dans le modele Mongo (Age, sexe, ville...)
 - Prevoir un filtre d'affichage des personnes (par age, par ville)
 
 - gerer tous les messages (succes et d'erreurs) de facon generique - reducer 'popupMessage'

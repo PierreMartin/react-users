@@ -3,13 +3,13 @@
 
 .navigation {
   padding: 0 28px;
+  font-size: 17px;
 }
 
-.item {
+a.item {
   display: inline-block;
   text-decoration: none;
-  padding: 16px 32px;
-  color: var(--colorBlack);
+  padding: 16px 20px;
 }
 
 .logo {

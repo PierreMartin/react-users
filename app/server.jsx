@@ -148,7 +148,6 @@ export default function render(req, res) {
                                 ${header.title.toString()}
                                 ${header.meta.toString()}
                                 ${header.link.toString()}
-                                <link href="css/react-star-rating.min.css" rel="stylesheet" type="text/css" media="screen">
                             </head>
                         <body>
                             <div id="app">${componentHTML}</div>
