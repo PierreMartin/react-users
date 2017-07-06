@@ -108,8 +108,9 @@ export function signUp(req, res, next) {
  */
 export function update(req, res) {
 	const data = req.body;
+	const id = req.params.id;
 
-	if (!data && !data.id && !data.email) {
+	if (id && !data && !data.id && !data.email) {
 		return res.status(400).json({message: 'Une erreur est survenue lors de votre mise à jour de votre profile'});
 	}
 
@@ -119,7 +120,7 @@ export function update(req, res) {
 		name: data.name
 	};
 
-	User.findOneAndUpdate({email: data.email}, dataForRequest, (err) => {
+	User.findOneAndUpdate({'_id' : id}, dataForRequest, (err) => {
 		if (err) {
 			return res.status(500).json({
 				message: 'Une erreur est survenue lors de votre mise à jour de votre profile'
