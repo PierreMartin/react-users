@@ -110,7 +110,7 @@ export function update(req, res) {
 	const data = req.body;
 	const id = req.params.id;
 
-	if (id && !data && !data.id && !data.email) {
+	if (id && !data && !data.email) {
 		return res.status(400).json({message: 'Une erreur est survenue lors de votre mise à jour de votre profile'});
 	}
 
