@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import classNames from 'classnames/bind';
 import styles from './user/css/user';
 import User from './user/user';
+import RaisedButton from 'material-ui/RaisedButton';
 // import AddCour from './actions/addCours/add';
 // import CoursListByUser from '../../front/home/coursList/coursList';
 const cx = classNames.bind(styles);
@@ -11,24 +12,19 @@ const cx = classNames.bind(styles);
 
 class userSinglePage extends Component {
     render() {
-        const { userSingle, userAuth } = this.props;
+        const { userSingle, userObj } = this.props;
 
         let buttonEditNode = '';
 
-        if (userSingle._id === userAuth._id) {
-          buttonEditNode = <Link to={'/user/edit/' + userAuth._id} className={cx('user-links')}><button>Editer mon profil</button></Link>;
+        if (userSingle._id === userObj._id) {
+          buttonEditNode = <Link to={'/user/edit/' + userObj._id} className={cx('user-links')}><RaisedButton label="Editer mon profil" /></Link>;
         }
 
         return (
             <div>
                 {buttonEditNode}
 
-                <User
-                    email={userSingle.email}
-                    name={userSingle.name}
-                    gender={userSingle.gender}
-                    picture={userSingle.picture}
-                />
+                <User userSingle={userSingle}/>
 
                 {/*<AddCour
                     newCoursValue={newCoursValue}
@@ -48,14 +44,14 @@ class userSinglePage extends Component {
 
 userSinglePage.propTypes = {
   userSingle: PropTypes.object.isRequired,
-  userAuth: PropTypes.object
+	userObj: PropTypes.object
 };
 
 
 function mapStateToProps(state) {
     return {
       userSingle: state.user.userSingle,
-      userAuth: state.userAuth.userObj
+			userObj: state.userAuth.userObj
     };
 }
 

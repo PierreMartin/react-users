@@ -5,23 +5,20 @@ import avatar from '../../../../images/apple-ninja152-precomposed.png';
 
 const cx = classNames.bind(styles);
 
-const User = ({ email, name, gender, picture }) => {
+const User = ({ userSingle }) => {
     return (
         <div>
             <img src={avatar} alt="" className={cx('img-item')}/>
-            <div><strong>Email : {email}</strong></div>
-            <div>Nom : {name}</div>
-            <div>Sexe : {gender}</div>
-            <div>Image : {picture}</div>
+            <div><strong>Email : {userSingle.email}</strong></div>
+            <div>Nom : {userSingle.name}</div>
+            <div>genre : {userSingle.gender}</div>
+            <div>Image : {userSingle.picture}</div>
         </div>
     );
 };
 
 User.propTypes = {
-    email: PropTypes.string,
-    name: PropTypes.string,
-    gender: PropTypes.string,
-    picture: PropTypes.string
+		userSingle: PropTypes.object
 };
 
 export default User;
