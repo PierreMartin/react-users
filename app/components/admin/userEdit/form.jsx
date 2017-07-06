@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames/bind';
 import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 // import styles from './css/entrybox';
 
 // const cx = classNames.bind(styles);
@@ -11,29 +12,35 @@ export default class FormEditUser extends Component {
 		super(props);
     this.handleInputChange  = this.handleInputChange.bind(this);
     this.handleOnSubmit 		= this.handleOnSubmit.bind(this);
+		this.fields = [];
 		this.isChanged = {};
 	}
 
 	handleInputChange(event) {
 		this.isChanged[event.target.name] = true;
+		this.fields.push(event.target.name);
     const { typingUpdateUserAction } = this.props;
 		typingUpdateUserAction(event.target.name, event.target.value);
   }
 
 	handleOnSubmit(event) {
 		event.preventDefault();
+		const { updateUser, userObj: { _id }, userObj, typingUpdateUserState } = this.props;
 
-		const { updateUser, userObj: { _id }, userObj } = this.props;
+		const email = (typeof typingUpdateUserState.email !== 'undefined' ? typingUpdateUserState.email : userObj.email) || false;
+		const name = (typeof typingUpdateUserState.name !== 'undefined' ? typingUpdateUserState.name : userObj.name) || '';
+		const picture = (typeof typingUpdateUserState.picture !== 'undefined' ? typingUpdateUserState.picture : userObj.picture) || '';
 
-		const email = (ReactDOM.findDOMNode(this.refs.email).value !== '') ? ReactDOM.findDOMNode(this.refs.email).value : userObj.email;
-		const name = ReactDOM.findDOMNode(this.refs.name).value;
-		const picture = ReactDOM.findDOMNode(this.refs.picture).value;
-
-		if (email !== '') {
+		// update - request :
+		if (email && _id) {
 			updateUser({email, name, picture, id: _id});
 		}
 
-		this.isChanged[event.target.name] = false;
+		// set all 'this.isChanged' to false :
+		for (var i = 0; i < this.fields.length; i++) {
+			this.isChanged[this.fields[i]] = false;
+		}
+		this.fields = [];
 	}
 
 	render() {
@@ -41,45 +48,12 @@ export default class FormEditUser extends Component {
 
 		return (
 			<form className='form-horizontal' onSubmit={this.handleOnSubmit}>
+				<TextField ref="email" name="email" defaultValue={this.isChanged.email ? typingUpdateUserState.email : userObj.email} floatingLabelText="Email" type="email" onChange={this.handleInputChange}/><br />
+				<TextField ref="name" name="name" defaultValue={this.isChanged.name ? typingUpdateUserState.name : userObj.name} floatingLabelText="Name" onChange={this.handleInputChange}/><br />
+				<TextField ref="picture" name="picture" defaultValue={this.isChanged.picture ? typingUpdateUserState.picture : userObj.picture} floatingLabelText="Picture" onChange={this.handleInputChange}/><br />
+				{/*<TextField hintText="Password Field" floatingLabelText="Password" type="password"/><br />*/}
 
-				<div>
-					<TextField hintText="Hint Text"/><br />
-					<TextField hintText="The hint text can be as long as you want, it will wrap."/><br />
-					<TextField id="text-field-default" defaultValue="Default Value"/><br />
-					<TextField hintText="Hint Text" floatingLabelText="Floating Label Text"/><br />
-					<TextField defaultValue="Default Value" floatingLabelText="Floating Label Text"/><br />
-					<TextField hintText="Hint Text" floatingLabelText="Fixed Floating Label Text" floatingLabelFixed={true}/><br />
-					<TextField hintText="Password Field" floatingLabelText="Password" type="password"/><br />
-					<TextField hintText="MultiLine with rows: 2 and rowsMax: 4" multiLine={true} rows={2} rowsMax={4}/><br />
-					<TextField hintText="Message Field" floatingLabelText="MultiLine and FloatingLabel" multiLine={true} rows={2}/><br />
-				</div>
-
-				<div className="form-group">
-					<label className="col-sm-2 control-label">Email</label>
-					<div className="col-sm-10">
-						<input type="email" ref="email" name="email" className="form-control" placeholder="Votre email" value={this.isChanged.email ? typingUpdateUserState.email : userObj.email} onChange={this.handleInputChange} />
-					</div>
-				</div>
-
-				<div className="form-group">
-					<label className="col-sm-2 control-label">Name</label>
-					<div className="col-sm-10">
-						<input type="text" ref="name" name="name" className="form-control" placeholder="Votre nom" value={this.isChanged.name ? typingUpdateUserState.name : userObj.name} onChange={this.handleInputChange} />
-					</div>
-				</div>
-
-				<div className="form-group">
-					<label className="col-sm-2 control-label">Picture</label>
-					<div className="col-sm-10">
-						<input type="text" ref="picture" name="picture" className="form-control" placeholder="Test/aaa/bbb" value={this.isChanged.picture ? typingUpdateUserState.picture : userObj.picture} onChange={this.handleInputChange} />
-					</div>
-				</div>
-
-				<div className="form-group">
-					<div className="col-sm-offset-2 col-sm-10">
-						<button type="submit" className="btn btn-default">Valider</button>
-					</div>
-				</div>
+				<RaisedButton label="Valider" type="submit" />
 
 			</form>
 		);
