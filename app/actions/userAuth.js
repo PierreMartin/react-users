@@ -163,9 +163,9 @@ export function updateUserSuccess(res) {
 	};
 }
 
-export function updateUserAction(data) {
+export function updateUserAction(data, id) {
 	return dispatch => {
-		return updateUser(data)
+		return updateUser(data, id)
 			.then((response) => {
 				if (response.status === 200) {
 					dispatch(updateUserSuccess(response.data));

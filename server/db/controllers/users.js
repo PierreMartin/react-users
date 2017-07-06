@@ -114,13 +114,7 @@ export function update(req, res) {
 		return res.status(400).json({message: 'Une erreur est survenue lors de votre mise à jour de votre profile'});
 	}
 
-	const dataForRequest = {
-		email: data.email,
-		picture: data.picture,
-		name: data.name
-	};
-
-	User.findOneAndUpdate({'_id' : id}, dataForRequest, (err) => {
+	User.findOneAndUpdate({'_id' : id}, data, (err) => {
 		if (err) {
 			return res.status(500).json({
 				message: 'Une erreur est survenue lors de votre mise à jour de votre profile'

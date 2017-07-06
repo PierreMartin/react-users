@@ -41,9 +41,9 @@ export function apiUsers() {
             method: 'GET',
             url: '/api/user/' + id
         }),
-				updateUser: (param) => client.request({
+				updateUser: (param, id) => client.request({
 					method: 'PUT',
-					url: '/api/user/' + param.id,
+					url: '/api/user/' + id,
 					data: param
 				})
         /*

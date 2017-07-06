@@ -33,7 +33,7 @@ export default class FormEditUser extends Component {
 
 		// update - request :
 		if (email && _id) {
-			updateUser({email, name, picture, id: _id});
+			updateUser({email, name, picture}, _id);
 		}
 
 		// set all 'this.isChanged' to false :

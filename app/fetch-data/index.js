@@ -42,8 +42,8 @@ export const getUser = (params, store) => {
 };
 
 // dispatch define in actions/userAuth :
-export const updateUser = (data) => {
-	return apiUsers().updateUser(data)
+export const updateUser = (data, id) => {
+	return apiUsers().updateUser(data, id)
 		.then((res) => {
 			return res;
 		})
