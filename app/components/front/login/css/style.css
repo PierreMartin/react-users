@@ -7,7 +7,7 @@
 .login {
   width: 420px;
   margin: 0 auto;
-  background-color: var(--colorAthensGray);
+  background-color: var(--colorLimedSpruce);
   border: 2px solid var(--colorMercury);
   border-radius: var(--globalRadius);
 }

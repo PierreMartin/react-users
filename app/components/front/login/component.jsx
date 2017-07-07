@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { manualLogin, signUp, toggleLoginMode } from '../../../actions/userAuth';
 import styles from './css/style';
 import hourGlassSvg from './images/hourglass.svg';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const cx = classNames.bind(styles);
 
@@ -18,10 +20,11 @@ class LoginOrRegister extends Component {
     handleOnSubmit(event) {
         event.preventDefault();
 
-        const { manualLogin, signUp, userAuth: { isLogin } } = this.props; // 'isLogin' est l'action au clique sur le boutton 'Login'
+        const { manualLogin, signUp, userAuth: { isLogin } } = this.props;
 
         const email     = ReactDOM.findDOMNode(this.refs.email).value;
         const password  = ReactDOM.findDOMNode(this.refs.password).value;
+				debugger;
 
         if (isLogin) {
             manualLogin({email, password});
@@ -36,11 +39,11 @@ class LoginOrRegister extends Component {
         if (isLogin) {
             return (
                 <div className={cx('header')}>
-                    <h1 className={cx('heading')}>Login with Email</h1>
+                    <h1 className={cx('heading')}>Se connecter</h1>
 
                     <div className={cx('alternative')}>
-                        Not what you want?
-                        <a className={cx('alternative-link')} onClick={toggleLoginMode}> Register an Account</a>
+                        Pas de compte créer ?
+                        <a className={cx('alternative-link')} onClick={toggleLoginMode}> Créer un compte</a>
                     </div>
 
                 </div>
@@ -49,10 +52,10 @@ class LoginOrRegister extends Component {
 
         return (
             <div className={cx('header')}>
-                <h1 className={cx('heading')}>Register with Email</h1>
+                <h1 className={cx('heading')}>Créer un compte</h1>
 
                 <div className={cx('alternative')}>
-                    Already have an account?
+                    J'ai déja un compte ?
                     <a className={cx('alternative-link')} onClick={toggleLoginMode}> Login</a>
                 </div>
 
@@ -65,46 +68,23 @@ class LoginOrRegister extends Component {
 
         return (
             <div className={cx('login', {waiting: isWaiting})}>
-                <div className={cx('container')}>
-                    { this.renderHeader() }
-                    <img className={cx('loading')} src={hourGlassSvg}/>
+								{ this.renderHeader() }
+								<img className={cx('loading')} src={hourGlassSvg}/>
 
-                    <div className={cx('email-container')}>
-                        <form onSubmit={this.handleOnSubmit}>
+								<div className={cx('email-container')}>
+										<form className='form-horizontal' onSubmit={this.handleOnSubmit}>
+												<TextField ref="email" name="email" floatingLabelText="Email" type="email" /><br />
+												<TextField ref="password" name="password" floatingLabelText="Password" type="password" /><br />
+												<p className={cx('message', {'message-show': message && message.length > 0})}>{message}</p>
 
-                            <input
-                                className={cx('input')}
-                                type="email"
-                                ref="email"
-                                placeholder="email"
-                            />
+												<RaisedButton label={isLogin ? 'Login' : 'Register'} type="submit" />
+										</form>
+								</div>
 
-                            <input
-                                className={cx('input')}
-                                type="password"
-                                ref="password"
-                                placeholder="password"
-                            />
-
-                            <p className={cx('message', {'message-show': message && message.length > 0})}>
-                                {message}
-                            </p>
-
-                            <input
-                                className={cx('button')}
-                                type="submit"
-                                value={isLogin ? 'Login' : 'Register'}
-                            />
-
-                        </form>
-                    </div>
-
-                    {/*<div className={cx('google-container')}>
-                        <h1 className={cx('heading')}>Login with Google</h1>
-                        <a className={cx('button')} href="/auth/google">Login with Google</a>
-                    </div>*/}
-
-                </div>
+								{/*<div className={cx('google-container')}>
+										<h1 className={cx('heading')}>Login with Google</h1>
+										<a className={cx('button')} href="/auth/google">Login with Google</a>
+								</div>*/}
             </div>
         );
     }
@@ -117,16 +97,11 @@ LoginOrRegister.propTypes = {
     toggleLoginMode: PropTypes.func.isRequired
 };
 
-// Function passed in to `connect` to subscribe to Redux store updates.
-// Any time it updates, mapStateToProps is called.
 function mapStateToProps({userAuth}) {
     return {
         userAuth
     };
 }
 
-// Connects React component to the redux store
-// It does not modify the component class passed to it
-// Instead, it returns a new, connected component class, for you to use.
 export default connect(mapStateToProps, {manualLogin, signUp, toggleLoginMode})(LoginOrRegister);
 
