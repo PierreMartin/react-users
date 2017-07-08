@@ -62,7 +62,7 @@ export function createCours(text) {
         // If the text box is empty
         if (text.trim().length <= 0) return;
 
-        const id = md5.hash(text);
+        const id = md5.hash(text); // this 'id' is used for the render of react in the list, before a reload of the page - after a reload, we'll use the '_id' create from the back-end
 
         // Redux thunk's middleware receives the store methods `dispatch` and `getState` as parameters
         const { cours } = getState();

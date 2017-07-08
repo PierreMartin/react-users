@@ -38,8 +38,19 @@
 }
 
 .email-container {
+  margin-top: -40px;
   padding: 16px 12px;
-  border-bottom: 2px solid var(--colorMercury);
+}
+
+/* fields for the signUp form */
+.nameFields-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nameFields-container .firstName-field,
+.nameFields-container .lastName-field {
+  width: 48% !important;
 }
 
 .google-container {

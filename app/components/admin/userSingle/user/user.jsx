@@ -10,7 +10,8 @@ const User = ({ userSingle }) => {
         <div>
             <img src={avatar} alt="" className={cx('img-item')}/>
             <div><strong>Email : {userSingle.email}</strong></div>
-            <div>Nom : {userSingle.name}</div>
+            <div>prénom : {userSingle.firstName}</div>
+            <div>Nom : {userSingle.lastName}</div>
             <div>genre : {userSingle.gender}</div>
             <div>Image : {userSingle.picture}</div>
         </div>

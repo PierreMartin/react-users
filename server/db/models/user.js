@@ -17,9 +17,14 @@ const UserSchema = new mongoose.Schema({
   password: String,
   tokens: Array,
 
-  name: { type: String, default: '' },
+  firstName: { type: String, default: '' },
+  lastName: { type: String, default: '' },
+  dateOfBirth: { type: Date, default: Date.now },
+  age: { type: Number, min: 16, max: 99 },
+  city: { type: String, default: '' },
+  country: { type: String, default: '' },
+  state: { type: String, default: '' },
   gender: { type: String, default: '' },
-  location: { type: String, default: '' },
   website: { type: String, default: '' },
   picture: { type: String, default: '' },
 

@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
 import { manualLogin, signUp, toggleLoginMode } from '../../../actions/userAuth';
@@ -22,15 +21,19 @@ class LoginOrRegister extends Component {
 
         const { manualLogin, signUp, userAuth: { isLogin } } = this.props;
 
-        const email     = ReactDOM.findDOMNode(this.refs.email).value;
-        const password  = ReactDOM.findDOMNode(this.refs.password).value;
-				debugger;
+        const email = this.refs.email.input.value;
+        const password = this.refs.password.input.value;
 
+        // Login :
         if (isLogin) {
             manualLogin({email, password});
+        // Signup :
         } else {
-            signUp({email, password});
+            const firstName = this.refs.firstName.input.value;
+            const lastName = this.refs.lastName.input.value;
+            signUp({email, password, firstName, lastName}); // set the names from the model
         }
+
     }
 
     renderHeader() {
@@ -39,32 +42,34 @@ class LoginOrRegister extends Component {
         if (isLogin) {
             return (
                 <div className={cx('header')}>
-                    <h1 className={cx('heading')}>Se connecter</h1>
-
                     <div className={cx('alternative')}>
-                        Pas de compte créer ?
-                        <a className={cx('alternative-link')} onClick={toggleLoginMode}> Créer un compte</a>
+                      Pas encore membre ? <a className={cx('alternative-link')} onClick={toggleLoginMode}> Inscris-toi ici</a>
                     </div>
-
+                    <h1 className={cx('heading')}>Connection</h1>
                 </div>
             );
         }
 
         return (
             <div className={cx('header')}>
-                <h1 className={cx('heading')}>Créer un compte</h1>
-
                 <div className={cx('alternative')}>
-                    J'ai déja un compte ?
-                    <a className={cx('alternative-link')} onClick={toggleLoginMode}> Login</a>
+                  Déjà membre ? <a className={cx('alternative-link')} onClick={toggleLoginMode}> Connecte-toi</a>
                 </div>
-
+                <h1 className={cx('heading')}>Inscription</h1>
             </div>
         );
     }
 
     render() {
         const { isWaiting, message, isLogin } = this.props.userAuth;
+        let fieldsForSignupNode = '';
+
+        if (!isLogin) {
+            fieldsForSignupNode = <div className={cx('nameFields-container')}>
+                <TextField ref="firstName" name="firstName" floatingLabelText="Prénom" type="text" className={cx('firstName-field')} />
+                <TextField ref="lastName" name="lastName" floatingLabelText="Nom" type="text" className={cx('lastName-field')} />
+            </div>;
+        }
 
         return (
             <div className={cx('login', {waiting: isWaiting})}>
@@ -72,9 +77,10 @@ class LoginOrRegister extends Component {
 								<img className={cx('loading')} src={hourGlassSvg}/>
 
 								<div className={cx('email-container')}>
-										<form className='form-horizontal' onSubmit={this.handleOnSubmit}>
-												<TextField ref="email" name="email" floatingLabelText="Email" type="email" /><br />
-												<TextField ref="password" name="password" floatingLabelText="Password" type="password" /><br />
+										<form className={cx('form-horizontal')} onSubmit={this.handleOnSubmit}>
+                        {fieldsForSignupNode}
+												<TextField ref="email" name="email" floatingLabelText="Email" type="email" fullWidth={true} /><br />
+												<TextField ref="password" name="password" floatingLabelText="Password" type="password" fullWidth={true} /><br />
 												<p className={cx('message', {'message-show': message && message.length > 0})}>{message}</p>
 
 												<RaisedButton label={isLogin ? 'Login' : 'Register'} type="submit" />

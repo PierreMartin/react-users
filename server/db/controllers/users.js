@@ -79,12 +79,10 @@ export function logout(req, res) {
  * POST /api/signup
  */
 export function signUp(req, res, next) {
-    const user = new User({
-        email: req.body.email,
-        password: req.body.password
-    });
+    const data = req.body;
+    const user = new User(data);
 
-    User.findOne({email: req.body.email}, (findErr, existingUser) => {
+    User.findOne({email: data.email}, (findErr, existingUser) => {
         if (existingUser) {
             return res.status(409).json({message: 'Account with this email address already exists!'});
         }

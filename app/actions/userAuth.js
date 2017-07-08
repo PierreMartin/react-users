@@ -43,7 +43,7 @@ export function manualLogin(data) {
       .then(response => {
         if (response.status === 200) {
           dispatch(loginSuccess(response.data.message, response.data.userObj));
-          dispatch(push('/dashboard')); // TODO - auth : ici on défini la redirection
+          dispatch(push('/user/' + response.data.userObj._id)); // redirection
         } else {
           dispatch(loginError('Oops! Something went wrong!'));
         }
@@ -56,11 +56,11 @@ export function manualLogin(data) {
 
 
 /***************************************** Sign Up ********************************************/
-export function signUpError(datas, message) {
+export function signUpError(email, message) {
     return {
         type: types.SIGNUP_ERROR_USER,
         message,
-        id: datas.id
+        email
     };
 }
 
@@ -68,12 +68,10 @@ export function beginSignUp() {
     return {type: types.SIGNUP_USER};
 }
 
-export function signUpSuccess(datas, message, userObj) {
+export function signUpSuccess(message, userObj) {
     return {
         type: types.SIGNUP_SUCCESS_USER,
         message,
-        id: datas.id,
-        email: datas.email,
         userObj
     };
 }
@@ -82,24 +80,17 @@ export function signUp(data) {
     return dispatch => {
         dispatch(beginSignUp());
 
-        const id = md5.hash(data.email);
-
-        const datas = {
-            id,
-            email: data.email
-        };
-
         return makeUserRequest('post', data, '/api/signup')
             .then(response => {
                 if (response.status === 200) {
-                    dispatch(signUpSuccess(datas, response.data.message, response.data.userObj));
-                    dispatch(push('/'));
+                    dispatch(signUpSuccess(response.data.message, response.data.userObj));
+                    dispatch(push('/user/' + response.data.userObj._id)); // redirection
                 } else {
-                    dispatch(signUpError(datas, 'Oops! Something went wrong'));
+                    dispatch(signUpError(data.email, 'Oops! Something went wrong'));
                 }
             })
             .catch(err => {
-                dispatch(signUpError(datas, getMessage(err)));
+                dispatch(signUpError(data.email, getMessage(err)));
             });
     };
 }

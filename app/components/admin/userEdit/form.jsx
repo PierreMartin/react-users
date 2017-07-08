@@ -29,13 +29,13 @@ export default class FormEditUser extends Component {
 		const { updateUser, userObj: { _id }, userObj, typingUpdateUserState } = this.props;
 
 		const email = (typeof typingUpdateUserState.email !== 'undefined' ? typingUpdateUserState.email : userObj.email) || false;
-		const name = (typeof typingUpdateUserState.name !== 'undefined' ? typingUpdateUserState.name : userObj.name) || '';
+		const firstName = (typeof typingUpdateUserState.firstName !== 'undefined' ? typingUpdateUserState.firstName : userObj.firstName) || '';
 		const picture = (typeof typingUpdateUserState.picture !== 'undefined' ? typingUpdateUserState.picture : userObj.picture) || '';
 		const gender = (typeof typingUpdateUserState.gender !== 'undefined' ? typingUpdateUserState.gender : userObj.gender) || 'homme';
 
 		// update - request :
 		if (email && _id) {
-			updateUser({email, name, picture, gender}, _id);
+			updateUser({email, firstName, picture, gender}, _id); // set the names from the model
 		}
 
 		// set all 'this.isChanged' to false :
@@ -51,7 +51,7 @@ export default class FormEditUser extends Component {
 		return (
 			<form className='form-horizontal' onSubmit={this.handleOnSubmit}>
 				<TextField ref="email" name="email" defaultValue={this.isChanged.email ? typingUpdateUserState.email : userObj.email} floatingLabelText="Email" type="email" onChange={this.handleInputChange}/><br />
-				<TextField ref="name" name="name" defaultValue={this.isChanged.name ? typingUpdateUserState.name : userObj.name} floatingLabelText="Nom" onChange={this.handleInputChange}/><br />
+				<TextField ref="firstName" name="firstName" defaultValue={this.isChanged.firstName ? typingUpdateUserState.firstName : userObj.firstName} floatingLabelText="Nom" onChange={this.handleInputChange}/><br />
 				<TextField ref="picture" name="picture" defaultValue={this.isChanged.picture ? typingUpdateUserState.picture : userObj.picture} floatingLabelText="Avatar" onChange={this.handleInputChange}/><br />
 				{/*<TextField hintText="Password Field" floatingLabelText="Password" type="password"/><br />*/}
 				<RadioButtonGroup ref="gender" name="gender" defaultSelected={this.isChanged.gender ? typingUpdateUserState.gender : userObj.gender} floatingLabelText="Genre" onChange={this.handleInputChange}>
