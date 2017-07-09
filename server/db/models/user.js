@@ -19,7 +19,7 @@ const UserSchema = new mongoose.Schema({
 
   firstName: { type: String, default: '' },
   lastName: { type: String, default: '' },
-  dateOfBirth: { type: Date, default: Date.now },
+  birthDate: { type: Date, default: Date.now },
   age: { type: Number, min: 16, max: 99 },
   city: { type: String, default: '' },
   country: { type: String, default: '' },

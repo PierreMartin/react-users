@@ -42,7 +42,12 @@
   padding: 16px 12px;
 }
 
-/* fields for the signUp form */
+label {
+  color: rgb(113, 121, 127);
+  font-size: 16px;
+}
+
+/********************* fields name (for the signUp form) *********************/
 .nameFields-container {
   display: flex;
   justify-content: space-between;
@@ -53,6 +58,38 @@
   width: 48% !important;
 }
 
+/********************* fields birthdate (for the signUp form) *********************/
+.form-birthdate-container {
+  margin-top: 20px;
+}
+
+.form-birthdate-container .input-birthdate-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: -20px;
+}
+
+.form-birthdate-container .input-birthdate-container .birthdate-year,
+.form-birthdate-container .input-birthdate-container .birthdate-month,
+.form-birthdate-container .input-birthdate-container .birthdate-day {
+  width: 22% !important;
+  margin-right: 10px;
+}
+
+/********************* fields gender (for the signUp form) *********************/
+.form-gender-container {
+  margin-top: 20px;
+}
+
+.form-gender-container .input-gender-container {
+  display: flex;
+}
+
+.form-gender-container .input-gender-container .gender-input {
+  width: 120px !important;
+}
+
+/********************* fields google auth *********************/
 .google-container {
   padding: 16px 12px;
 }
