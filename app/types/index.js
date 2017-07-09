@@ -26,6 +26,7 @@ export const RATING_COURS_SUCCESS = 'RATING_COURS_SUCCESS';
 export const RATING_COURS_FAILURE = 'RATING_COURS_FAILURE';
 
 /***************************************** Users Me ********************************************/
+export const TYPING_LOGIN_SIGNUP_USER_ACTION = 'TYPING_LOGIN_SIGNUP_USER_ACTION';
 export const TOGGLE_LOGIN_MODE = 'TOGGLE_LOGIN_MODE';
 export const MANUAL_LOGIN_USER = 'MANUAL_LOGIN_USER';
 export const LOGIN_SUCCESS_USER = 'LOGIN_SUCCESS_USER';

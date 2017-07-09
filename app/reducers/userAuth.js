@@ -1,6 +1,19 @@
 import * as types from 'types';
 import { combineReducers } from 'redux';
 
+const typingLoginSignupUserState = (state = {}, action) => {
+  switch (action.type) {
+    case types.TYPING_LOGIN_SIGNUP_USER_ACTION:
+      return Object.assign({}, state, action.data);
+    /*case types.UPDATE_USER_SUCCESS:
+    case types.UPDATE_USER_FAILURE:
+      return state;*/
+    default:
+      return state;
+  }
+};
+
+
 const isLogin = (
   state = true,
   action
@@ -120,6 +133,7 @@ const userReducer = combineReducers({
   authenticated,
   message,
   userObj,
+  typingLoginSignupUserState,
 	typingUpdateUserState
 });
 

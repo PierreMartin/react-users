@@ -15,6 +15,17 @@ function makeUserRequest(method, data, api = '/api/login') {
 }
 
 
+/***************************************** Log In / Sign Up ********************************************/
+export function typingLoginSignupUserAction(nameField, valueField) {
+  return {
+    type: types.TYPING_LOGIN_SIGNUP_USER_ACTION,
+    data: {
+      [nameField]: valueField
+    }
+  };
+}
+
+
 /***************************************** Log In ********************************************/
 export function beginLogin() {
     return {type: types.MANUAL_LOGIN_USER};
