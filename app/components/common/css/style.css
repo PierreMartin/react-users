@@ -1,0 +1,17 @@
+/********************* fields birthdate (for the signUp form) *********************/
+.form-birthdate-container {
+	margin-top: 20px;
+}
+
+.form-birthdate-container .input-birthdate-container {
+	display: flex;
+	justify-content: flex-start;
+	margin-top: -20px;
+}
+
+.form-birthdate-container .input-birthdate-container .birthdate-year,
+.form-birthdate-container .input-birthdate-container .birthdate-month,
+.form-birthdate-container .input-birthdate-container .birthdate-day {
+	width: 25% !important;
+	margin-right: 10px;
+}

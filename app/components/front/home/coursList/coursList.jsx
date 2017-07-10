@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
 import Cours from './cours';
 import styles from '../../../../css/common/main-section';

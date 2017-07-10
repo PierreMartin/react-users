@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames/bind';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';

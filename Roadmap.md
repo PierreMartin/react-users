@@ -167,6 +167,9 @@ GET auth        => GET usersMe(auth._id)                -> userMe
 `- voir passport js`
 `- changer tout les 'courses' par 'cours'`
 
+- TYPING_LOGIN_SIGNUP_USER_ACTION gerer les cas d'erreurs
+- gerer la date de naissance
+- implémenter l'avatar dans l'update
 - page 'mon profil' -> ajouter des champs (prenom, age, ville, ...)
 
 - cours => page single - et renomer dans reducer :
