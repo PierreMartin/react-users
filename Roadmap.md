@@ -173,14 +173,14 @@ GET auth        => GET usersMe(auth._id)                -> userMe
 - page 'mon profil' -> ajouter des champs (prenom, age, ville, ...)
 
 - cours => page single - et renomer dans reducer :
-    - state.cour.courSingle
-    - state.cour.coursAll
-    - state.cour.coursByUser
+    - state.cours.single
+    - state.cours.all
+    - state.cours.byUser
     
 - users => renomer dans reducer :
-    - state.user.userSingle
-    - state.user.usersAll
-    - state.user.usersByFriends    
+    - state.users.single
+    - state.users.all
+    - state.users.byFriend    
     
 - finir CRUD des users + cours (GET: DONE, POST, PUT, DELET)
 - Prevoir un filtre d'affichage des personnes (par age, par ville)
