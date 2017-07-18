@@ -1,23 +1,8 @@
 import * as types from 'types';
 import { combineReducers } from 'redux';
 
-const typingLoginSignupUserState = (state = {}, action) => {
-  switch (action.type) {
-    case types.TYPING_LOGIN_SIGNUP_USER_ACTION:
-      return Object.assign({}, state, action.data);
-    /*case types.UPDATE_USER_SUCCESS:
-    case types.UPDATE_USER_FAILURE:
-      return state;*/
-    default:
-      return state;
-  }
-};
 
-
-const isLogin = (
-  state = true,
-  action
-) => {
+const isLogin = (state = true, action) => {
   switch (action.type) {
     case types.TOGGLE_LOGIN_MODE:
       return !state;
@@ -26,10 +11,7 @@ const isLogin = (
   }
 };
 
-const message = (
-  state = '',
-  action
-) => {
+const message = (state = '', action) => {
   switch (action.type) {
     case types.TOGGLE_LOGIN_MODE:
     case types.MANUAL_LOGIN_USER:
@@ -46,10 +28,7 @@ const message = (
   }
 };
 
-const isWaiting = (
-  state = false,
-  action
-) => {
+const isWaiting = (state = false, action) => {
   switch (action.type) {
     case types.MANUAL_LOGIN_USER:
     case types.SIGNUP_USER:
@@ -67,10 +46,7 @@ const isWaiting = (
   }
 };
 
-const authenticated = (
-  state = false,
-  action
-) => {
+const authenticated = (state = false, action) => {
   switch (action.type) {
     case types.LOGIN_SUCCESS_USER:
     case types.SIGNUP_SUCCESS_USER:
@@ -85,20 +61,37 @@ const authenticated = (
   }
 };
 
-/************* updating userObj - typing *************/
+/************* login/signup - 'userObj' - typing *************/
+const typingLoginSignupUserState = (state = {}, action) => {
+  switch (action.type) {
+    case types.TYPING_LOGIN_SIGNUP_USER_ACTION:
+      return Object.assign({}, state, action.data);
+    case types.LOGIN_ERROR_USER:
+    case types.LOGIN_SUCCESS_USER:
+    case types.SIGNUP_ERROR_USER:
+    case types.SIGNUP_SUCCESS_USER:
+    case types.LOGOUT_SUCCESS_USER:
+      return {};
+    default:
+      return state;
+  }
+};
+
+/************* updating - 'userObj' - typing *************/
 const typingUpdateUserState = (state = {}, action) => {
 	switch (action.type) {
 		case types.TYPING_UPDATE_USER_ACTION:
 			return Object.assign({}, state, action.data);
 		case types.UPDATE_USER_SUCCESS:
 		case types.UPDATE_USER_FAILURE:
-			return state;
+		case types.LOGOUT_SUCCESS_USER:
+			return {};
 		default:
 			return state;
 	}
 };
 
-/************* set userObj - submit / login / signup *************/
+/************* login/signup - 'userObj' - submit *************/
 const userObj = (state = {}, action) => {
   switch (action.type) {
     case types.LOGIN_SUCCESS_USER:

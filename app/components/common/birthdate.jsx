@@ -144,18 +144,18 @@ const Birthdate = ({ typingLoginSignupUserAction, typingLoginSignupUserState, la
         </SelectField>
 
         <SelectField floatingLabelText="Mois" className={cx('birthdate-month')} id="birthdate-month" name="birthdateMonth" onChange={handleSelectDateChange('birthdateMonth')} value={typingLoginSignupUserState.birthdateMonth}  >
-          <MenuItem value={1} primaryText="janv." />
-          <MenuItem value={2} primaryText="févr." />
-          <MenuItem value={3} primaryText="mars" />
-          <MenuItem value={4} primaryText="avr." />
-          <MenuItem value={5} primaryText="mai" />
-          <MenuItem value={6} primaryText="juin" />
-          <MenuItem value={7} primaryText="juil." />
-          <MenuItem value={8} primaryText="août" />
-          <MenuItem value={9} primaryText="sept." />
-          <MenuItem value={10} primaryText="oct." />
-          <MenuItem value={11} primaryText="nov." />
-          <MenuItem value={12} primaryText="déc." />
+          <MenuItem value={0} primaryText="janv." />
+          <MenuItem value={1} primaryText="févr." />
+          <MenuItem value={2} primaryText="mars" />
+          <MenuItem value={3} primaryText="avr." />
+          <MenuItem value={4} primaryText="mai" />
+          <MenuItem value={5} primaryText="juin" />
+          <MenuItem value={6} primaryText="juil." />
+          <MenuItem value={7} primaryText="août" />
+          <MenuItem value={8} primaryText="sept." />
+          <MenuItem value={9} primaryText="oct." />
+          <MenuItem value={10} primaryText="nov." />
+          <MenuItem value={11} primaryText="déc." />
         </SelectField>
 
         <SelectField floatingLabelText="Jour" className={cx('birthdate-day')} id="birthdate-day" name="birthdateDay" onChange={handleSelectDateChange('birthdateDay')} value={typingLoginSignupUserState.birthdateDay} >

@@ -29,7 +29,7 @@ class LoginOrRegister extends Component {
         event.preventDefault();
 
         const { manualLogin, signUp, userAuth: { isLogin }, typingLoginSignupUserState } = this.props;
-        const email = typingLoginSignupUserState.email;
+        const email = typingLoginSignupUserState.email; // typingLoginSignupUserState.email || ReactDOM.findDOMNode(this.refs.email).value || ''; // TODO a mettre la
         const password = typingLoginSignupUserState.password;
 
         // Login :
@@ -40,13 +40,18 @@ class LoginOrRegister extends Component {
             const firstName = typingLoginSignupUserState.firstName;
             const lastName = typingLoginSignupUserState.lastName;
 
-            let birthDate = '';
+            let birthDate = Date.now();
             const birthdateYear = typingLoginSignupUserState.birthdateYear;
             const birthdateMonth = typingLoginSignupUserState.birthdateMonth;
             const birthdateDay = typingLoginSignupUserState.birthdateDay;
-            if (birthdateYear && birthdateMonth && birthdateDay) {
-              birthDate = birthdateYear + ' ' + birthdateMonth + ' ' + birthdateDay;
+
+            // TODO a faire coté back-end pour afficher les erreurs :
+            if (typeof birthdateYear === 'number' && typeof birthdateMonth === 'number' && typeof birthdateDay === 'number') {
+              birthDate = new Date(birthdateYear, birthdateMonth, birthdateDay).getTime();
             }
+
+            debugger;
+
             const gender = typingLoginSignupUserState.gender;
             signUp({email, password, firstName, lastName, birthDate, gender}); // set the names from the model
         }
