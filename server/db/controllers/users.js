@@ -52,6 +52,7 @@ export function login(req, res, next) {
         // Passport exposes a login() function on req (also aliased as
         // logIn()) that can be used to establish a login session
         return req.logIn(user, (loginErr) => {
+            console.log('loginErr ==> ', loginErr); // todo voir ici
             if (loginErr) return res.status(401).json({message: loginErr});
 
             return res.status(200).json({
@@ -80,7 +81,50 @@ export function logout(req, res) {
  */
 export function signUp(req, res, next) {
     const data = req.body;
-    const user = new User(data);
+    let error = false;
+    let msg = '';
+
+    // handling date errors :
+    if (typeof data.birthDateYear !== 'number') {
+        msg += ' Birthdate year incorrect ';
+        error = true;
+    }
+
+    if (typeof data.birthDateMonth !== 'number') {
+        msg +=' Birthdate month incorrect ';
+        error = true;
+    }
+
+    if (typeof data.birthDateDay !== 'number') {
+        msg += ' Birthdate day incorrect ';
+        error = true;
+    }
+
+    let birthDateFull = new Date(data.birthDateYear, data.birthDateMonth, data.birthDateDay);
+
+    if (Object.prototype.toString.call(birthDateFull) !== '[object Date]') {
+        msg += ' Birthdate not a date format ';
+        error = true;
+    }
+
+    // displaying the dates errors :
+    if (error) {
+      return res.status(409).json({message: msg});
+    }
+
+    const age = new Date().getFullYear() - birthDateFull.getFullYear();
+
+    const datas = {
+      email: data.email,
+      password: data.password,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      gender: data.gender,
+      birthDate: birthDateFull.getTime(),
+      age
+    };
+
+    const user = new User(datas);
 
     User.findOne({email: data.email}, (findErr, existingUser) => {
         if (existingUser) {

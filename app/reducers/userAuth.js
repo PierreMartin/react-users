@@ -66,12 +66,13 @@ const typingLoginSignupUserState = (state = {}, action) => {
   switch (action.type) {
     case types.TYPING_LOGIN_SIGNUP_USER_ACTION:
       return Object.assign({}, state, action.data);
-    case types.LOGIN_ERROR_USER:
     case types.LOGIN_SUCCESS_USER:
-    case types.SIGNUP_ERROR_USER:
     case types.SIGNUP_SUCCESS_USER:
     case types.LOGOUT_SUCCESS_USER:
       return {};
+    case types.LOGIN_ERROR_USER:
+    case types.SIGNUP_ERROR_USER:
+      return state;
     default:
       return state;
   }
