@@ -77,19 +77,19 @@ class LoginOrRegister extends Component {
 
     render() {
         const { isWaiting, message, isLogin } = this.props.userAuth;
-        const { typingLoginSignupUserState, typingLoginSignupUserAction } = this.props;
+        const { typingLoginSignupUserState, typingLoginSignupUserAction, missingRequiredField } = this.props;
 
         let fieldsNamesNode = '';
         let fieldsDatesAndGenderNode = '';
 
         if (!isLogin) {
             fieldsNamesNode = <div className={cx('nameFields-container')}>
-                  <TextField ref="firstName" name="firstName" floatingLabelText="Prénom" type="text" className={cx('firstName-field')} onChange={this.handleInputChange} defaultValue={typingLoginSignupUserState.firstName} />
-                  <TextField ref="lastName" name="lastName" floatingLabelText="Nom" type="text" className={cx('lastName-field')} onChange={this.handleInputChange} defaultValue={typingLoginSignupUserState.lastName} />
+                  <TextField ref="firstName" name="firstName" floatingLabelText="Prénom" type="text" className={cx('firstName-field')} onChange={this.handleInputChange} defaultValue={typingLoginSignupUserState.firstName} errorText={missingRequiredField.firstName ? 'Saisis ton prénom' : ''} />
+                  <TextField ref="lastName" name="lastName" floatingLabelText="Nom" type="text" className={cx('lastName-field')} onChange={this.handleInputChange} defaultValue={typingLoginSignupUserState.lastName} errorText={missingRequiredField.lastName ? 'Saisis ton nom' : ''} />
             </div>;
 
             fieldsDatesAndGenderNode = <div>
-                <Birthdate typingLoginSignupUserAction={typingLoginSignupUserAction} typingLoginSignupUserState={typingLoginSignupUserState} label="Date de naissance" />
+                <Birthdate typingLoginSignupUserAction={typingLoginSignupUserAction} typingLoginSignupUserState={typingLoginSignupUserState} label="Date de naissance" missingRequiredField={missingRequiredField} />
 
                 <div className={cx('form-gender-container')}>
                     <label htmlFor="gender">Sexe</label>
@@ -109,8 +109,8 @@ class LoginOrRegister extends Component {
 								<div className={cx('email-container')}>
 										<form className={cx('form-horizontal')} onSubmit={this.handleOnSubmit}>
                         {fieldsNamesNode}
-												<TextField ref="email" name="email" floatingLabelText="Email" type="email" fullWidth={true} onChange={this.handleInputChange} defaultValue={typingLoginSignupUserState.email} /><br />
-												<TextField ref="password" name="password" floatingLabelText="Mot de passe" type="password" fullWidth={true} onChange={this.handleInputChange} defaultValue={typingLoginSignupUserState.password} /><br />
+												<TextField ref="email" name="email" floatingLabelText="Email" type="email" fullWidth={true} onChange={this.handleInputChange} defaultValue={typingLoginSignupUserState.email} errorText={missingRequiredField.email ? 'Saisis ton email' : ''} /><br />
+												<TextField ref="password" name="password" floatingLabelText="Mot de passe" type="password" fullWidth={true} onChange={this.handleInputChange} defaultValue={typingLoginSignupUserState.password} errorText={missingRequiredField.password ? 'Saisis ton mot de passe' : ''} /><br />
                         {fieldsDatesAndGenderNode}
 												<p className={cx('message', {'message-show': message && message.length > 0})}>{message}</p>
 
@@ -133,13 +133,15 @@ LoginOrRegister.propTypes = {
     signUp: PropTypes.func.isRequired,
     toggleLoginMode: PropTypes.func.isRequired,
     typingLoginSignupUserAction: PropTypes.func.isRequired,
-    typingLoginSignupUserState: PropTypes.object.isRequired
+    typingLoginSignupUserState: PropTypes.object.isRequired,
+    missingRequiredField: PropTypes.object
 };
 
 function mapStateToProps(state) {
     return {
         userAuth: state.userAuth,
-        typingLoginSignupUserState: state.userAuth.typingLoginSignupUserState
+        typingLoginSignupUserState: state.userAuth.typingLoginSignupUserState,
+        missingRequiredField: state.userAuth.missingRequiredField
     };
 }
 

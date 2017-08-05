@@ -8,12 +8,21 @@ import md5 from 'spark-md5';
 polyfill();
 
 const getMessage = res => res.response && res.response.data && res.response.data.message;
+const getFieldsMissing = res => res.response && res.response.data && res.response.data.errorField;
 
 
 function makeUserRequest(method, data, api = '/api/login') {
     return request[method](api, data);
 }
 
+
+// for login / signup :
+export function requiredFieldsError(fields) {
+  return {
+    type: types.MISSING_REQUIRED_FIELDS_USER,
+    fields
+  };
+}
 
 /***************************************** Log In / Sign Up ********************************************/
 export function typingLoginSignupUserAction(nameField, valueField) {
@@ -60,7 +69,13 @@ export function manualLogin(data) {
         }
       })
       .catch(err => {
-        dispatch(loginError(getMessage(err)));
+        if (err.response.data.errorField) {
+          // missing required fields :
+          dispatch(requiredFieldsError(getFieldsMissing(err)));
+        } else {
+          // others errors :
+          dispatch(loginError(getMessage(err)));
+        }
       });
   };
 }
@@ -101,7 +116,13 @@ export function signUp(data) {
                 }
             })
             .catch(err => {
-                dispatch(signUpError(data.email, getMessage(err)));
+                if (err.response.data.errorField) {
+                  // missing required fields :
+                  dispatch(requiredFieldsError(getFieldsMissing(err)));
+                } else {
+                  // acount already exist or others errors :
+                  dispatch(signUpError(data.email, getMessage(err)));
+                }
             });
     };
 }

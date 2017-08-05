@@ -120,6 +120,21 @@ const userObj = (state = {}, action) => {
   }
 };
 
+const missingRequiredField = (state = {}, action) => {
+  switch (action.type) {
+    case types.MISSING_REQUIRED_FIELDS_USER:
+      return action.fields;
+    case types.LOGIN_SUCCESS_USER:
+    case types.SIGNUP_SUCCESS_USER:
+    case types.LOGOUT_SUCCESS_USER:
+    case types.LOGIN_ERROR_USER:
+    case types.SIGNUP_ERROR_USER:
+      return {};
+    default:
+      return state;
+  }
+};
+
 
 const userReducer = combineReducers({
   isLogin,
@@ -128,7 +143,8 @@ const userReducer = combineReducers({
   message,
   userObj,
   typingLoginSignupUserState,
-	typingUpdateUserState
+	typingUpdateUserState,
+	missingRequiredField
 });
 
 export default userReducer;

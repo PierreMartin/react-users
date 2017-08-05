@@ -1,6 +1,20 @@
 import User from '../models/user';
 import passport from 'passport';
 
+
+/**
+ * @param {Date} birthday - date to calculate in age
+ * @return {Number} age
+ * */
+function calculateAge(birthday) {
+    const ageDifMs = Date.now() - birthday.getTime();
+    let ageDate = new Date(ageDifMs);
+
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+
+
+
 /**
  * GET /api/user/all
  */
@@ -32,7 +46,7 @@ export function single(req, res) {
             return res.status(404).send({ message: 'user non trouvé.' });
         }
 
-        return res.json(user); // res.send(pokemon);
+        return res.json(user); // res.send(user);
     });
 }
 
@@ -41,18 +55,29 @@ export function single(req, res) {
  * POST /api/login
  */
 export function login(req, res, next) {
+    const data = req.body;
+    let errorField = {};
+
+    // handling required fields :
+    errorField.email = typeof data.email === 'undefined' || data.email === '';
+    errorField.password = typeof data.password === 'undefined' || data.password === '';
+
+    // displaying required fields :
+    if (errorField.email || errorField.password) {
+        return res.status(400).json({errorField});
+    }
+
     // Do email and password validation for the server
     passport.authenticate('local', (authErr, user, info) => {
         if (authErr) return next(authErr);
 
+        // unauthorized error (if wrong password or wrong login) :
         if (!user) {
             return res.status(401).json({message: info.message});
         }
 
-        // Passport exposes a login() function on req (also aliased as
-        // logIn()) that can be used to establish a login session
+        // login user :
         return req.logIn(user, (loginErr) => {
-            console.log('loginErr ==> ', loginErr); // todo voir ici
             if (loginErr) return res.status(401).json({message: loginErr});
 
             return res.status(200).json({
@@ -81,38 +106,24 @@ export function logout(req, res) {
  */
 export function signUp(req, res, next) {
     const data = req.body;
-    let error = false;
-    let msg = '';
+    let errorField = {};
 
-    // handling date errors :
-    if (typeof data.birthDateYear !== 'number') {
-        msg += ' Birthdate year incorrect ';
-        error = true;
-    }
-
-    if (typeof data.birthDateMonth !== 'number') {
-        msg +=' Birthdate month incorrect ';
-        error = true;
-    }
-
-    if (typeof data.birthDateDay !== 'number') {
-        msg += ' Birthdate day incorrect ';
-        error = true;
-    }
+    // handling required fields :
+    errorField.firstName = typeof data.firstName === 'undefined' || data.firstName === '';
+    errorField.lastName = typeof data.lastName === 'undefined' || data.lastName === '';
+    errorField.email = typeof data.email === 'undefined' || data.email === '';
+    errorField.password = typeof data.password === 'undefined' || data.password === '';
+    errorField.birthDateYear = typeof data.birthDateYear !== 'number';
+    errorField.birthDateMonth = typeof data.birthDateMonth !== 'number';
+    errorField.birthDateDay = typeof data.birthDateDay !== 'number';
 
     let birthDateFull = new Date(data.birthDateYear, data.birthDateMonth, data.birthDateDay);
+    errorField.birthDateFull = Object.prototype.toString.call(birthDateFull) !== '[object Date]';
 
-    if (Object.prototype.toString.call(birthDateFull) !== '[object Date]') {
-        msg += ' Birthdate not a date format ';
-        error = true;
+    // displaying required fields :
+    if (errorField.firstName || errorField.lastName || errorField.email || errorField.password || errorField.birthDateYear || errorField.birthDateMonth || errorField.birthDateDay || errorField.birthDateFull) {
+        return res.status(400).json({errorField});
     }
-
-    // displaying the dates errors :
-    if (error) {
-      return res.status(409).json({message: msg});
-    }
-
-    const age = new Date().getFullYear() - birthDateFull.getFullYear();
 
     const datas = {
       email: data.email,
@@ -121,18 +132,22 @@ export function signUp(req, res, next) {
       lastName: data.lastName,
       gender: data.gender,
       birthDate: birthDateFull.getTime(),
-      age
+      age: calculateAge(birthDateFull)
     };
 
     const user = new User(datas);
 
     User.findOne({email: data.email}, (findErr, existingUser) => {
+        // conflict errors :
         if (existingUser) {
-            return res.status(409).json({message: 'Account with this email address already exists!'});
+            return res.status(409).json({message: 'Ce compte existe déja !'});
         }
 
+        // create count :
         return user.save((saveErr) => {
             if (saveErr) return next(saveErr);
+
+            // login user :
             return req.logIn(user, (loginErr) => {
                 if (loginErr) return res.status(401).json({message: loginErr});
                 return res.status(200).json({
@@ -164,7 +179,7 @@ export function update(req, res) {
 		}
 
 		return res.status(200).json({
-			message: 'Votre profile à bien été mis à jour',
+			message: 'Votre profil à bien été mis à jour',
 			userObj: data
 		});
 	});
