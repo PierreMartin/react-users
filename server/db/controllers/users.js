@@ -1,18 +1,6 @@
 import User from '../models/user';
 import passport from 'passport';
-
-
-/**
- * @param {Date} birthday - date to calculate in age
- * @return {Number} age
- * */
-function calculateAge(birthday) {
-    const ageDifMs = Date.now() - birthday.getTime();
-    let ageDate = new Date(ageDifMs);
-
-    return Math.abs(ageDate.getUTCFullYear() - 1970);
-}
-
+import { calculateAge } from '../../../toolbox/toolbox';
 
 
 /**
