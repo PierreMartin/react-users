@@ -101,15 +101,7 @@ const userObj = (state = {}, action) => {
       return state;
 		case types.UPDATE_USER_SUCCESS:
 			if (action.userObj) {
-				return {
-					...state,
-          firstName: action.userObj.firstName,
-          lastName: action.userObj.lastName,
-					email: action.userObj.email,
-          birthDate: new Date(action.userObj.birthDate),
-          age: action.userObj.age,
-          gender: action.userObj.gender
-				};
+        return Object.assign({}, state, action.userObj);
 			}
 			return state;
 		case types.UPDATE_USER_FAILURE:

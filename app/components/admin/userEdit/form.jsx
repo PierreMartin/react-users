@@ -50,20 +50,45 @@ export default class FormEditUser extends Component {
     // get birthDate right format :
     let birthDateState = this.birthDateForSelectField(birthDate);
 
-		const email = (typeof typingUpdateUserState.email !== 'undefined' ? typingUpdateUserState.email : userObj.email) || '';
-		const password = (typeof typingUpdateUserState.password !== 'undefined' ? typingUpdateUserState.password : userObj.password) || '';
-		const firstName = (typeof typingUpdateUserState.firstName !== 'undefined' ? typingUpdateUserState.firstName : userObj.firstName) || '';
-		const lastName = (typeof typingUpdateUserState.lastName !== 'undefined' ? typingUpdateUserState.lastName : userObj.lastName) || '';
-		const gender = (typeof typingUpdateUserState.gender !== 'undefined' ? typingUpdateUserState.gender : userObj.gender) || 'homme';
+    // ########################## we set only the fields changed ##########################
+		const data = {};
 
-    // dates :
-    const birthDateYear = (typeof typingUpdateUserState.birthdateYear !== 'undefined' ? typingUpdateUserState.birthdateYear : birthDateState.year) || defaultValBirthDate.year;
-    const birthDateMonth = (typeof typingUpdateUserState.birthdateMonth !== 'undefined' ? typingUpdateUserState.birthdateMonth : birthDateState.month) || defaultValBirthDate.month;
-    const birthDateDay = (typeof typingUpdateUserState.birthdateDay !== 'undefined' ? typingUpdateUserState.birthdateDay : birthDateState.day) || defaultValBirthDate.day;
+    // ###### fields requied ######
+		const fieldsListRequired = ['email', 'password', 'firstName', 'lastName'];
+    for (let i = 0; i < fieldsListRequired.length; i++) {
+      const fieldRequired = fieldsListRequired[i];
 
-		// update - request :
-		if (email && _id) {
-      updateUser({email, /*password,*/ firstName, lastName, gender, birthDateYear, birthDateMonth, birthDateDay}, _id);
+      if (typeof typingUpdateUserState[fieldRequired] !== 'undefined') {
+        // if field changed :
+        data[fieldRequired] = typingUpdateUserState[fieldRequired] !== '' ? typingUpdateUserState[fieldRequired] : null;
+      } else if ((typeof typingUpdateUserState[fieldRequired] === 'undefined' && typeof userObj[fieldRequired] === 'undefined' || userObj[fieldRequired] === '')) {
+        // if field not changed AND undefined in database :
+        data[fieldRequired] = null;
+      }
+    }
+
+    if (typeof typingUpdateUserState.birthdateYear !== 'undefined' || typeof typingUpdateUserState.birthdateMonth !== 'undefined' || typeof typingUpdateUserState.birthdateDay !== 'undefined') {
+      data.birthDateYear = (typeof typingUpdateUserState.birthdateYear !== 'undefined' ? typingUpdateUserState.birthdateYear : birthDateState.year) || null;
+      data.birthDateMonth = (typeof typingUpdateUserState.birthdateMonth !== 'undefined' ? typingUpdateUserState.birthdateMonth : birthDateState.month) || null;
+      data.birthDateDay = (typeof typingUpdateUserState.birthdateDay !== 'undefined' ? typingUpdateUserState.birthdateDay : birthDateState.day) || null;
+    } else if (
+			(typeof typingUpdateUserState.birthdateYear === 'undefined' && typeof birthDateState.year === 'undefined' || birthDateState.year === '') ||
+			(typeof typingUpdateUserState.birthDateMonth === 'undefined' && typeof birthDateState.month === 'undefined' || birthDateState.month === '') ||
+			(typeof typingUpdateUserState.birthDateDay === 'undefined' && typeof birthDateState.day === 'undefined' || birthDateState.day === '')
+		) {
+      data.birthDateYear = null;
+      data.birthDateMonth = null;
+      data.birthDateDay = null;
+		}
+
+    // ###### fields NOT requied ######
+    if (typeof typingUpdateUserState.gender !== 'undefined') {
+      data.gender = typingUpdateUserState.gender;
+    }
+
+    // ###### update - request : ######
+		if (_id && Object.keys(data).length > 0) {
+      updateUser(data, _id);
 		}
 
 		// set all 'this.isChanged' to false :

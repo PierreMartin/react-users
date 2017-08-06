@@ -157,44 +157,35 @@ export function update(req, res) {
   let errorField = {};
 
   // handling required fields :
-  errorField.firstName = typeof data.firstName === 'undefined' || data.firstName === '';
-  errorField.lastName = typeof data.lastName === 'undefined' || data.lastName === '';
-  errorField.email = typeof data.email === 'undefined' || data.email === '';
-  errorField.password = false/*typeof data.password === 'undefined' || data.password === ''*/;
-  errorField.birthDateYear = typeof data.birthDateYear !== 'number';
-  errorField.birthDateMonth = typeof data.birthDateMonth !== 'number';
-  errorField.birthDateDay = typeof data.birthDateDay !== 'number';
+  errorField.firstName = data.firstName === null;
+  errorField.lastName = data.lastName === null;
+  errorField.email = data.email === null;
+  errorField.password = data.password === null;
+  errorField.birthDateYear = data.birthDateYear === null;
+  errorField.birthDateMonth = data.birthDateMonth === null;
+  errorField.birthDateDay = data.birthDateDay === null;
 
-  let birthDateFull = new Date(data.birthDateYear, data.birthDateMonth, data.birthDateDay);
-  errorField.birthDateFull = Object.prototype.toString.call(birthDateFull) !== '[object Date]';
+  if (data.birthDateYear || data.birthDateMonth || data.birthDateDay) {
+    let birthDateFull = new Date(data.birthDateYear, data.birthDateMonth, data.birthDateDay);
+    errorField.birthDateFull = Object.prototype.toString.call(birthDateFull) !== '[object Date]';
 
-  // these fields must to define in the reducer :
-  const datas = {
-    email: data.email,
-    // password: data.password,
-    firstName: data.firstName,
-    lastName: data.lastName,
-    gender: data.gender,
-    birthDate: birthDateFull.getTime(),
-    age: calculateAge(birthDateFull)
-  };
-
-  /*
-  if (isPasswordChanged) {
-    datas.password = data.password;
+    // set field right format :
+    data.birthDate = birthDateFull.getTime();
+    data.age = calculateAge(birthDateFull);
   }
-  */
 
   // displaying required fields :
-  if (errorField.firstName || errorField.lastName || errorField.email || errorField.password || errorField.birthDateYear || errorField.birthDateMonth || errorField.birthDateDay || errorField.birthDateFull) {
+  for (let key in errorField) {
+    if (errorField[key] === true) {
       return res.status(400).json({errorField});
+    }
   }
 
 	if (id && !data && !data.email) {
 		return res.status(400).json({message: 'Une erreur est survenue lors de votre mise à jour de votre profil'});
 	}
 
-	User.findOneAndUpdate({'_id' : id}, datas, (err) => {
+	User.findOneAndUpdate({'_id' : id}, data, (err) => {
 		if (err) {
 			return res.status(500).json({
 				message: 'Une erreur est survenue lors de votre mise à jour de votre profil'
@@ -203,7 +194,7 @@ export function update(req, res) {
 
 		return res.status(200).json({
 			message: 'Votre profil à bien été mis à jour',
-			userObj: datas
+			userObj: data
 		});
 	});
 }
