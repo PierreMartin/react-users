@@ -110,7 +110,7 @@ export default class FormEditUser extends Component {
 		return (
 			<form className='form-horizontal' onSubmit={this.handleOnSubmit}>
 				<TextField ref="email" name="email" defaultValue={this.isChanged.email ? typingUpdateUserState.email : userObj.email} floatingLabelText="Email" type="email" onChange={this.handleInputChange} errorText={missingRequiredField.email ? 'Saisis ton email' : ''} /><br />
-				{/*<TextField ref="password" name="password" defaultValue={this.isChanged.password ? typingUpdateUserState.password : userObj.password} floatingLabelText="Mot de passe" type="password" onChange={this.handleInputChange} errorText={missingRequiredField.password ? 'Saisis ton mot de passe' : ''} /><br />*/}
+				<TextField ref="password" name="password" defaultValue={this.isChanged.password ? typingUpdateUserState.password : ''} floatingLabelText="Change ton mot de passe" type="password" onChange={this.handleInputChange} errorText={missingRequiredField.password ? 'Saisis ton mot de passe' : ''} /><br />
 				<TextField ref="firstName" name="firstName" defaultValue={this.isChanged.firstName ? typingUpdateUserState.firstName : userObj.firstName} floatingLabelText="Prénom" onChange={this.handleInputChange} errorText={missingRequiredField.firstName ? 'Saisis ton prénom' : ''} /><br />
 				<TextField ref="lastName" name="lastName" defaultValue={this.isChanged.lastName ? typingUpdateUserState.lastName : userObj.lastName} floatingLabelText="Nom" onChange={this.handleInputChange} errorText={missingRequiredField.lastName ? 'Saisis ton nom' : ''} /><br />
 

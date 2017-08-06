@@ -1,7 +1,7 @@
 import User from '../models/user';
 import passport from 'passport';
 import { calculateAge } from '../../../toolbox/toolbox';
-
+import bcrypt from 'bcrypt-nodejs';
 
 /**
  * GET /api/user/all
@@ -167,6 +167,10 @@ export function update(req, res) {
     // set field right format :
     data.birthDate = birthDateFull.getTime();
     data.age = calculateAge(birthDateFull);
+  }
+
+  if (data.password) {
+    data.password = bcrypt.hashSync(data.password);
   }
 
   // displaying required fields :
