@@ -47,7 +47,7 @@ export const updateUser = (data, id) => {
 		.then((res) => {
 			return res;
 		})
-		.catch(() => {
-			return {};
+		.catch(err => {
+			return Promise.reject(err);
 		});
 };

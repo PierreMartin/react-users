@@ -10,14 +10,15 @@ import { typingUpdateUserAction, updateUserAction } from '../../../actions/userA
 
 class UserEditPage extends Component {
 	render() {
-		const { userObj, updateUserAction, typingUpdateUserState, typingUpdateUserAction } = this.props;
+		const { userAuth, updateUserAction, typingUpdateUserState, typingUpdateUserAction, missingRequiredField } = this.props;
 
 		return (
 			<div>
 				<h1>Completer mon profil</h1>
 
 				<FormEditUser
-					userObj={userObj} 																	// from new state NOT in real time - after the SUBMIT action
+					userAuth={userAuth}
+					missingRequiredField={missingRequiredField}
 
 					typingUpdateUserAction={typingUpdateUserAction}			// 1) for update the new state
 					typingUpdateUserState={typingUpdateUserState}				// 2) from new state in REAL TIME for the displaying in the fields
@@ -30,16 +31,18 @@ class UserEditPage extends Component {
 }
 
 UserEditPage.propTypes = {
-	userObj: PropTypes.object.isRequired,
+  userAuth: PropTypes.object.isRequired,
 	typingUpdateUserAction: PropTypes.func.isRequired,
 	typingUpdateUserState: PropTypes.object.isRequired,
-	updateUserAction: PropTypes.func
+	updateUserAction: PropTypes.func,
+  missingRequiredField: PropTypes.object
 };
 
 function mapStateToProps(state) {
 	return {
-		userObj: state.userAuth.userObj,
-		typingUpdateUserState: state.userAuth.typingUpdateUserState
+    userAuth: state.userAuth,
+		typingUpdateUserState: state.userAuth.typingUpdateUserState,
+    missingRequiredField: state.userAuth.missingRequiredField
 	};
 }
 

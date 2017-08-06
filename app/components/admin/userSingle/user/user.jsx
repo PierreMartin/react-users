@@ -13,7 +13,6 @@ const User = ({ userSingle }) => {
             <div>prénom : {userSingle.firstName}</div>
             <div>Nom : {userSingle.lastName}</div>
             <div>genre : {userSingle.gender}</div>
-            <div>Image : {userSingle.picture}</div>
             <div>Age : {userSingle.age}</div>
         </div>
     );

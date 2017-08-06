@@ -8,7 +8,7 @@ import styles from './css/style';
 const cx = classNames.bind(styles);
 
 
-const Birthdate = ({ typingLoginSignupUserAction, typingLoginSignupUserState, label, missingRequiredField }) => {
+const Birthdate = ({ typingLoginSignupUserAction, typingLoginSignupUserState, label, missingRequiredField, currentValue, defaultVal }) => {
   const handleSelectDateChange = (nameField) => {
     return function (event, index, value) {
       typingLoginSignupUserAction(nameField, value);
@@ -19,7 +19,7 @@ const Birthdate = ({ typingLoginSignupUserAction, typingLoginSignupUserState, la
     <div className={cx('form-birthdate-container')}>
       <label htmlFor="birthdate">{label}</label>
       <div className={cx('input-birthdate-container')}>
-        <SelectField floatingLabelText="Année" className={cx('birthdate-year')} id="birthdate-year" name="birthdateYear" onChange={handleSelectDateChange('birthdateYear')} value={typingLoginSignupUserState.birthdateYear} errorText={missingRequiredField.birthDateYear ? 'Saisis l\'année' : ''} >
+        <SelectField floatingLabelText="Année" className={cx('birthdate-year')} id="birthdate-year" name="birthdateYear" onChange={handleSelectDateChange('birthdateYear')} value={typingLoginSignupUserState.birthdateYear || currentValue && currentValue.year || defaultVal.year} errorText={missingRequiredField.birthDateYear ? 'Saisis l\'année' : ''} >
           <MenuItem value={1897} primaryText="1897" />
           <MenuItem value={1898} primaryText="1898" />
           <MenuItem value={1899} primaryText="1899" />
@@ -143,7 +143,7 @@ const Birthdate = ({ typingLoginSignupUserAction, typingLoginSignupUserState, la
           <MenuItem value={2017} primaryText="2017" />
         </SelectField>
 
-        <SelectField floatingLabelText="Mois" className={cx('birthdate-month')} id="birthdate-month" name="birthdateMonth" onChange={handleSelectDateChange('birthdateMonth')} value={typingLoginSignupUserState.birthdateMonth} errorText={missingRequiredField.birthDateMonth ? 'Saisis le mois' : ''} >
+        <SelectField floatingLabelText="Mois" className={cx('birthdate-month')} id="birthdate-month" name="birthdateMonth" onChange={handleSelectDateChange('birthdateMonth')} value={typingLoginSignupUserState.birthdateMonth || currentValue && currentValue.month || defaultVal.month} errorText={missingRequiredField.birthDateMonth ? 'Saisis le mois' : ''} >
           <MenuItem value={0} primaryText="janv." />
           <MenuItem value={1} primaryText="févr." />
           <MenuItem value={2} primaryText="mars" />
@@ -158,7 +158,7 @@ const Birthdate = ({ typingLoginSignupUserAction, typingLoginSignupUserState, la
           <MenuItem value={11} primaryText="déc." />
         </SelectField>
 
-        <SelectField floatingLabelText="Jour" className={cx('birthdate-day')} id="birthdate-day" name="birthdateDay" onChange={handleSelectDateChange('birthdateDay')} value={typingLoginSignupUserState.birthdateDay} errorText={missingRequiredField.birthDateDay ? 'Saisis le jour' : ''} >
+        <SelectField floatingLabelText="Jour" className={cx('birthdate-day')} id="birthdate-day" name="birthdateDay" onChange={handleSelectDateChange('birthdateDay')} value={typingLoginSignupUserState.birthdateDay || currentValue && currentValue.day || defaultVal.day} errorText={missingRequiredField.birthDateDay ? 'Saisis le jour' : ''} >
           <MenuItem value={1} primaryText="1" />
           <MenuItem value={2} primaryText="2" />
           <MenuItem value={3} primaryText="3" />

@@ -189,15 +189,21 @@ export function updateUserSuccess(res) {
 export function updateUserAction(data, id) {
 	return dispatch => {
 		return updateUser(data, id)
-			.then((response) => {
+			.then(response => {
 				if (response.status === 200) {
 					dispatch(updateUserSuccess(response.data));
 				} else {
 					dispatch(updateUserError(response.data.message));
 				}
 			})
-			.catch((err) => {
-				dispatch(updateUserError(getMessage(err)));
+			.catch(err => {
+        if (err.response.data.errorField) {
+          // missing required fields :
+          dispatch(requiredFieldsError(getFieldsMissing(err)));
+        } else {
+          // others errors :
+          dispatch(updateUserError(getMessage(err)));
+        }
 			});
 	};
 }

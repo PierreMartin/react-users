@@ -5,6 +5,7 @@ import { manualLogin, signUp, toggleLoginMode, typingLoginSignupUserAction } fro
 import styles from './css/style';
 import hourGlassSvg from './images/hourglass.svg';
 import Birthdate from '../../common/birthdate';
+import { defaultValBirthDate } from '../../common/constants';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -42,9 +43,9 @@ class LoginOrRegister extends Component {
             const gender = typingLoginSignupUserState.gender;
 
             // dates :
-            const birthDateYear = typingLoginSignupUserState.birthdateYear;
-            const birthDateMonth = typingLoginSignupUserState.birthdateMonth;
-            const birthDateDay = typingLoginSignupUserState.birthdateDay;
+            const birthDateYear = typingLoginSignupUserState.birthdateYear || defaultValBirthDate.year;
+            const birthDateMonth = typingLoginSignupUserState.birthdateMonth || defaultValBirthDate.month;
+            const birthDateDay = typingLoginSignupUserState.birthdateDay || defaultValBirthDate.day;
 
             signUp({email, password, firstName, lastName, gender, birthDateYear, birthDateMonth, birthDateDay});
         }
@@ -89,7 +90,7 @@ class LoginOrRegister extends Component {
             </div>;
 
             fieldsDatesAndGenderNode = <div>
-                <Birthdate typingLoginSignupUserAction={typingLoginSignupUserAction} typingLoginSignupUserState={typingLoginSignupUserState} label="Date de naissance" missingRequiredField={missingRequiredField} />
+                <Birthdate defaultVal={defaultValBirthDate} typingLoginSignupUserAction={typingLoginSignupUserAction} typingLoginSignupUserState={typingLoginSignupUserState} label="Date de naissance" missingRequiredField={missingRequiredField} />
 
                 <div className={cx('form-gender-container')}>
                     <label htmlFor="gender">Sexe</label>

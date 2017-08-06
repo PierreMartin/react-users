@@ -103,9 +103,12 @@ const userObj = (state = {}, action) => {
 			if (action.userObj) {
 				return {
 					...state,
-					name: action.userObj.name,
-					picture: action.userObj.picture,
-					email: action.userObj.email
+          firstName: action.userObj.firstName,
+          lastName: action.userObj.lastName,
+					email: action.userObj.email,
+          birthDate: new Date(action.userObj.birthDate),
+          age: action.userObj.age,
+          gender: action.userObj.gender
 				};
 			}
 			return state;
@@ -129,6 +132,8 @@ const missingRequiredField = (state = {}, action) => {
     case types.LOGOUT_SUCCESS_USER:
     case types.LOGIN_ERROR_USER:
     case types.SIGNUP_ERROR_USER:
+    case types.UPDATE_USER_SUCCESS:
+    case types.UPDATE_USER_FAILURE:
       return {};
     default:
       return state;
