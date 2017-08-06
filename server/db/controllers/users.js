@@ -109,21 +109,16 @@ export function signUp(req, res, next) {
     errorField.birthDateFull = Object.prototype.toString.call(birthDateFull) !== '[object Date]';
 
     // displaying required fields :
-    if (errorField.firstName || errorField.lastName || errorField.email || errorField.password || errorField.birthDateYear || errorField.birthDateMonth || errorField.birthDateDay || errorField.birthDateFull) {
-        return res.status(400).json({errorField});
+    for (let key in errorField) {
+        if (errorField[key] === true) {
+            return res.status(400).json({errorField});
+        }
     }
 
-    const datas = {
-      email: data.email,
-      password: data.password,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      gender: data.gender,
-      birthDate: birthDateFull.getTime(),
-      age: calculateAge(birthDateFull)
-    };
+    data.birthDate = birthDateFull.getTime();
+    data.age = calculateAge(birthDateFull);
 
-    const user = new User(datas);
+    const user = new User(data);
 
     User.findOne({email: data.email}, (findErr, existingUser) => {
         // conflict errors :
