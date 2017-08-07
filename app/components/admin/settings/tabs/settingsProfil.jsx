@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import Birthdate from '../../../common/birthdate/birthdate';
 import { defaultValBirthDate } from '../../../common/constants';
-import { NavigationSetting } from '../../../navigation/settings';
+import { NavigationSetting } from '../../../navigation/settingsMenu/settings';
 import { typingUpdateUserAction, updateUserAction } from '../../../../actions/userAuth';
 
 import classNames from 'classnames/bind';

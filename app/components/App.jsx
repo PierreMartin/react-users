@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Navigation from '../components/navigation/component';
+import Navigation from '../components/navigation/mainMenu/mainMenu';
 import Message from '../components/message/component';
 import classNames from 'classnames/bind';
 import styles from '../css/main';

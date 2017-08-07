@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import { NavigationSetting } from '../../../navigation/settings';
+import { NavigationSetting } from '../../../navigation/settingsMenu/settings';
 import { typingUpdateUserAction, updateUserAction } from '../../../../actions/userAuth';
 
 import classNames from 'classnames/bind';
