@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { NavigationSetting } from '../../navigation/settingsMenu/settings';
+import { NavigationSetting } from './settingsMenu/settings';
 
 // import classNames from 'classnames/bind';
 // import styles from './css/style';
