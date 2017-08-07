@@ -168,10 +168,6 @@ GET auth        => GET usersMe(auth._id)                -> userMe
 `- changer tout les 'courses' par 'cours'`
 
 - gerer css (importer main.css + style.css) pour messages form
-- gerer hash password
-
-
-- gerer required fields pour l'update
 - implémenter l'avatar dans l'update
 - page 'mon profil' -> ajouter des champs (prenom, age, ville, ...)
 

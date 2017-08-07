@@ -108,22 +108,25 @@ export default class FormEditUser extends Component {
     let birthDateState = this.birthDateForSelectField(birthDate);
 
 		return (
-			<form className='form-horizontal' onSubmit={this.handleOnSubmit}>
-				<TextField ref="email" name="email" defaultValue={this.isChanged.email ? typingUpdateUserState.email : userObj.email} floatingLabelText="Email" type="email" onChange={this.handleInputChange} errorText={missingRequiredField.email ? 'Saisis ton email' : ''} /><br />
-				<TextField ref="password" name="password" defaultValue={this.isChanged.password ? typingUpdateUserState.password : ''} floatingLabelText="Change ton mot de passe" type="password" onChange={this.handleInputChange} errorText={missingRequiredField.password ? 'Saisis ton mot de passe' : ''} /><br />
-				<TextField ref="firstName" name="firstName" defaultValue={this.isChanged.firstName ? typingUpdateUserState.firstName : userObj.firstName} floatingLabelText="Prénom" onChange={this.handleInputChange} errorText={missingRequiredField.firstName ? 'Saisis ton prénom' : ''} /><br />
-				<TextField ref="lastName" name="lastName" defaultValue={this.isChanged.lastName ? typingUpdateUserState.lastName : userObj.lastName} floatingLabelText="Nom" onChange={this.handleInputChange} errorText={missingRequiredField.lastName ? 'Saisis ton nom' : ''} /><br />
+			<div>
+				<h2>Profil et infos publique</h2>
+				<form className='form-horizontal' onSubmit={this.handleOnSubmit}>
+					<TextField ref="email" name="email" defaultValue={this.isChanged.email ? typingUpdateUserState.email : userObj.email} floatingLabelText="Email" type="email" onChange={this.handleInputChange} errorText={missingRequiredField.email ? 'Saisis ton email' : ''} /><br />
+					<TextField ref="password" name="password" defaultValue={this.isChanged.password ? typingUpdateUserState.password : ''} floatingLabelText="Change ton mot de passe" type="password" onChange={this.handleInputChange} errorText={missingRequiredField.password ? 'Saisis ton mot de passe' : ''} /><br />
+					<TextField ref="firstName" name="firstName" defaultValue={this.isChanged.firstName ? typingUpdateUserState.firstName : userObj.firstName} floatingLabelText="Prénom" onChange={this.handleInputChange} errorText={missingRequiredField.firstName ? 'Saisis ton prénom' : ''} /><br />
+					<TextField ref="lastName" name="lastName" defaultValue={this.isChanged.lastName ? typingUpdateUserState.lastName : userObj.lastName} floatingLabelText="Nom" onChange={this.handleInputChange} errorText={missingRequiredField.lastName ? 'Saisis ton nom' : ''} /><br />
 
-				<Birthdate defaultVal={defaultValBirthDate} currentValue={birthDateState} typingLoginSignupUserAction={typingUpdateUserAction} typingLoginSignupUserState={typingUpdateUserState} label="Date de naissance" missingRequiredField={missingRequiredField} />
+					<Birthdate defaultVal={defaultValBirthDate} currentValue={birthDateState} typingLoginSignupUserAction={typingUpdateUserAction} typingLoginSignupUserState={typingUpdateUserState} label="Date de naissance" missingRequiredField={missingRequiredField} />
 
-				<RadioButtonGroup ref="gender" name="gender" defaultSelected={this.isChanged.gender ? typingUpdateUserState.gender : userObj.gender} floatingLabelText="Genre" onChange={this.handleInputChange}>
-					<RadioButton value="homme" label="Homme"/>
-					<RadioButton value="femme" label="Femme"/>
-				</RadioButtonGroup>
+					<RadioButtonGroup ref="gender" name="gender" defaultSelected={this.isChanged.gender ? typingUpdateUserState.gender : userObj.gender} floatingLabelText="Genre" onChange={this.handleInputChange}>
+						<RadioButton value="homme" label="Homme"/>
+						<RadioButton value="femme" label="Femme"/>
+					</RadioButtonGroup>
 
-				<p className={cx('message', {'message-show': message && message.length > 0})}>{message}</p>
-				<RaisedButton label="Valider" type="submit" />
-			</form>
+					<p className={cx('message', {'message-show': message && message.length > 0})}>{message}</p>
+					<RaisedButton label="Valider" type="submit" />
+				</form>
+			</div>
 		);
 	}
 }

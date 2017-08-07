@@ -32,6 +32,12 @@ body {
 /* --------------- MAIN MARKDOWNS ----------------*/
 h1 {
   color: var(--colorPrimaryGray);
+  font-size: 36px;
+}
+
+h2 {
+  color: var(--colorPrimaryGray);
+  font-size: 26px;
 }
 
 

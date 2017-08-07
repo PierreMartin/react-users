@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
 // import styles from './css/style';
 import FormEditUser from './form';
+import { NavigationSetting } from '../../navigation/settings';
 import { typingUpdateUserAction, updateUserAction } from '../../../actions/userAuth';
-
+import { Link } from 'react-router';
 // const cx = classNames.bind(styles);
 
 
@@ -14,7 +15,9 @@ class UserEditPage extends Component {
 
 		return (
 			<div>
-				<h1>Completer mon profil</h1>
+				<h1>Paramètres généraux du compte</h1>
+
+				<NavigationSetting />
 
 				<FormEditUser
 					userAuth={userAuth}
