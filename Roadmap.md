@@ -168,7 +168,7 @@ GET auth        => GET usersMe(auth._id)                -> userMe
 `- changer tout les 'courses' par 'cours'`
 
 - implémenter l'avatar dans l'update
-- page 'mon profil' -> ajouter des champs (prenom, age, ville, ...)
+- page 'mon profil' -> ajouter des champs (pseudo unique, check email unique)
 
 - cours => page single - et renomer dans reducer :
     - state.cours.single
@@ -180,7 +180,7 @@ GET auth        => GET usersMe(auth._id)                -> userMe
     - state.users.all
     - state.users.byFriend    
     
-- finir CRUD des users + cours (GET: DONE, POST, PUT, DELET)
+- finir CRUD des users + cours (GET, POST, PUT, DELET)
 - Prevoir un filtre d'affichage des personnes (par age, par ville)
 
 - gerer tous les messages (succes et d'erreurs) de facon generique - reducer 'popupMessage'

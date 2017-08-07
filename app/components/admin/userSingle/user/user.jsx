@@ -14,6 +14,9 @@ const User = ({ userSingle }) => {
             <div>Nom : {userSingle.lastName}</div>
             <div>genre : {userSingle.gender}</div>
             <div>Age : {userSingle.age}</div>
+            <div>Ville : {userSingle.city}</div>
+            <div>Pays : {userSingle.country}</div>
+            <div>Avatar : {userSingle.avatar}</div>
         </div>
     );
 };

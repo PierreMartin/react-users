@@ -6,12 +6,6 @@
 import bcrypt from 'bcrypt-nodejs';
 import mongoose from 'mongoose';
 
-// Other oauthtypes to be added
-
-/*
- User Schema
- */
-
 const UserSchema = new mongoose.Schema({
   email: { type: String, unique: true, lowercase: true },
   password: String,
@@ -26,7 +20,8 @@ const UserSchema = new mongoose.Schema({
   state: { type: String, default: '' },
   gender: { type: String, default: '' },
   website: { type: String, default: '' },
-  picture: { type: String, default: '' },
+  avatar: { type: String, default: '' },
+  avatarSrc: { type: String, default: '' },
 
   resetPasswordToken: String,
   resetPasswordExpires: Date,

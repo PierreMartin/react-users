@@ -17,7 +17,7 @@ class userSinglePage extends Component {
         let buttonEditNode = '';
 
         if (userSingle._id === userObj._id) {
-          buttonEditNode = <Link to={'/settings/'} className={cx('user-links')}><RaisedButton label="Editer mon profil" /></Link>;
+          buttonEditNode = <Link to={'/settings/'} className={cx('user-links')}><RaisedButton label="Paramètres de mon compte" /></Link>;
         }
 
         return (

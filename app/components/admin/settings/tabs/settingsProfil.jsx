@@ -91,6 +91,14 @@ class SettingsProfil extends Component {
       data.gender = typingUpdateUserState.gender;
     }
 
+    if (typeof typingUpdateUserState.city !== 'undefined') {
+      data.city = typingUpdateUserState.city;
+    }
+
+    if (typeof typingUpdateUserState.country !== 'undefined') {
+      data.country = typingUpdateUserState.country;
+    }
+
     // ###### update - request : ######
     if (_id && Object.keys(data).length > 0) {
       updateUserAction(data, _id);
@@ -119,6 +127,8 @@ class SettingsProfil extends Component {
         <form className={cx('form-horizontal')} onSubmit={this.handleOnSubmit}>
           <TextField ref="firstName" name="firstName" defaultValue={this.isChanged.firstName ? typingUpdateUserState.firstName : userObj.firstName} floatingLabelText="Prénom" onChange={this.handleInputChange} errorText={missingRequiredField.firstName ? 'Saisis ton prénom' : ''} fullWidth={true} /><br />
           <TextField ref="lastName" name="lastName" defaultValue={this.isChanged.lastName ? typingUpdateUserState.lastName : userObj.lastName} floatingLabelText="Nom" onChange={this.handleInputChange} errorText={missingRequiredField.lastName ? 'Saisis ton nom' : ''} fullWidth={true} /><br />
+          <TextField ref="city" name="city" defaultValue={this.isChanged.city ? typingUpdateUserState.city : userObj.city} floatingLabelText="Ville" onChange={this.handleInputChange} fullWidth={true} /><br />
+          <TextField ref="country" name="country" defaultValue={this.isChanged.country ? typingUpdateUserState.country : userObj.country} floatingLabelText="Pays" onChange={this.handleInputChange} fullWidth={true} /><br />
 
           <Birthdate defaultVal={defaultValBirthDate} currentValue={birthDateState} typingLoginSignupUserAction={typingUpdateUserAction} typingLoginSignupUserState={typingUpdateUserState} label="Date de naissance" missingRequiredField={missingRequiredField} />
 
