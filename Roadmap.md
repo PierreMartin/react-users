@@ -168,7 +168,6 @@ GET auth        => GET usersMe(auth._id)                -> userMe
 `- changer tout les 'courses' par 'cours'`
 
 - voir routes.js
-- changer structure "navigation"
 
 
 - implémenter l'avatar dans l'update
