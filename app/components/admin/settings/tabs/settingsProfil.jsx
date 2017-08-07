@@ -5,7 +5,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import Birthdate from '../../../common/birthdate/birthdate';
 import { defaultValBirthDate } from '../../../common/constants';
-import { NavigationSetting } from '../settingsMenu/settings';
 import { typingUpdateUserAction, updateUserAction } from '../../../../actions/userAuth';
 
 import classNames from 'classnames/bind';
@@ -114,38 +113,26 @@ class SettingsProfil extends Component {
     let birthDateState = this.birthDateForSelectField(birthDate);
 
     return (
-      <div className="container">
-        <h1>Paramètres du compte</h1>
-        <hr/>
+      <div>
+        <h2>Paramètres du profil</h2>
 
-        <div className="row">
-          <div className="col-xs-3">
-            <NavigationSetting userAuth={userAuth} />
+        <form className={cx('form-horizontal')} onSubmit={this.handleOnSubmit}>
+          <TextField ref="firstName" name="firstName" defaultValue={this.isChanged.firstName ? typingUpdateUserState.firstName : userObj.firstName} floatingLabelText="Prénom" onChange={this.handleInputChange} errorText={missingRequiredField.firstName ? 'Saisis ton prénom' : ''} fullWidth={true} /><br />
+          <TextField ref="lastName" name="lastName" defaultValue={this.isChanged.lastName ? typingUpdateUserState.lastName : userObj.lastName} floatingLabelText="Nom" onChange={this.handleInputChange} errorText={missingRequiredField.lastName ? 'Saisis ton nom' : ''} fullWidth={true} /><br />
+
+          <Birthdate defaultVal={defaultValBirthDate} currentValue={birthDateState} typingLoginSignupUserAction={typingUpdateUserAction} typingLoginSignupUserState={typingUpdateUserState} label="Date de naissance" missingRequiredField={missingRequiredField} />
+
+          <div className={cx('form-gender-container')}>
+            <label htmlFor="gender">Sexe</label>
+            <RadioButtonGroup ref="gender" name="gender" className={cx('input-gender-container')}  defaultSelected={this.isChanged.gender ? typingUpdateUserState.gender : userObj.gender} floatingLabelText="Genre" onChange={this.handleInputChange} >
+              <RadioButton value="homme" label="Homme" className={cx('gender-input')} />
+              <RadioButton value="femme" label="Femme" className={cx('gender-input')} />
+            </RadioButtonGroup>
           </div>
 
-          <div className="col-xs-9">
-            <h2>Paramètres du profil</h2>
-
-            <form className={cx('form-horizontal')} onSubmit={this.handleOnSubmit}>
-              <TextField ref="firstName" name="firstName" defaultValue={this.isChanged.firstName ? typingUpdateUserState.firstName : userObj.firstName} floatingLabelText="Prénom" onChange={this.handleInputChange} errorText={missingRequiredField.firstName ? 'Saisis ton prénom' : ''} fullWidth={true} /><br />
-              <TextField ref="lastName" name="lastName" defaultValue={this.isChanged.lastName ? typingUpdateUserState.lastName : userObj.lastName} floatingLabelText="Nom" onChange={this.handleInputChange} errorText={missingRequiredField.lastName ? 'Saisis ton nom' : ''} fullWidth={true} /><br />
-
-              <Birthdate defaultVal={defaultValBirthDate} currentValue={birthDateState} typingLoginSignupUserAction={typingUpdateUserAction} typingLoginSignupUserState={typingUpdateUserState} label="Date de naissance" missingRequiredField={missingRequiredField} />
-
-              <div className={cx('form-gender-container')}>
-                <label htmlFor="gender">Sexe</label>
-                <RadioButtonGroup ref="gender" name="gender" className={cx('input-gender-container')}  defaultSelected={this.isChanged.gender ? typingUpdateUserState.gender : userObj.gender} floatingLabelText="Genre" onChange={this.handleInputChange} >
-                  <RadioButton value="homme" label="Homme" className={cx('gender-input')} />
-                  <RadioButton value="femme" label="Femme" className={cx('gender-input')} />
-                </RadioButtonGroup>
-              </div>
-
-              <p className={cx('message', {'message-show': message && message.length > 0})}>{message}</p>
-              <RaisedButton label="Valider" type="submit" />
-            </form>
-
-          </div>
-        </div>
+          <p className={cx('message', {'message-show': message && message.length > 0})}>{message}</p>
+          <RaisedButton label="Valider" type="submit" />
+        </form>
       </div>
     );
   }

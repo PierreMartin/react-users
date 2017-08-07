@@ -167,9 +167,6 @@ GET auth        => GET usersMe(auth._id)                -> userMe
 `- voir passport js`
 `- changer tout les 'courses' par 'cours'`
 
-- voir routes.js
-
-
 - implémenter l'avatar dans l'update
 - page 'mon profil' -> ajouter des champs (prenom, age, ville, ...)
 

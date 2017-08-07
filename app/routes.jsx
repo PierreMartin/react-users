@@ -55,14 +55,10 @@ export default (store) => {
             <Route path="/userslist" component={Users} fetchMyDatas={getUsers} onEnter={requireAuth} />
             <Route path='/user/:id' component={User} fetchMyDatas={getUser} onEnter={requireAuth} />
 
-            <Route path='/user/edit/:id' component={Settings} fetchMyDatas={getUser} onEnter={requireAuth} />
-            <Route path='/settings/profil/:id' component={SettingsProfil} fetchMyDatas={getUser} onEnter={requireAuth} />
-            <Route path='/settings/acount/:id' component={SettingsAcount} fetchMyDatas={getUser} onEnter={requireAuth} />
-
-            {/*<Route path='/settings' component={Settings} fetchMyDatas={getUser} onEnter={requireAuth} >
-              <Route path='profil/:id' component={SettingsProfil} fetchMyDatas={getUser} onEnter={requireAuth} />
-              <Route path='acount/:id' component={SettingsAcount} fetchMyDatas={getUser} onEnter={requireAuth} />
-            </Route>*/}
+            <Route path='/settings' component={Settings} onEnter={requireAuth} >
+              <Route path='/settings/profil/:id' component={SettingsProfil} fetchMyDatas={getUser} onEnter={requireAuth} />
+              <Route path='/settings/acount/:id' component={SettingsAcount} fetchMyDatas={getUser} onEnter={requireAuth} />
+            </Route>
 
             {/*<Route path="/userslist" component={Users} fetchMyDatas={getUsers} onEnter={requireAuth} >
                <Route path=":userId" component={User}/>

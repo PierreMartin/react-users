@@ -13,7 +13,7 @@ class SettingsPage extends Component {
 
 		return (
 			<div className="container">
-				<h1>Paramètres du compte</h1>
+				<h1>Paramètres généraux</h1>
 				<hr/>
 
 				<div className="row">
@@ -22,7 +22,7 @@ class SettingsPage extends Component {
 					</div>
 
 					<div className="col-xs-9">
-						<p>Le mot de passe se trouve dans Paramètres du compte</p>
+            { this.props.children }
 					</div>
 				</div>
 
