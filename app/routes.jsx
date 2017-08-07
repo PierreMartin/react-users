@@ -9,7 +9,10 @@ import Home from 'components/front/home/component';
 
 import Users from 'components/admin/usersList/usersPage';
 import User from 'components/admin/userSingle/userSinglePage';
-import UserEdit from 'components/admin/userEdit/userEditPage';
+import Settings from 'components/admin/settings/settingsPage';
+
+import SettingsProfil from 'components/admin/settings/tabs/settingsProfil';
+import SettingsAcount from 'components/admin/settings/tabs/settingsAcount';
 
 import Dashboard from 'components/admin/dashboard/component';
 
@@ -51,7 +54,15 @@ export default (store) => {
             <IndexRoute component={Home} fetchMyDatas={getCours}/>
             <Route path="/userslist" component={Users} fetchMyDatas={getUsers} onEnter={requireAuth} />
             <Route path='/user/:id' component={User} fetchMyDatas={getUser} onEnter={requireAuth} />
-            <Route path='/user/edit/:id' component={UserEdit} fetchMyDatas={getUser} onEnter={requireAuth} />
+
+            <Route path='/user/edit/:id' component={Settings} fetchMyDatas={getUser} onEnter={requireAuth} />
+            <Route path='/settings/profil/:id' component={SettingsProfil} fetchMyDatas={getUser} onEnter={requireAuth} />
+            <Route path='/settings/acount/:id' component={SettingsAcount} fetchMyDatas={getUser} onEnter={requireAuth} />
+
+            {/*<Route path='/settings' component={Settings} fetchMyDatas={getUser} onEnter={requireAuth} >
+              <Route path='profil/:id' component={SettingsProfil} fetchMyDatas={getUser} onEnter={requireAuth} />
+              <Route path='acount/:id' component={SettingsAcount} fetchMyDatas={getUser} onEnter={requireAuth} />
+            </Route>*/}
 
             {/*<Route path="/userslist" component={Users} fetchMyDatas={getUsers} onEnter={requireAuth} >
                <Route path=":userId" component={User}/>

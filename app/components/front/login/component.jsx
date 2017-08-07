@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { manualLogin, signUp, toggleLoginMode, typingLoginSignupUserAction } from '../../../actions/userAuth';
 import styles from './css/style';
 import hourGlassSvg from './images/hourglass.svg';
-import Birthdate from '../../common/birthdate';
+import Birthdate from '../../common/birthdate/birthdate';
 import { defaultValBirthDate } from '../../common/constants';
 
 import TextField from 'material-ui/TextField';

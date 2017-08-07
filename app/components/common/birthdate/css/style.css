@@ -5,13 +5,12 @@
 
 .form-birthdate-container .input-birthdate-container {
 	display: flex;
-	justify-content: flex-start;
+	justify-content: space-between;
 	margin-top: -20px;
 }
 
 .form-birthdate-container .input-birthdate-container .birthdate-year,
 .form-birthdate-container .input-birthdate-container .birthdate-month,
 .form-birthdate-container .input-birthdate-container .birthdate-day {
-	width: 25% !important;
-	margin-right: 10px;
+	width: 100px !important;
 }

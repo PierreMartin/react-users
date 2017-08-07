@@ -167,7 +167,6 @@ GET auth        => GET usersMe(auth._id)                -> userMe
 `- voir passport js`
 `- changer tout les 'courses' par 'cours'`
 
-- gerer css (importer main.css + style.css) pour messages form
 - implémenter l'avatar dans l'update
 - page 'mon profil' -> ajouter des champs (prenom, age, ville, ...)
 

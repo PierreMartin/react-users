@@ -1,0 +1,8 @@
+.setting-nav ul {
+	list-style: none;
+}
+
+.setting-nav ul li a {
+	display: inline-block;
+	margin: 0 0 8px 0;
+}

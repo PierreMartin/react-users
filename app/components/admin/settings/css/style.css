@@ -1,0 +1,16 @@
+.form-horizontal {
+	width: 320px;
+}
+
+/********************* fields gender *********************/
+.form-gender-container {
+	margin-top: 20px;
+}
+
+.form-gender-container .input-gender-container {
+	display: flex;
+}
+
+.form-gender-container .input-gender-container .gender-input {
+	width: 120px !important;
+}

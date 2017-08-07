@@ -12,6 +12,7 @@
 body {
   margin: 0;
   font-family: var(--fontMontserrat);
+  font-size: 12px;
   background-color: #303030;
   color: var(--colorPrimaryGray);
 }
@@ -40,6 +41,10 @@ h2 {
   font-size: 26px;
 }
 
+ul, ol, dl {
+  padding: 0;
+  margin: 0;
+}
 
 /* --------------- MAIN LINKS ----------------*/
 a:link, a:visited { text-decoration: none; color: #fff; }
