@@ -7,7 +7,7 @@ import { NavigationSetting } from './settingsMenu/settings';
 // const cx = classNames.bind(styles);
 
 
-class SettingsPage extends Component {
+export default class SettingsPage extends Component {
 	render() {
 
 		return (
@@ -29,5 +29,3 @@ class SettingsPage extends Component {
 		);
 	}
 }
-
-export default connect(mapStateToProps, null)(SettingsPage);

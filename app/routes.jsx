@@ -9,8 +9,8 @@ import Home from 'components/front/home/component';
 
 import Users from 'components/admin/usersList/usersPage';
 import User from 'components/admin/userSingle/userSinglePage';
-import Settings from 'components/admin/settings/settingsPage';
 
+import Settings from 'components/admin/settings/settingsPage';
 import SettingsPhotos from 'components/admin/settings/tabs/settingsPhotos';
 import SettingsProfil from 'components/admin/settings/tabs/settingsProfil';
 import SettingsAcount from 'components/admin/settings/tabs/settingsAcount';
