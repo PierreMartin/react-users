@@ -9,7 +9,6 @@ import { NavigationSetting } from './settingsMenu/settings';
 
 class SettingsPage extends Component {
 	render() {
-		const { userAuth } = this.props;
 
 		return (
 			<div className="container">
@@ -18,7 +17,7 @@ class SettingsPage extends Component {
 
 				<div className="row">
 					<div className="col-xs-3">
-						<NavigationSetting userAuth={userAuth} />
+						<NavigationSetting />
 					</div>
 
 					<div className="col-xs-9">
@@ -30,16 +29,5 @@ class SettingsPage extends Component {
 		);
 	}
 }
-
-SettingsPage.propTypes = {
-  userAuth: PropTypes.object.isRequired
-};
-
-function mapStateToProps(state) {
-	return {
-    userAuth: state.userAuth
-	};
-}
-
 
 export default connect(mapStateToProps, null)(SettingsPage);

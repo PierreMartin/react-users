@@ -167,7 +167,8 @@ GET auth        => GET usersMe(auth._id)                -> userMe
 `- voir passport js`
 `- changer tout les 'courses' par 'cours'`
 
-- implémenter l'avatar dans l'update
+- implémenter l'avatar dans l'update => voir si methode put c'est ok ??
+
 - page 'mon profil' -> ajouter des champs (pseudo unique, check email unique)
 
 - cours => page single - et renomer dans reducer :

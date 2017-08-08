@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import { getCours, getUsers, getUser } from './fetch-data';
+import { getCours, getUsers, getUser, getUserAuth } from './fetch-data';
 
 import App from 'components/App';
 import About from 'components/front/about/component';
@@ -11,6 +11,7 @@ import Users from 'components/admin/usersList/usersPage';
 import User from 'components/admin/userSingle/userSinglePage';
 import Settings from 'components/admin/settings/settingsPage';
 
+import SettingsPhotos from 'components/admin/settings/tabs/settingsPhotos';
 import SettingsProfil from 'components/admin/settings/tabs/settingsProfil';
 import SettingsAcount from 'components/admin/settings/tabs/settingsAcount';
 
@@ -49,15 +50,17 @@ export default (store) => {
         callback();
     };
 
+    // "fetchMyDatas" is used at the reload page - without that we lost the datas
     return (
         <Route path="/" component={App}>
             <IndexRoute component={Home} fetchMyDatas={getCours}/>
             <Route path="/userslist" component={Users} fetchMyDatas={getUsers} onEnter={requireAuth} />
             <Route path='/user/:id' component={User} fetchMyDatas={getUser} onEnter={requireAuth} />
 
-            <Route path='/settings' component={Settings} onEnter={requireAuth} >
-              <Route path='/settings/profil/:id' component={SettingsProfil} fetchMyDatas={getUser} onEnter={requireAuth} />
-              <Route path='/settings/acount/:id' component={SettingsAcount} fetchMyDatas={getUser} onEnter={requireAuth} />
+            <Route path='/settings/' component={Settings} fetchMyDatas={getUserAuth} onEnter={requireAuth} >
+              <IndexRoute component={SettingsPhotos} fetchMyDatas={getUserAuth} onEnter={requireAuth} />
+              <Route path='/settings/profil/' component={SettingsProfil} fetchMyDatas={getUserAuth} onEnter={requireAuth} />
+              <Route path='/settings/acount/' component={SettingsAcount} fetchMyDatas={getUserAuth} onEnter={requireAuth} />
             </Route>
 
             {/*<Route path="/userslist" component={Users} fetchMyDatas={getUsers} onEnter={requireAuth} >
