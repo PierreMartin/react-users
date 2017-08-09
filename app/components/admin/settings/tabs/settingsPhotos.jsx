@@ -1,7 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import RaisedButton from 'material-ui/RaisedButton';
-import { typingUpdateUserAction, updateUserAction } from '../../../../actions/userAuth';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import { uploadAvatarUserAction, avatarUploadModalIsOpenAction, avatarUploadImagePreviewAction } from '../../../../actions/userAuth';
+import Dropzone from 'react-dropzone';
+import Cropper from 'react-cropper';
 
 import classNames from 'classnames/bind';
 import stylesMain from '../../../../css/main';
@@ -13,75 +16,102 @@ const cx = classNames.bind(styles);
 class SettingsProfil extends Component {
   constructor(props) {
     super(props);
-    this.handleInputChange  = this.handleInputChange.bind(this);
-    this.handleOnSubmit 		= this.handleOnSubmit.bind(this);
+    this.dropHandler 		    = this.dropHandler.bind(this);
+    this.handleClose 		    = this.handleClose.bind(this);
+    this.uploadAvatarAction = this.uploadAvatarAction.bind(this);
   }
 
-  handleInputChange(event) {
-    const { typingUpdateUserAction } = this.props;
-    typingUpdateUserAction(event.target.name, event.target.value);
-  }
+  /* Upload - step 1 - open the modal with us image selected */
+  dropHandler(file) {
+    const { avatarUploadImagePreviewAction, avatarUploadModalIsOpenAction } = this.props;
 
-  handleOnSubmit(event) {
-    event.preventDefault();
-    const { userAuth, updateUserAction, typingUpdateUserState } = this.props;
-    const userObj = userAuth.userObj;
-    const _id = userAuth.userObj._id;
-
-
-    var test = new FormData();
-    var imagedata = document.querySelector('input[type="file"]').files[0];
-    test.append("data", imagedata);
-    debugger;
-
-
-
-    // ########################## we set only the fields changed ##########################
-    const data = {};
-
-    // ###### fields NOT requied ######
-    /*if (typeof typingUpdateUserState.gender !== 'undefined') {
-      data.gender = typingUpdateUserState.gender;
-    }*/
-
-    // ###### update - request : ######
-    if (_id && Object.keys(data).length > 0) {
-      updateUserAction(data, _id);
+    if (!file[0] || !file[0].preview) {
+      return;
     }
 
+    // send image in state for displaying in Cropper
+    avatarUploadImagePreviewAction(file[0].preview);
+
+    // open modal :
+    avatarUploadModalIsOpenAction(true);
   }
 
-  /*handleUploadFile = (event) => {
-    debugger;
-    const data = new FormData();
-    data.append('file', event.target.files[0]);
-    data.append('name', 'some value user types');
-    data.append('description', 'some value user types');
-    // '/files' is your node.js route that triggers our middleware
+  /* Upload - step 2 - close the modal and call the API */
+  uploadAvatarAction() {
+    const { userAuth, uploadAvatarUserAction, avatarUploadModalIsOpenAction } = this.props;
+    const _id = userAuth.userObj._id;
 
-  };*/
+    // close modal :
+    avatarUploadModalIsOpenAction(false);
+
+    this.refs.cropper.getCroppedCanvas({
+      width: 160,
+      height: 90,
+      fillColor: '#fff',
+      imageSmoothingEnabled: false,
+      imageSmoothingQuality: 'high'
+    });
+
+    this.refs.cropper.getCroppedCanvas().toBlob(function (blob) {
+      let formData = new FormData();
+      formData.append('formAvatar', blob); // 'formAvatar' is used in routes.js
+
+      // send image cropped to back-end :
+      if (_id && formData) {
+        uploadAvatarUserAction(formData, _id);
+        // for multiple, implemented ('fileName', 'formData', '_id')
+      }
+
+    });
+  }
+
+  handleClose() {
+    const { avatarUploadModalIsOpenAction } = this.props;
+    avatarUploadModalIsOpenAction(false);
+  };
 
   render() {
-    const { userAuth, typingUpdateUserState, missingRequiredField, typingUpdateUserAction } = this.props;
-    const userObj = userAuth.userObj;
+    const { userAuth, avatarUploadModalIsOpenState, avatarUploadImagePreviewState } = this.props;
     const message = userAuth.message;
 
-    const divStyle = {
-      padding: '20px',
-      backgroundColor: '#4a4b4e',
-      marginBottom: '15px'
-    };
+    const actions = [
+      <FlatButton label="Annuler" primary={true} onTouchTap={this.handleClose}/>,
+      <FlatButton label="OK" primary={true} keyboardFocused={true} onTouchTap={this.uploadAvatarAction}/>,
+    ];
 
     return (
       <div>
-        <h2>Paramètres du profil</h2>
+        <h2>Ajouter une image</h2>
 
-        <form className={cx('form-horizontal')} onSubmit={this.handleOnSubmit} action="" method="post" encType="multipart/form-data" >
-          <img src="" alt="avatar" style={divStyle} />
-          <input type="file" name="fileName" />
+        {/* MODALE CROPPER */}
+        <div>
+          <Dialog
+            title="Redimensionne une image"
+            actions={actions}
+            modal={false}
+            open={avatarUploadModalIsOpenState}
+            onRequestClose={this.handleClose}
+          >
+            <Cropper
+              ref='cropper'
+              src={avatarUploadImagePreviewState}
+              style={{height: 400, width: '100%'}}
+              zoomable={false}
+              aspectRatio={16 / 9}
+              guides={false}
+            />
+          </Dialog>
+        </div>
+
+        <form id="formAvatar" className={cx('form-horizontal')} >
+          <Dropzone ref='dropper1' onDrop={this.dropHandler} multiple={false} accept={'image/*'} >
+            <div>
+              <strong>Image 1 </strong><br/>
+              <p>Drag and drop une image ici ou clique pour selectionner une image.</p>
+            </div>
+          </Dropzone>
 
           <p className={cx('message', {'message-show': message && message.length > 0})}>{message}</p>
-          <RaisedButton label="Valider" type="submit" />
         </form>
       </div>
     );
@@ -90,19 +120,20 @@ class SettingsProfil extends Component {
 
 SettingsProfil.propTypes = {
   userAuth: PropTypes.object.isRequired,
-  typingUpdateUserAction: PropTypes.func.isRequired,
-  typingUpdateUserState: PropTypes.object.isRequired,
-  updateUserAction: PropTypes.func,
-  missingRequiredField: PropTypes.object
+  uploadAvatarUserAction: PropTypes.func,
+  avatarUploadModalIsOpenAction: PropTypes.func,
+  avatarUploadModalIsOpenState: PropTypes.bool,
+  avatarUploadImagePreviewAction: PropTypes.func,
+  avatarUploadImagePreviewState: PropTypes.string
 };
 
 function mapStateToProps(state) {
   return {
     userAuth: state.userAuth,
-    typingUpdateUserState: state.userAuth.typingUpdateUserState,
-    missingRequiredField: state.userAuth.missingRequiredField
+    avatarUploadModalIsOpenState: state.userAuth.avatarUploadModalIsOpenState,
+    avatarUploadImagePreviewState: state.userAuth.avatarUploadImagePreviewState
   };
 }
 
 
-export default connect(mapStateToProps, {updateUserAction, typingUpdateUserAction})(SettingsProfil);
+export default connect(mapStateToProps, {uploadAvatarUserAction, avatarUploadModalIsOpenAction, avatarUploadImagePreviewAction})(SettingsProfil);

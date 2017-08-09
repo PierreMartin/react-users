@@ -1,9 +1,11 @@
 import passport from 'passport';
 import unsupportedMessage from '../db/unsupportedMessage';
 import { controllers, passport as passportConfig } from '../db';
+import multer from 'multer';
 
 const usersController       = controllers && controllers.users;
 const coursesController     = controllers && controllers.courses;
+const upload = multer({ dest: 'public/uploads/' });
 
 export default (app) => {
 
@@ -15,6 +17,7 @@ export default (app) => {
         app.get('/api/user/all',    usersController.all);
         app.get('/api/user/:id',    usersController.single);
         app.put('/api/user/:id',    usersController.update);
+        app.post('/api/user/avatar', upload.single('formAvatar'), usersController.uploadAvatar);
     } else {
         console.warn(unsupportedMessage('users routes'));
     }

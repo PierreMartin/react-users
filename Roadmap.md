@@ -167,7 +167,11 @@ GET auth        => GET usersMe(auth._id)                -> userMe
 `- voir passport js`
 `- changer tout les 'courses' par 'cours'`
 
-- implémenter l'avatar dans l'update => voir si methode put c'est ok ??
+- 42
+- avatar - persistance en database + renommage unique de l'image
+- avatar - reducers + dispatch dans actions
+- avatar - gerer les errors + petits message en bas
+
 
 - page 'mon profil' -> ajouter des champs (pseudo unique, check email unique)
 

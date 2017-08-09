@@ -1,9 +1,8 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
-import { updateUser } from './../fetch-data';
+import { updateUser, createAvatarUser } from './../fetch-data';
 import { push } from 'react-router-redux';
 import * as types from 'types';
-import md5 from 'spark-md5';
 
 polyfill();
 
@@ -204,6 +203,38 @@ export function updateUserAction(data, id) {
           // others errors :
           dispatch(updateUserError(getMessage(err)));
         }
+			});
+	};
+}
+
+
+/***************************************** POST AVATAR user ********************************************/
+export function avatarUploadModalIsOpenAction(isOpen) {
+  return {
+    type: types.AVATAR_UPLOAD_MODAL_ISOPEN_ACTION,
+    isOpen
+  };
+}
+
+export function avatarUploadImagePreviewAction(image) {
+  return {
+    type: types.AVATAR_UPLOAD_IMAGEPREVIEW_ACTION,
+    image
+  };
+}
+
+export function uploadAvatarUserAction(data, id) {
+	return dispatch => {
+		return createAvatarUser(data, id)
+			.then(response => {
+				if (response.status === 200) {
+					dispatch(updateUserSuccess(response.data));
+				} else {
+					dispatch(updateUserError(response.data.message));
+				}
+			})
+			.catch(err => {
+        dispatch(updateUserError(getMessage(err)));
 			});
 	};
 }

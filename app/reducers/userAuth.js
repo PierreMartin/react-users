@@ -132,6 +132,24 @@ const missingRequiredField = (state = {}, action) => {
   }
 };
 
+const avatarUploadModalIsOpenState = (state = false, action) => {
+  switch (action.type) {
+    case types.AVATAR_UPLOAD_MODAL_ISOPEN_ACTION:
+      return action.isOpen;
+    default:
+      return state;
+  }
+};
+
+const avatarUploadImagePreviewState = (state = '', action) => {
+  switch (action.type) {
+    case types.AVATAR_UPLOAD_IMAGEPREVIEW_ACTION:
+      return action.image;
+    default:
+      return state;
+  }
+};
+
 
 const userReducer = combineReducers({
   isLogin,
@@ -141,7 +159,9 @@ const userReducer = combineReducers({
   userObj,
   typingLoginSignupUserState,
 	typingUpdateUserState,
-	missingRequiredField
+	missingRequiredField,
+  avatarUploadModalIsOpenState,
+  avatarUploadImagePreviewState,
 });
 
 export default userReducer;

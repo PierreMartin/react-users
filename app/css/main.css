@@ -5,7 +5,7 @@
 
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 @import url(https://bootswatch.com/cyborg/bootstrap.min.css);
-
+@import url(https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css);
 
 * { box-sizing: border-box; }
 

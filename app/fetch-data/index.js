@@ -66,3 +66,14 @@ export const updateUser = (data, id) => {
 			return Promise.reject(err);
 		});
 };
+
+
+export const createAvatarUser = (data, id) => {
+	return apiUsers().createAvatarUser(data, id)
+		.then((res) => {
+			return res;
+		})
+		.catch(err => {
+			return Promise.reject(err);
+		});
+};

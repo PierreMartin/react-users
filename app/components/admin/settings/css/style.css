@@ -14,3 +14,7 @@
 .form-gender-container .input-gender-container .gender-input {
 	width: 120px !important;
 }
+
+.cropper-container img {
+	max-width: 100%; /* require by Cropper.js */
+}
