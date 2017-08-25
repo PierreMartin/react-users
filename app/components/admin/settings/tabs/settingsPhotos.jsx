@@ -53,8 +53,10 @@ class SettingsProfil extends Component {
     });
 
     this.refs.cropper.getCroppedCanvas().toBlob(function (blob) {
+			var $filename = document.querySelector('#formAvatar input[type="file"]');
+			var filename = $filename.files[0] && $filename.files[0].name || 'undefined.jpg';
       let formData = new FormData();
-      formData.append('formAvatar', blob); // 'formAvatar' is used in routes.js
+      formData.append('formAvatar', blob, filename); // 'formAvatar' is used in routes.js
 
       // send image cropped to back-end :
       if (_id && formData) {

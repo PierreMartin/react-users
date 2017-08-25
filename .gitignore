@@ -2,7 +2,8 @@ node_modules
 npm-debug.log
 .tmp
 .idea
-public/assets
+public/assets/
+public/uploads/
 compiled
 .swp
 .vscode

@@ -3,6 +3,7 @@ import passport from 'passport';
 import { calculateAge } from '../../../toolbox/toolbox';
 import bcrypt from 'bcrypt-nodejs';
 import multer from 'multer';
+var upload = multer().single('formAvatar');
 
 /**
  * GET /api/user/all
@@ -148,32 +149,9 @@ export function signUp(req, res, next) {
  * POST /api/user/avatar
  */
 export function uploadAvatar(req, res, next) {
-  console.log('req.file === ', req.file);
   if (req.file && req.file.size > 9000000) {
     return res.status(400).json({message: 'Cette image est trop grosse'}).end();
   }
-
-  const storage = multer.diskStorage({
-    destination: function(req, file, callback) {
-      callback(null, '/tmp/my-uploads');
-    },
-    filename: function(req, file, callback) {
-      callback(null, file.fieldname + '_' + Date.now() + "_" + file.originalname);
-    }
-  });
-
-  const upload = multer({
-    storage: storage,
-    fileFilter: function(req, file, callback) {
-      const ext = path.extname(file.originalname);
-
-      if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
-        return callback(res.end('Only images are allowed'), null)
-      }
-
-      callback(null, true);
-    }
-  }).single('userFile');
 
   upload(req, res, function(err) {
     if (err) {
