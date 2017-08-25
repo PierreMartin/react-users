@@ -1,52 +1,9 @@
 import passport from 'passport';
 import unsupportedMessage from '../db/unsupportedMessage';
 import { controllers, passport as passportConfig } from '../db';
-import multer from 'multer';
-import crypto from 'crypto';
-import path from 'path';
 
 const usersController       = controllers && controllers.users;
 const coursesController     = controllers && controllers.courses;
-
-/********************* Multer *******************/
-var maxSize = 1000 * 1000 * 1000;
-
-const storage = multer.diskStorage({
-	destination: function(req, file, callback) {
-		callback(null, 'public/uploads/');
-	},
-	filename: function(req, file, callback) {
-		crypto.pseudoRandomBytes(16, function (err, raw) {
-			if (!err) {
-				var ext = file.originalname && path.extname(file.originalname);
-
-				if (typeof ext === 'undefined' || ext === '') {
-					ext = '.jpg';
-				}
-				callback(null, raw.toString('hex') + Date.now() + ext.toLowerCase());
-			}
-		});
-	}
-});
-
-const upload = multer({
-	storage: storage,
-	limits: { fileSize: maxSize },
-	fileFilter: function(req, file, callback) {
-		const typeArray = file.mimetype.split("/");
-		var ext = file.originalname && path.extname(file.originalname).toLowerCase();
-
-		if (typeArray[0] !== 'image') {
-			return callback(new Error('Something went wrong'), false);
-		}
-
-		if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
-			return callback(new Error('Only images are allowed'), false);
-		}
-
-		callback(null, true);
-	}
-});
 
 export default (app) => {
 
@@ -58,7 +15,7 @@ export default (app) => {
         app.get('/api/user/all',    usersController.all);
         app.get('/api/user/:id',    usersController.single);
         app.put('/api/user/:id',    usersController.update);
-        app.post('/api/user/avatar', upload.single('formAvatar'), usersController.uploadAvatar);
+        app.post('/api/user/avatar', usersController.uploadAvatarMulter, usersController.uploadAvatar);
     } else {
         console.warn(unsupportedMessage('users routes'));
     }

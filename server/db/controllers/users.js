@@ -3,7 +3,9 @@ import passport from 'passport';
 import { calculateAge } from '../../../toolbox/toolbox';
 import bcrypt from 'bcrypt-nodejs';
 import multer from 'multer';
-var upload = multer().single('formAvatar');
+import crypto from 'crypto';
+import path from 'path';
+var uploaded = multer().single('formAvatar');
 
 /**
  * GET /api/user/all
@@ -144,16 +146,59 @@ export function signUp(req, res, next) {
     });
 }
 
+/********************* Multer *******************/
+var maxSize = 1000 * 1000 * 1000;
+
+const storage = multer.diskStorage({
+	destination: function(req, file, callback) {
+		callback(null, 'public/uploads/');
+	},
+	filename: function(req, file, callback) {
+		crypto.pseudoRandomBytes(16, function (err, raw) {
+			if (!err) {
+				var ext = file.originalname && path.extname(file.originalname);
+
+				if (typeof ext === 'undefined' || ext === '') {
+					ext = '.jpg';
+				}
+				callback(null, raw.toString('hex') + Date.now() + ext.toLowerCase());
+			}
+		});
+	}
+});
+
+const upload = multer({
+	storage: storage,
+	limits: { fileSize: maxSize },
+	fileFilter: function(req, file, callback) {
+		const typeArray = file.mimetype.split("/");
+		var ext = file.originalname && path.extname(file.originalname).toLowerCase();
+
+		if (typeArray[0] !== 'image') {
+			return callback(new Error('Something went wrong'), false);
+		}
+
+		if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
+			return callback(new Error('Only images are allowed'), false);
+		}
+
+		callback(null, true);
+	}
+});
+
+export const uploadAvatarMulter = upload.single('formAvatar');
 
 /**
  * POST /api/user/avatar
  */
 export function uploadAvatar(req, res, next) {
+	console.log(req.file.filename);
+
   if (req.file && req.file.size > 9000000) {
     return res.status(400).json({message: 'Cette image est trop grosse'}).end();
   }
 
-  upload(req, res, function(err) {
+  uploaded(req, res, function(err) {
     if (err) {
       return res.status(500).json('Error in upload image').end();
     }
@@ -225,5 +270,6 @@ export default {
     all,
     single,
 		update,
-    uploadAvatar
+    uploadAvatar,
+		uploadAvatarMulter
 };
