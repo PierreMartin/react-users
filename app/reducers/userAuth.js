@@ -108,7 +108,6 @@ const userObj = (state = {}, action) => {
 			return state;
 		case types.AVATAR_UPDATE_USER_SUCCESS:
 			if (action.userObj) {
-				debugger;
 				return Object.assign({}, state, action.userObj);
 			}
 			return state;

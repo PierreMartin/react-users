@@ -81,6 +81,17 @@ class SettingsProfil extends Component {
       <FlatButton label="OK" primary={true} keyboardFocused={true} onTouchTap={this.uploadAvatarAction}/>,
     ];
 
+		const dropZoneStyle = {
+			color: 'white',
+			backgroundImage: `url(/uploads/${userAuth.userObj.avatarSrc})`,
+			backgroundRepeat: 'no-repeat',
+			backgroundPositionX: 'center',
+			backgroundPositionY: 'center',
+			backgroundSize: 'cover',
+			height: 150,
+			width: 150,
+		};
+
     return (
       <div>
         <h2>Ajouter une image</h2>
@@ -106,7 +117,7 @@ class SettingsProfil extends Component {
         </div>
 
         <form id="formAvatar" className={cx('form-horizontal')} >
-          <Dropzone ref='dropper1' onDrop={this.dropHandler} multiple={false} accept={'image/*'} >
+          <Dropzone ref='dropper1' onDrop={this.dropHandler} multiple={false} accept={'image/*'} style={dropZoneStyle}>
             <div>
               <strong>Image 1 </strong><br/>
               <p>Drag and drop une image ici ou clique pour selectionner une image.</p>
