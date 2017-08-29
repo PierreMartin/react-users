@@ -223,18 +223,33 @@ export function avatarUploadImagePreviewAction(image) {
   };
 }
 
+export function avatarUploadUserError(message) {
+	return {
+		type: types.AVATAR_UPDATE_USER_FAILURE,
+		message
+	};
+}
+
+export function avatarUploadUserSuccess(res) {
+	return {
+		type: types.AVATAR_UPDATE_USER_SUCCESS,
+		message: res.message,
+		userObj: res.userObj
+	};
+}
+
 export function uploadAvatarUserAction(data, id) {
 	return dispatch => {
 		return createAvatarUser(data, id)
 			.then(response => {
 				if (response.status === 200) {
-					dispatch(updateUserSuccess(response.data));
+					dispatch(avatarUploadUserSuccess(response.data));
 				} else {
-					dispatch(updateUserError(response.data.message));
+					dispatch(avatarUploadUserError(response.data.message));
 				}
 			})
 			.catch(err => {
-        dispatch(updateUserError(getMessage(err)));
+        dispatch(avatarUploadUserError(getMessage(err)));
 			});
 	};
 }

@@ -48,9 +48,8 @@ export function apiUsers() {
 				}),
         createAvatarUser: (data, id) => client.request({
 					method: 'POST',
-					url: '/api/user/avatar/',
-					data: data,
-					id: id,
+					url: '/api/user/avatar/' + id,
+					data: data
 				})
         /*
         deleteUsers: (id) => client.request({

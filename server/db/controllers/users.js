@@ -191,19 +191,30 @@ export const uploadAvatarMulter = upload.single('formAvatar');
 /**
  * POST /api/user/avatar
  */
-export function uploadAvatar(req, res, next) {
-	console.log(req.file.filename);
-
-  if (req.file && req.file.size > 9000000) {
-    return res.status(400).json({message: 'Cette image est trop grosse'}).end();
-  }
+export function uploadAvatar(req, res) {
+	const id = req.params.id;
+	const filename = req.file.filename;
+	let dataObj = {};
+	dataObj.avatarSrc = filename;
 
   uploaded(req, res, function(err) {
-    if (err) {
-      return res.status(500).json('Error in upload image').end();
+    if (err || !id || !filename) {
+      return res.status(500).json({message: 'Une erreur est survenue lors de votre mise à jour de votre avatar'}).end();
     }
-    return res.status(200).json({message: 'L \'image à bien été uploadé'}).end();
   });
+
+	User.findOneAndUpdate({'_id' : id}, dataObj, (err) => {
+		if (err) {
+			return res.status(500).json({
+				message: 'Une erreur est survenue lors de votre mise à jour de votre profil'
+			});
+		}
+
+		return res.status(200).json({
+			message: 'Votre avatar à bien été mis à jour',
+			userObj: dataObj
+		});
+	});
 
 }
 
