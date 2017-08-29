@@ -90,6 +90,12 @@ class SettingsProfil extends Component {
 			backgroundSize: 'cover',
 			height: 150,
 			width: 150,
+			borderWidth: '2px',
+			borderColor: 'rgb(102, 102, 102)',
+			borderStyle: 'dashed',
+			borderRadius: '50%',
+			padding: '8px',
+			textAlign: 'center'
 		};
 
     return (
@@ -117,12 +123,14 @@ class SettingsProfil extends Component {
         </div>
 
         <form id="formAvatar" className={cx('form-horizontal')} >
-          <Dropzone ref='dropper1' onDrop={this.dropHandler} multiple={false} accept={'image/*'} style={dropZoneStyle}>
-            <div>
-              <strong>Image 1 </strong><br/>
-              <p>Drag and drop une image ici ou clique pour selectionner une image.</p>
-            </div>
-          </Dropzone>
+					<div className={cx('dropzone-container')}>
+						<Dropzone ref='dropper1' onDrop={this.dropHandler} multiple={false} accept={'image/*'} className={cx('dropzone-input')} style={dropZoneStyle} >
+						</Dropzone>
+						<div className={cx('dropzone-text')}>
+							<strong>Image 1 </strong><br/>
+							<p>Drag and drop une image ici ou clique pour selectionner une image.</p>
+						</div>
+					</div>
 
           <p className={cx('message', {'message-show': message && message.length > 0})}>{message}</p>
         </form>

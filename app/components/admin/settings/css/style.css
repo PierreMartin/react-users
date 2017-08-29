@@ -18,3 +18,16 @@
 .cropper-container img {
 	max-width: 100%; /* require by Cropper.js */
 }
+
+.dropzone-container {
+    width: 150px;
+}
+
+.dropzone-container .dropzone-input {
+    cursor: pointer;
+}
+
+.dropzone-container .dropzone-text {
+    margin-top: 12px;
+    text-align: center;
+}
