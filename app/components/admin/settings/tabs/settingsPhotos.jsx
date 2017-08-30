@@ -19,6 +19,7 @@ class SettingsProfil extends Component {
     this.dropHandler 		    = this.dropHandler.bind(this);
     this.handleClose 		    = this.handleClose.bind(this);
     this.uploadAvatarAction = this.uploadAvatarAction.bind(this);
+		this.numberTryingLoadImg = 0;
   }
 
   /* Upload - step 1 - open the modal with us image selected */
@@ -72,6 +73,26 @@ class SettingsProfil extends Component {
     avatarUploadModalIsOpenAction(false);
   };
 
+  /*
+   * retry to load image immediately after the upload - because the server is very long :
+	 * */
+	componentDidUpdate() {
+		const { userAuth } = this.props;
+		const image = this.refs.avatar;
+		var that = this;
+
+		if (userAuth.userObj && userAuth.userObj.avatarSrc) {
+			image.onerror = function () {
+				that.numberTryingLoadImg++;
+				if (that.numberTryingLoadImg < 2) {
+					setTimeout(function () {
+						image.src = `/uploads/${userAuth.userObj.avatarSrc}`;
+					}, 700);
+				}
+			};
+		}
+	};
+
   render() {
     const { userAuth, avatarUploadModalIsOpenState, avatarUploadImagePreviewState } = this.props;
     const message = userAuth.message;
@@ -81,26 +102,10 @@ class SettingsProfil extends Component {
       <FlatButton label="OK" primary={true} keyboardFocused={true} onTouchTap={this.uploadAvatarAction}/>,
     ];
 
-		const dropZoneStyle = {
-			color: 'white',
-			backgroundImage: `url(/uploads/${userAuth.userObj.avatarSrc})`,
-			backgroundRepeat: 'no-repeat',
-			backgroundPositionX: 'center',
-			backgroundPositionY: 'center',
-			backgroundSize: 'cover',
-			height: 150,
-			width: 150,
-			borderWidth: '2px',
-			borderColor: 'rgb(102, 102, 102)',
-			borderStyle: 'dashed',
-			borderRadius: '50%',
-			padding: '8px',
-			textAlign: 'center'
-		};
-
     return (
       <div>
         <h2>Ajouter une image</h2>
+				<p>Drag and drop une image ici ou clique pour selectionner une image.</p>
 
         {/* MODALE CROPPER */}
         <div>
@@ -124,12 +129,10 @@ class SettingsProfil extends Component {
 
         <form id="formAvatar" className={cx('form-horizontal')} >
 					<div className={cx('dropzone-container')}>
-						<Dropzone ref='dropper1' onDrop={this.dropHandler} multiple={false} accept={'image/*'} className={cx('dropzone-input')} style={dropZoneStyle} >
+						<Dropzone onDrop={this.dropHandler} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
+							<img src={`/uploads/${userAuth.userObj.avatarSrc}`} alt="avatar" ref="avatar" />
 						</Dropzone>
-						<div className={cx('dropzone-text')}>
-							<strong>Image 1 </strong><br/>
-							<p>Drag and drop une image ici ou clique pour selectionner une image.</p>
-						</div>
+						<div className={cx('dropzone-text')}><strong>Image 1</strong><br/></div>
 					</div>
 
           <p className={cx('message', {'message-show': message && message.length > 0})}>{message}</p>

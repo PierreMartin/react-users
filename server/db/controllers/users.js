@@ -3,6 +3,8 @@ import passport from 'passport';
 import { calculateAge } from '../../../toolbox/toolbox';
 import bcrypt from 'bcrypt-nodejs';
 import multer from 'multer';
+import sharp from 'sharp';
+import { unlinkSync } from "fs";
 import crypto from 'crypto';
 import path from 'path';
 var uploaded = multer().single('formAvatar');
@@ -194,13 +196,33 @@ export const uploadAvatarMulter = upload.single('formAvatar');
 export function uploadAvatar(req, res) {
 	const id = req.params.id;
 	const filename = req.file.filename;
+	const newFilenameMain = '150_' + req.file.filename;
+	const newFilenameThumbnail1 = '80_' + req.file.filename;
+	const newFilenameThumbnail2 = '50_' + req.file.filename;
 	let dataObj = {};
-	dataObj.avatarSrc = filename;
+	dataObj.avatarSrc = newFilenameMain;
 
   uploaded(req, res, function(err) {
     if (err || !id || !filename) {
       return res.status(500).json({message: 'Une erreur est survenue lors de votre mise à jour de votre avatar'}).end();
     }
+
+		sharp.cache(true);
+
+		// Main image :
+		sharp(req.file.path)
+			.resize(150, 150)
+			.crop(sharp.strategy.entropy)
+			.toFile('public/uploads/' + newFilenameMain);
+
+		// Thumbnail image :
+		sharp(req.file.path)
+			.resize(80, 80)
+			.crop(sharp.strategy.entropy)
+			.toFile('public/uploads/' + newFilenameThumbnail1, function (err) {
+				// for deleting the original image // TODO ATTENTION ON WINDOWS
+				unlinkSync('public/uploads/' + filename);
+			});
   });
 
 	User.findOneAndUpdate({'_id' : id}, dataObj, (err) => {
