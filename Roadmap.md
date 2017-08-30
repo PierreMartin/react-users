@@ -168,7 +168,7 @@ GET auth        => GET usersMe(auth._id)                -> userMe
 `- changer tout les 'courses' par 'cours'`
 
 - 42
-- avatar - fixer une dimension
+- avatar - plusieurs image + user peux choisir laquelle sera main
 - avatar - reducers + afficher les erreur
 
 - page 'mon profil' -> ajouter des champs (pseudo unique, check email unique)

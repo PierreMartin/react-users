@@ -25,15 +25,11 @@
 
 .dropzone-container .dropzone-input {
     cursor: pointer;
-    color: white;
-    background-repeat: no-repeat;
-    background-position: center center;
     height: 150px;
     width: 150px;
     border-width: 2px;
     border-color: rgb(102, 102, 102);
     border-style: dashed;
-    text-align: center;
 }
 
 .dropzone-container .dropzone-text {
