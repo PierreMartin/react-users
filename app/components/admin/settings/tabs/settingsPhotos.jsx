@@ -84,10 +84,10 @@ class SettingsProfil extends Component {
 		if (userAuth.userObj && userAuth.userObj.avatarSrc) {
 			image.onerror = function () {
 				that.numberTryingLoadImg++;
-				if (that.numberTryingLoadImg < 2) {
+				if (that.numberTryingLoadImg < 10) {
 					setTimeout(function () {
 						image.src = `/uploads/${userAuth.userObj.avatarSrc}`;
-					}, 700);
+					}, 1000);
 				}
 			};
 		}
