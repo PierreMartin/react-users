@@ -207,6 +207,24 @@ export function uploadAvatar(req, res) {
 		}
 	};
 
+	var avatarsSrcPrev = {
+		"avatar1": {
+			"thumbnail1":"80_970249a8ab57e7c3d7fe94f41abf9b791504275233092.jpg",
+			"mainProfil":"150_970249a8ab57e7c3d7fe94f41abf9b791504275233092.jpg"
+		},
+		"avatar2": {
+			"thumbnail1":"80_970249a8ab57e7c3d7fe94f41abf9b791504275233092.jpg",
+			"mainProfil":"150_970249a8ab57e7c3d7fe94f41abf9b791504275233092.jpg"
+		},
+		"avatar3": {
+			"thumbnail1":"80_970249a8ab57e7c3d7fe94f41abf9b791504275233092.jpg",
+			"mainProfil":"150_970249a8ab57e7c3d7fe94f41abf9b791504275233092.jpg"
+		}
+	};
+
+	// var avatarsSrc = Object.assign({}, avatarsSrcPrev, avatarsSrc);
+	// console.log(avatarsSrc);
+
   uploaded(req, res, function(err) {
     if (err || !id || !filename) {
       return res.status(500).json({message: 'Une erreur est survenue lors de votre mise à jour de votre avatar'}).end();
