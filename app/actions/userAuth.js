@@ -216,11 +216,14 @@ export function avatarUploadModalIsOpenAction(isOpen) {
   };
 }
 
-export function avatarUploadImagePreviewAction(image) {
-  return {
-    type: types.AVATAR_UPLOAD_IMAGEPREVIEW_ACTION,
-    image
-  };
+export function avatarUploadImagePreviewAction(nameField, image) {
+	return {
+		type: types.AVATAR_UPLOAD_IMAGEPREVIEW_ACTION,
+		data: {
+			imageSrc: image,
+			nameField: nameField
+		}
+	};
 }
 
 export function avatarUploadUserError(message) {

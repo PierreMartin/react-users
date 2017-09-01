@@ -148,10 +148,10 @@ const avatarUploadModalIsOpenState = (state = false, action) => {
   }
 };
 
-const avatarUploadImagePreviewState = (state = '', action) => {
+const avatarUploadImagePreviewState = (state = {}, action) => {
   switch (action.type) {
     case types.AVATAR_UPLOAD_IMAGEPREVIEW_ACTION:
-      return action.image;
+      return action.data;
     default:
       return state;
   }

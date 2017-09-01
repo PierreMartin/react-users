@@ -22,24 +22,27 @@ class SettingsProfil extends Component {
 		this.numberTryingLoadImg = 0;
   }
 
-  /* Upload - step 1 - open the modal with us image selected */
-  dropHandler(file) {
-    const { avatarUploadImagePreviewAction, avatarUploadModalIsOpenAction } = this.props;
+	/* Upload - step 1 - open the modal with us image selected */
+	dropHandler(nameField) {
+		const { avatarUploadImagePreviewAction, avatarUploadModalIsOpenAction } = this.props;
+		function dropHandlerFile(file) {
+			if (!file[0] || !file[0].preview) {
+				return;
+			}
 
-    if (!file[0] || !file[0].preview) {
-      return;
-    }
+			// send image in state for displaying in Cropper
+			avatarUploadImagePreviewAction(nameField, file[0].preview);
 
-    // send image in state for displaying in Cropper
-    avatarUploadImagePreviewAction(file[0].preview);
+			// open modal :
+			avatarUploadModalIsOpenAction(true);
+		}
 
-    // open modal :
-    avatarUploadModalIsOpenAction(true);
-  }
+		return dropHandlerFile;
+	};
 
   /* Upload - step 2 - close the modal and call the API */
   uploadAvatarAction() {
-    const { userAuth, uploadAvatarUserAction, avatarUploadModalIsOpenAction } = this.props;
+    const { userAuth, uploadAvatarUserAction, avatarUploadModalIsOpenAction, avatarUploadImagePreviewState } = this.props;
     const _id = userAuth.userObj._id;
 
     // close modal :
@@ -56,13 +59,13 @@ class SettingsProfil extends Component {
     this.refs.cropper.getCroppedCanvas().toBlob(function (blob) {
 			var $filename = document.querySelector('#formAvatar input[type="file"]');
 			var filename = $filename.files[0] && $filename.files[0].name || 'undefined.jpg';
+			var nameField = avatarUploadImagePreviewState.nameField;
       let formData = new FormData();
       formData.append('formAvatar', blob, filename); // 'formAvatar' is used in routes.js
 
       // send image cropped to back-end :
-      if (_id && formData) {
-        uploadAvatarUserAction(formData, _id);
-        // for multiple, implemented ('fileName', 'formData', '_id')
+      if (_id && formData && nameField) {
+        uploadAvatarUserAction(formData, _id, nameField);
       }
 
     });
@@ -118,7 +121,7 @@ class SettingsProfil extends Component {
           >
             <Cropper
               ref='cropper'
-              src={avatarUploadImagePreviewState}
+              src={avatarUploadImagePreviewState.imageSrc}
               style={{height: 400, width: '100%'}}
               zoomable={false}
               aspectRatio={16 / 9}
@@ -129,10 +132,24 @@ class SettingsProfil extends Component {
 
         <form id="formAvatar" className={cx('form-horizontal')} >
 					<div className={cx('dropzone-container')}>
-						<Dropzone onDrop={this.dropHandler} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
+						<Dropzone onDrop={this.dropHandler('avatar1')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
 							<img src={`/uploads/${userAuth.userObj.avatarSrc}`} alt="avatar" ref="avatar" />
 						</Dropzone>
 						<div className={cx('dropzone-text')}><strong>Image 1</strong><br/></div>
+					</div>
+
+					<div className={cx('dropzone-container')}>
+						<Dropzone onDrop={this.dropHandler('avatar2')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
+							<img src={`/uploads/${userAuth.userObj.avatarSrc}`} alt="avatar" ref="avatar" />
+						</Dropzone>
+						<div className={cx('dropzone-text')}><strong>Image 2</strong><br/></div>
+					</div>
+
+					<div className={cx('dropzone-container')}>
+						<Dropzone onDrop={this.dropHandler('avatar3')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
+							<img src={`/uploads/${userAuth.userObj.avatarSrc}`} alt="avatar" ref="avatar" />
+						</Dropzone>
+						<div className={cx('dropzone-text')}><strong>Image 3</strong><br/></div>
 					</div>
 
           <p className={cx('message', {'message-show': message && message.length > 0})}>{message}</p>
@@ -148,7 +165,7 @@ SettingsProfil.propTypes = {
   avatarUploadModalIsOpenAction: PropTypes.func,
   avatarUploadModalIsOpenState: PropTypes.bool,
   avatarUploadImagePreviewAction: PropTypes.func,
-  avatarUploadImagePreviewState: PropTypes.string
+  avatarUploadImagePreviewState: PropTypes.object
 };
 
 function mapStateToProps(state) {
