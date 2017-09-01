@@ -198,9 +198,14 @@ export function uploadAvatar(req, res) {
 	const filename = req.file.filename;
 	const newFilenameMain = '150_' + req.file.filename;
 	const newFilenameThumbnail1 = '80_' + req.file.filename;
-	const newFilenameThumbnail2 = '50_' + req.file.filename;
-	let dataObj = {};
-	dataObj.avatarSrc = newFilenameMain;
+	const avatarSelected = req.params.avatarSelected;
+
+	let avatarsSrc = {
+		[avatarSelected]: {
+			mainProfil: newFilenameMain,
+			thumbnail1: newFilenameThumbnail1
+		}
+	};
 
   uploaded(req, res, function(err) {
     if (err || !id || !filename) {
@@ -225,7 +230,8 @@ export function uploadAvatar(req, res) {
 			});
   });
 
-	User.findOneAndUpdate({'_id' : id}, dataObj, (err) => {
+	// User.markModified('avatarsSrc');
+	User.findOneAndUpdate({'_id' : id}, {avatarsSrc, avatarSelected}, (err) => {
 		if (err) {
 			return res.status(500).json({
 				message: 'Une erreur est survenue lors de votre mise à jour de votre profil'
@@ -234,7 +240,8 @@ export function uploadAvatar(req, res) {
 
 		return res.status(200).json({
 			message: 'Votre avatar à bien été mis à jour',
-			userObj: dataObj
+			userObj: avatarsSrc,
+			avatarSelected
 		});
 	});
 

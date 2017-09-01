@@ -108,7 +108,7 @@ const userObj = (state = {}, action) => {
 			return state;
 		case types.AVATAR_UPDATE_USER_SUCCESS:
 			if (action.userObj) {
-				return Object.assign({}, state, action.userObj);
+				return Object.assign({}, state, {avatarsSrc: action.userObj, avatarSelected: action.avatarSelected});
 			}
 			return state;
 		case types.AVATAR_UPDATE_USER_FAILURE:

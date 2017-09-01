@@ -46,9 +46,9 @@ export function apiUsers() {
 					url: '/api/user/' + id,
 					data: param
 				}),
-        createAvatarUser: (data, id) => client.request({
+        createAvatarUser: (data, id, avatarSelected) => client.request({
 					method: 'POST',
-					url: '/api/user/avatar/' + id,
+					url: '/api/user/avatar/' + id + '/' + avatarSelected,
 					data: data
 				})
         /*

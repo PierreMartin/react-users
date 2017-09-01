@@ -20,8 +20,8 @@ const UserSchema = new mongoose.Schema({
   state: { type: String, default: '' },
   gender: { type: String, default: '' },
   website: { type: String, default: '' },
-  avatar: { type: String, default: '' },
-  avatarSrc: { type: String, default: '' },
+	avatarsSrc: Object,
+	avatarSelected: { type: String, default: 'avatar1' },
 
   resetPasswordToken: String,
   resetPasswordExpires: Date,

@@ -237,13 +237,14 @@ export function avatarUploadUserSuccess(res) {
 	return {
 		type: types.AVATAR_UPDATE_USER_SUCCESS,
 		message: res.message,
-		userObj: res.userObj
+		userObj: res.userObj,
+		avatarSelected: res.avatarSelected
 	};
 }
 
-export function uploadAvatarUserAction(data, id) {
+export function uploadAvatarUserAction(data, params) {
 	return dispatch => {
-		return createAvatarUser(data, id)
+		return createAvatarUser(data, params)
 			.then(response => {
 				if (response.status === 200) {
 					dispatch(avatarUploadUserSuccess(response.data));

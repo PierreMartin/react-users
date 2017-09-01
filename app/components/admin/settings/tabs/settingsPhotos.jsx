@@ -65,7 +65,7 @@ class SettingsProfil extends Component {
 
       // send image cropped to back-end :
       if (_id && formData && nameField) {
-        uploadAvatarUserAction(formData, _id, nameField);
+        uploadAvatarUserAction(formData, {id: _id, avatarSelected: nameField});
       }
 
     });
@@ -133,21 +133,21 @@ class SettingsProfil extends Component {
         <form id="formAvatar" className={cx('form-horizontal')} >
 					<div className={cx('dropzone-container')}>
 						<Dropzone onDrop={this.dropHandler('avatar1')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
-							<img src={`/uploads/${userAuth.userObj.avatarSrc}`} alt="avatar" ref="avatar" />
+							<img src={userAuth.userObj.avatarsSrc.avatar1 ? `/uploads/${userAuth.userObj.avatarsSrc.avatar1.mainProfil}` : ''} alt="avatar" ref="avatar" />
 						</Dropzone>
 						<div className={cx('dropzone-text')}><strong>Image 1</strong><br/></div>
 					</div>
 
 					<div className={cx('dropzone-container')}>
 						<Dropzone onDrop={this.dropHandler('avatar2')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
-							<img src={`/uploads/${userAuth.userObj.avatarSrc}`} alt="avatar" ref="avatar" />
+							<img src={userAuth.userObj.avatarsSrc.avatar2 ? `/uploads/${userAuth.userObj.avatarsSrc.avatar2.mainProfil}` : ''} alt="avatar" ref="avatar" />
 						</Dropzone>
 						<div className={cx('dropzone-text')}><strong>Image 2</strong><br/></div>
 					</div>
 
 					<div className={cx('dropzone-container')}>
 						<Dropzone onDrop={this.dropHandler('avatar3')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
-							<img src={`/uploads/${userAuth.userObj.avatarSrc}`} alt="avatar" ref="avatar" />
+							<img src={userAuth.userObj.avatarsSrc.avatar3 ? `/uploads/${userAuth.userObj.avatarsSrc.avatar3.mainProfil}` : ''} alt="avatar" ref="avatar" />
 						</Dropzone>
 						<div className={cx('dropzone-text')}><strong>Image 3</strong><br/></div>
 					</div>
