@@ -20,7 +20,11 @@ const UserSchema = new mongoose.Schema({
   state: { type: String, default: '' },
   gender: { type: String, default: '' },
   website: { type: String, default: '' },
-	avatarsSrc: Object,
+	avatarsSrc: [{
+		avatarId: String,
+		thumbnail1: String,
+		mainProfil: String
+	}],
 	avatarSelected: { type: String, default: 'avatar1' },
 
   resetPasswordToken: String,

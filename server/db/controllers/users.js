@@ -200,30 +200,54 @@ export function uploadAvatar(req, res) {
 	const newFilenameThumbnail1 = '80_' + req.file.filename;
 	const avatarSelected = req.params.avatarSelected;
 
-	let avatarsSrc = {
-		[avatarSelected]: {
+	let avatarsSrc = [{
+			avatarId: avatarSelected,
 			mainProfil: newFilenameMain,
 			thumbnail1: newFilenameThumbnail1
-		}
-	};
+	}];
 
-	var avatarsSrcPrev = {
-		"avatar1": {
+	/*
+	var avatarsSrcPrev = [
+		{
+			"avatarId": "avatar1",
 			"thumbnail1":"80_970249a8ab57e7c3d7fe94f41abf9b791504275233092.jpg",
 			"mainProfil":"150_970249a8ab57e7c3d7fe94f41abf9b791504275233092.jpg"
 		},
-		"avatar2": {
+		{
+			"avatarId": "avatar2",
 			"thumbnail1":"80_970249a8ab57e7c3d7fe94f41abf9b791504275233092.jpg",
 			"mainProfil":"150_970249a8ab57e7c3d7fe94f41abf9b791504275233092.jpg"
 		},
-		"avatar3": {
+		{
+			"avatarId": "avatar3",
 			"thumbnail1":"80_970249a8ab57e7c3d7fe94f41abf9b791504275233092.jpg",
 			"mainProfil":"150_970249a8ab57e7c3d7fe94f41abf9b791504275233092.jpg"
 		}
-	};
+	];
 
-	// var avatarsSrc = Object.assign({}, avatarsSrcPrev, avatarsSrc);
-	// console.log(avatarsSrc);
+	var avatarAlreadyExist = false;
+	for (var i = 0; i < avatarsSrcPrev.length; i++) {
+		var avatarSrc = avatarsSrcPrev[i];
+		if (avatarSrc.avatarId === avatarSelected) {
+			// update an existant avatar :
+			avatarSrc.thumbnail1 = newFilenameMain;
+			avatarSrc.mainProfil = newFilenameThumbnail1;
+			avatarAlreadyExist = true;
+			break;
+		}
+	}
+
+	// add an new avatar :
+	if (!avatarAlreadyExist) {
+		avatarsSrcPrev.push({
+			'avatarId': avatarSelected,
+			'thumbnail1': newFilenameMain,
+			'mainProfil': newFilenameThumbnail1
+		});
+	}
+	
+	console.log(avatarsSrcPrev);
+	*/
 
   uploaded(req, res, function(err) {
     if (err || !id || !filename) {
@@ -249,7 +273,12 @@ export function uploadAvatar(req, res) {
   });
 
 	// User.markModified('avatarsSrc');
-	User.findOneAndUpdate({'_id' : id}, {avatarsSrc, avatarSelected}, (err) => {
+	User.findOneAndUpdate({'_id' : id, 'avatarsSrc.avatarId': avatarSelected}, { $set : {
+		'avatarsSrc.avatarId': avatarSelected,
+		'avatarsSrc.mainProfil': newFilenameMain,
+		'avatarsSrc.thumbnail1': newFilenameThumbnail1,
+		avatarSelected: avatarSelected
+	} }, (err) => {
 		if (err) {
 			return res.status(500).json({
 				message: 'Une erreur est survenue lors de votre mise à jour de votre profil'
