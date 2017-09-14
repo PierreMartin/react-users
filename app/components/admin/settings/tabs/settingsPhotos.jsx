@@ -156,7 +156,7 @@ class SettingsProfil extends Component {
           </Dialog>
         </div>
 
-        <form id="formAvatar" className={cx('form-horizontal')} >
+        <div>
 					<div className={cx('dropzone-container')}>
 						<div className={cx('dropzone-text')}><strong>Image 1</strong><br/></div>
 						<Dropzone onDrop={this.dropHandler('0')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
@@ -182,7 +182,7 @@ class SettingsProfil extends Component {
 					</div>
 
           <p className={cx('message', {'message-show': message && message.length > 0})}>{message}</p>
-        </form>
+        </div>
       </div>
     );
   }

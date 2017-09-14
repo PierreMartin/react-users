@@ -20,13 +20,13 @@
 }
 
 .dropzone-container {
+    display: inline-block;
     width: 250px;
     height: 250px;
     text-align: center;
     border-width: 1px;
     border-color: rgb(102, 102, 102);
     border-style: solid;
-    margin-bottom: 8px;
 }
 
 .dropzone-container .dropzone-input {
