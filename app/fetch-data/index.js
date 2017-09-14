@@ -69,7 +69,7 @@ export const updateUser = (data, id) => {
 
 
 export const createAvatarUser = (data, params) => {
-	return apiUsers().createAvatarUser(data, params.id, params.avatarSelected)
+	return apiUsers().createAvatarUser(data, params.id, params.avatarId)
 		.then((res) => {
 			return res;
 		})

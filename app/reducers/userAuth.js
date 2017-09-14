@@ -124,7 +124,7 @@ const userObj = (state = {}, action) => {
 					avatarsListState.push(action.userObj);
 				}
 
-				return Object.assign({}, state, {avatarsSrc: avatarsListState, avatarSelected: action.avatarSelected});
+				return Object.assign({}, state, {avatarsSrc: avatarsListState});
 			}
 			return state;
 		case types.AVATAR_UPDATE_USER_FAILURE:

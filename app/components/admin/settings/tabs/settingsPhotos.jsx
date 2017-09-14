@@ -19,25 +19,46 @@ class SettingsProfil extends Component {
     this.dropHandler 		    = this.dropHandler.bind(this);
     this.handleClose 		    = this.handleClose.bind(this);
     this.uploadAvatarAction = this.uploadAvatarAction.bind(this);
+    this.getAvatarById 			= this.getAvatarById.bind(this);
 		this.numberTryingLoadImg = 0;
   }
 
-	/*
-	 * retry to load image immediately after the upload - because the server is very long :
+  /**
+	 * get the avatar by the id given by parameter
+	 * @param {number} avatarId - the id of the avatar we want find
+	 * @return {object} the avatar find in the list
 	 * */
-	reloadImage(userAuth, nameField) {
-		const image = this.refs['avatar_' + nameField];
-		const avatarSelected = parseInt(nameField, 10) || 0;
-		var that = this;
-		debugger;
+  getAvatarById(avatarId) {
+		const { userAuth } = this.props;
+		var avatarSelected;
 
-		if (userAuth.userObj && userAuth.userObj.avatarsSrc[avatarSelected] && userAuth.userObj.avatarsSrc[avatarSelected].mainProfil) {
+		for (var i = 0; i < userAuth.userObj.avatarsSrc.length; i++) {
+			var avatar = userAuth.userObj.avatarsSrc[i];
+			if (parseInt(avatar.avatarId, 10) === avatarId) {
+				avatarSelected = avatar;
+				break;
+			}
+		}
+
+		return avatarSelected;
+	};
+
+	/**
+	 * To load the image immediately after the upload - because the resizer BE side is very long :
+	 * @param {string} avatarIdParam - the id of the avatar we want find
+	 * @return {void}
+	 * */
+	reloadImage(avatarIdParam) {
+		const image = this.refs['avatar_' + avatarIdParam];
+		const avatarId = parseInt(avatarIdParam, 10) || 0;
+		var that = this;
+
+		if (this.getAvatarById(avatarId) && this.getAvatarById(avatarId).mainProfil) {
 			image.onerror = function () {
-				console.log('### ERROR ###');
 				that.numberTryingLoadImg++;
 				if (that.numberTryingLoadImg < 10) {
 					setTimeout(function () {
-						image.src = `/uploads/${userAuth.userObj.avatarsSrc[avatarSelected].mainProfil}`;
+						image.src = `/uploads/${that.getAvatarById(avatarId).mainProfil}`;
 					}, 1000);
 				}
 			};
@@ -45,7 +66,7 @@ class SettingsProfil extends Component {
 	};
 
 	/* Upload - step 1 - open the modal with us image selected */
-	dropHandler(nameField) {
+	dropHandler(avatarId) {
 		const { avatarUploadImagePreviewAction, avatarUploadModalIsOpenAction } = this.props;
 		function dropHandlerFile(file) {
 			if (!file[0] || !file[0].preview) {
@@ -53,7 +74,7 @@ class SettingsProfil extends Component {
 			}
 
 			// send image in state for displaying in Cropper
-			avatarUploadImagePreviewAction(nameField, file[0].preview);
+			avatarUploadImagePreviewAction(avatarId, file[0].preview);
 
 			// open modal :
 			avatarUploadModalIsOpenAction(true);
@@ -82,16 +103,16 @@ class SettingsProfil extends Component {
     this.refs.cropper.getCroppedCanvas().toBlob(function (blob) {
 			var $filename = document.querySelector('#formAvatar input[type="file"]');
 			var filename = $filename.files[0] && $filename.files[0].name || 'undefined.jpg';
-			var nameField = avatarUploadImagePreviewState.nameField;
+			var avatarId = avatarUploadImagePreviewState.nameField;
       let formData = new FormData();
       formData.append('formAvatar', blob, filename); // 'formAvatar' is used in routes.js
 
       // send image cropped to back-end :
-      if (_id && formData && nameField) {
-        uploadAvatarUserAction(formData, {id: _id, avatarSelected: nameField});
+      if (_id && formData && avatarId) {
+        uploadAvatarUserAction(formData, {id: _id, avatarId: avatarId});
       }
 
-			that.reloadImage(userAuth, nameField);
+			that.reloadImage(avatarId);
     });
   }
 
@@ -137,21 +158,21 @@ class SettingsProfil extends Component {
         <form id="formAvatar" className={cx('form-horizontal')} >
 					<div className={cx('dropzone-container')}>
 						<Dropzone onDrop={this.dropHandler('0')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
-							<img src={userAuth.userObj.avatarsSrc[0] ? `/uploads/${userAuth.userObj.avatarsSrc[0].mainProfil}` : ''} alt="avatar" ref={'avatar_0'} />
+							<img src={this.getAvatarById(0) ? `/uploads/${this.getAvatarById(0).mainProfil}` : ''} alt="avatar" ref={'avatar_0'} />
 						</Dropzone>
 						<div className={cx('dropzone-text')}><strong>Image 1</strong><br/></div>
 					</div>
 
 					<div className={cx('dropzone-container')}>
 						<Dropzone onDrop={this.dropHandler('1')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
-							<img src={userAuth.userObj.avatarsSrc[1] ? `/uploads/${userAuth.userObj.avatarsSrc[1].mainProfil}` : ''} alt="avatar" ref={'avatar_1'} />
+							<img src={this.getAvatarById(1) ? `/uploads/${this.getAvatarById(1).mainProfil}` : ''} alt="avatar" ref={'avatar_1'} />
 						</Dropzone>
 						<div className={cx('dropzone-text')}><strong>Image 2</strong><br/></div>
 					</div>
 
 					<div className={cx('dropzone-container')}>
 						<Dropzone onDrop={this.dropHandler('2')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
-							<img src={userAuth.userObj.avatarsSrc[2] ? `/uploads/${userAuth.userObj.avatarsSrc[2].mainProfil}` : ''} alt="avatar" ref={'avatar_2'} />
+							<img src={this.getAvatarById(2) ? `/uploads/${this.getAvatarById(2).mainProfil}` : ''} alt="avatar" ref={'avatar_2'} />
 						</Dropzone>
 						<div className={cx('dropzone-text')}><strong>Image 3</strong><br/></div>
 					</div>

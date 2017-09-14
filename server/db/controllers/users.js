@@ -198,10 +198,10 @@ export function uploadAvatar(req, res) {
 	const filename = req.file.filename;
 	const newFilenameMain = '150_' + req.file.filename;
 	const newFilenameThumbnail1 = '80_' + req.file.filename;
-	const avatarSelected = req.params.avatarSelected;
+	const avatarId = req.params.avatarId;
 
 	let avatarsSrc = {
-			avatarId: avatarSelected,
+			avatarId: avatarId,
 			mainProfil: newFilenameMain,
 			thumbnail1: newFilenameThumbnail1
 	};
@@ -229,37 +229,34 @@ export function uploadAvatar(req, res) {
 			});
   });
 
-	User.findOne({ '_id': id, 'avatarsSrc': { $elemMatch: { 'avatarId': avatarSelected } } }, (findErr, userAvatar) => {
+	User.findOne({ '_id': id, 'avatarsSrc': { $elemMatch: { 'avatarId': avatarId } } }, (findErr, userAvatar) => {
 		if (userAvatar) {
 			console.log('Cet avatar exist deja');
 
-			User.findOneAndUpdate({'_id': id, 'avatarsSrc.avatarId': avatarSelected},
+			User.findOneAndUpdate({'_id': id, 'avatarsSrc.avatarId': avatarId},
 				{
 					$set : {
-						'avatarsSrc.$.avatarId': avatarSelected,
+						'avatarsSrc.$.avatarId': avatarId,
 						'avatarsSrc.$.mainProfil': newFilenameMain,
-						'avatarsSrc.$.thumbnail1': newFilenameThumbnail1,
-						'avatarSelected': avatarSelected
+						'avatarsSrc.$.thumbnail1': newFilenameThumbnail1
 					}
 				}, (err) => {
 					if (err) return res.status(500).json({message: 'Une erreur est survenue lors de votre mise à jour de votre avatar'});
 
 					return res.status(200).json({
 						message: 'Votre avatar à bien été mis à jour',
-						userObj: avatarsSrc,
-						avatarSelected
+						userObj: avatarsSrc
 					});
 				});
 			} else {
 			console.log('Cet avatar n\'existe pas');
 
-			User.findOneAndUpdate({'_id': id}, {$push : { avatarsSrc }, avatarSelected }, (err) => {
+			User.findOneAndUpdate({'_id': id}, {$push : { avatarsSrc } }, (err) => {
 				if (err) return res.status(500).json({message: 'Une erreur est survenue lors de votre mise à jour de votre avatar'});
 
 				return res.status(200).json({
 					message: 'Votre avatar à bien été ajouté',
-					userObj: avatarsSrc,
-					avatarSelected
+					userObj: avatarsSrc
 				});
 			});
 		}

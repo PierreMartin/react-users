@@ -237,8 +237,7 @@ export function avatarUploadUserSuccess(res) {
 	return {
 		type: types.AVATAR_UPDATE_USER_SUCCESS,
 		message: res.message,
-		userObj: res.userObj,
-		avatarSelected: res.avatarSelected
+		userObj: res.userObj
 	};
 }
 
