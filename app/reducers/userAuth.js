@@ -107,8 +107,24 @@ const userObj = (state = {}, action) => {
 		case types.UPDATE_USER_FAILURE:
 			return state;
 		case types.AVATAR_UPDATE_USER_SUCCESS:
-			if (action.userObj) {
-				return Object.assign({}, state, {avatarsSrc: action.userObj, avatarSelected: action.avatarSelected});
+			if (action.userObj && state.avatarsSrc) {
+				var avatarsListState = state.avatarsSrc;
+				var isAvatarAlreadyExist = false;
+
+				for (var i = 0; i < avatarsListState.length; i++) {
+					if (avatarsListState[i].avatarId === action.userObj.avatarId) {
+						avatarsListState[i].mainProfil = action.userObj.mainProfil;
+						avatarsListState[i].thumbnail1 = action.userObj.thumbnail1;
+						isAvatarAlreadyExist = true;
+						break;
+					}
+				}
+
+				if (!isAvatarAlreadyExist) {
+					avatarsListState.push(action.userObj);
+				}
+
+				return Object.assign({}, state, {avatarsSrc: avatarsListState, avatarSelected: action.avatarSelected});
 			}
 			return state;
 		case types.AVATAR_UPDATE_USER_FAILURE:

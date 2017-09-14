@@ -22,6 +22,28 @@ class SettingsProfil extends Component {
 		this.numberTryingLoadImg = 0;
   }
 
+	/*
+	 * retry to load image immediately after the upload - because the server is very long :
+	 * */
+	reloadImage(userAuth, nameField) {
+		const image = this.refs['avatar_' + nameField];
+		const avatarSelected = parseInt(nameField, 10) || 0;
+		var that = this;
+		debugger;
+
+		if (userAuth.userObj && userAuth.userObj.avatarsSrc[avatarSelected] && userAuth.userObj.avatarsSrc[avatarSelected].mainProfil) {
+			image.onerror = function () {
+				console.log('### ERROR ###');
+				that.numberTryingLoadImg++;
+				if (that.numberTryingLoadImg < 10) {
+					setTimeout(function () {
+						image.src = `/uploads/${userAuth.userObj.avatarsSrc[avatarSelected].mainProfil}`;
+					}, 1000);
+				}
+			};
+		}
+	};
+
 	/* Upload - step 1 - open the modal with us image selected */
 	dropHandler(nameField) {
 		const { avatarUploadImagePreviewAction, avatarUploadModalIsOpenAction } = this.props;
@@ -44,6 +66,7 @@ class SettingsProfil extends Component {
   uploadAvatarAction() {
     const { userAuth, uploadAvatarUserAction, avatarUploadModalIsOpenAction, avatarUploadImagePreviewState } = this.props;
     const _id = userAuth.userObj._id;
+		const that = this;
 
     // close modal :
     avatarUploadModalIsOpenAction(false);
@@ -68,6 +91,7 @@ class SettingsProfil extends Component {
         uploadAvatarUserAction(formData, {id: _id, avatarSelected: nameField});
       }
 
+			that.reloadImage(userAuth, nameField);
     });
   }
 
@@ -75,26 +99,6 @@ class SettingsProfil extends Component {
     const { avatarUploadModalIsOpenAction } = this.props;
     avatarUploadModalIsOpenAction(false);
   };
-
-  /*
-   * retry to load image immediately after the upload - because the server is very long :
-	 * */
-	componentDidUpdate() {
-		const { userAuth } = this.props;
-		const image = this.refs.avatar;
-		var that = this;
-
-		if (userAuth.userObj && userAuth.userObj.avatarSrc) {
-			image.onerror = function () {
-				that.numberTryingLoadImg++;
-				if (that.numberTryingLoadImg < 10) {
-					setTimeout(function () {
-						image.src = `/uploads/${userAuth.userObj.avatarSrc}`;
-					}, 1000);
-				}
-			};
-		}
-	};
 
   render() {
     const { userAuth, avatarUploadModalIsOpenState, avatarUploadImagePreviewState } = this.props;
@@ -132,22 +136,22 @@ class SettingsProfil extends Component {
 
         <form id="formAvatar" className={cx('form-horizontal')} >
 					<div className={cx('dropzone-container')}>
-						<Dropzone onDrop={this.dropHandler('avatar1')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
-							<img src={userAuth.userObj.avatarsSrc.avatar1 ? `/uploads/${userAuth.userObj.avatarsSrc.avatar1.mainProfil}` : ''} alt="avatar" ref="avatar" />
+						<Dropzone onDrop={this.dropHandler('0')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
+							<img src={userAuth.userObj.avatarsSrc[0] ? `/uploads/${userAuth.userObj.avatarsSrc[0].mainProfil}` : ''} alt="avatar" ref={'avatar_0'} />
 						</Dropzone>
 						<div className={cx('dropzone-text')}><strong>Image 1</strong><br/></div>
 					</div>
 
 					<div className={cx('dropzone-container')}>
-						<Dropzone onDrop={this.dropHandler('avatar2')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
-							<img src={userAuth.userObj.avatarsSrc.avatar2 ? `/uploads/${userAuth.userObj.avatarsSrc.avatar2.mainProfil}` : ''} alt="avatar" ref="avatar" />
+						<Dropzone onDrop={this.dropHandler('1')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
+							<img src={userAuth.userObj.avatarsSrc[1] ? `/uploads/${userAuth.userObj.avatarsSrc[1].mainProfil}` : ''} alt="avatar" ref={'avatar_1'} />
 						</Dropzone>
 						<div className={cx('dropzone-text')}><strong>Image 2</strong><br/></div>
 					</div>
 
 					<div className={cx('dropzone-container')}>
-						<Dropzone onDrop={this.dropHandler('avatar3')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
-							<img src={userAuth.userObj.avatarsSrc.avatar3 ? `/uploads/${userAuth.userObj.avatarsSrc.avatar3.mainProfil}` : ''} alt="avatar" ref="avatar" />
+						<Dropzone onDrop={this.dropHandler('2')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
+							<img src={userAuth.userObj.avatarsSrc[2] ? `/uploads/${userAuth.userObj.avatarsSrc[2].mainProfil}` : ''} alt="avatar" ref={'avatar_2'} />
 						</Dropzone>
 						<div className={cx('dropzone-text')}><strong>Image 3</strong><br/></div>
 					</div>

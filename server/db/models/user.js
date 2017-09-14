@@ -25,7 +25,7 @@ const UserSchema = new mongoose.Schema({
 		thumbnail1: String,
 		mainProfil: String
 	}],
-	avatarSelected: { type: String, default: 'avatar1' },
+	avatarSelected: { type: String, default: '0' },
 
   resetPasswordToken: String,
   resetPasswordExpires: Date,

@@ -111,8 +111,9 @@ $> show collections
 db.cours.find()
 db.cours.find({"text": "test 1"} , {_id:0}) 
 
-db.cours.remove({})
-db.cours.insert({text: "test 1", count: 0})
+db.users.remove({})
+db.users.update({}, {$unset: {avatarsSrc: 1}}, false, true)
+db.users.insert({text: "test 1", count: 0})
 
 db.users.update({email: "pierre@gmail.com"} , {$set : {profile: {name: "Pierre Martin", gender: "male", picture: "http://localhost:3000/xxx"}} })  
 
@@ -126,6 +127,8 @@ mongod --shutdown
 /!!\ dans Mongoose on a   model('Cours', CoursSchema)   => mongodb rajoute un 's' dans les collections + met tout en minuscule (sauf si déja un 's' a la fin, ce qui est le cas)
 
 
+db.users.findOne( { _id: ObjectId("59b923d8fe2c95d70482145f") } )
+db.users.findOne({'_id': ObjectId("59b923d8fe2c95d70482145f") }, { avatarsSrc: { $elemMatch: { avatarId: 'avatar1' } } } )
 
 ##################################################### TREE COMPONENTS #####################################################
 - client    store={store}    NE PAS TOUCHER 
