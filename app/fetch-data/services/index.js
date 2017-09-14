@@ -50,6 +50,11 @@ export function apiUsers() {
 					method: 'POST',
 					url: '/api/user/avatar/' + id + '/' + avatarId,
 					data: data
+				}),
+				updateDefaultAvatarUser: (avatarId, idUser) => client.request({
+					method: 'PUT',
+					url: '/api/user/avatar/' + idUser,
+					data: {avatarMainSelected: avatarId} // (data must is a object type)
 				})
         /*
         deleteUsers: (id) => client.request({

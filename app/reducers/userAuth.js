@@ -129,6 +129,13 @@ const userObj = (state = {}, action) => {
 			return state;
 		case types.AVATAR_UPDATE_USER_FAILURE:
 			return state;
+		case types.AVATAR_MAIN_SELECTED_SUCCESS:
+			if (typeof action.avatarMainSelected !== 'undefined') {
+				return {...state, avatarMainSelected: action.avatarMainSelected};
+			}
+			return state;
+		case types.AVATAR_MAIN_SELECTED_FAILURE:
+			return state;
     case types.LOGIN_ERROR_USER:
     case types.SIGNUP_ERROR_USER:
     case types.LOGOUT_SUCCESS_USER:

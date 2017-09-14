@@ -1,6 +1,6 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
-import { updateUser, createAvatarUser } from './../fetch-data';
+import { updateUser, createAvatarUser, updateDefaultAvatarUser } from './../fetch-data';
 import { push } from 'react-router-redux';
 import * as types from 'types';
 
@@ -257,3 +257,34 @@ export function uploadAvatarUserAction(data, params) {
 	};
 }
 
+/***************************************** AVATAR SET DEFAULT ********************************************/
+export function avatarMainSelectedSuccess(res) {
+	return {
+		type: types.AVATAR_MAIN_SELECTED_SUCCESS,
+		message: res.message,
+		avatarMainSelected: res.avatarMainSelected
+	};
+}
+
+export function avatarMainSelectedFailure(message) {
+	return {
+		type: types.AVATAR_MAIN_SELECTED_FAILURE,
+		message
+	};
+}
+
+export function avatarMainSelectedAction(avatarId, idUser) {
+	return dispatch => {
+		return updateDefaultAvatarUser(avatarId, idUser)
+			.then(response => {
+				if (response.status === 200) {
+					dispatch(avatarMainSelectedSuccess(response.data));
+				} else {
+					dispatch(avatarMainSelectedFailure(getMessage(response)));
+				}
+			})
+			.catch(err => {
+				dispatch(avatarMainSelectedFailure(getMessage(err)));
+			});
+	};
+}

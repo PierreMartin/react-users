@@ -264,6 +264,21 @@ export function uploadAvatar(req, res) {
 
 }
 
+/**
+ * PUT /api/user/avatar/:idUser
+ * */
+export function updateDefaultAvatar(req, res) {
+	const data = req.body;
+	const idUser = req.params.idUser;
+
+	User.findOneAndUpdate({ '_id': idUser }, data, (err, user) => {
+		if (err) {
+			return res.status(500).json({message: 'Une erreur est survenue lors de votre mise à jour de votre profil'});
+		} else if (user) {
+			return res.status(200).json({message: 'Votre avatar de profil est mis à jour', avatarMainSelected: data.avatarMainSelected});
+		}
+	});
+}
 
 /**
  * PUT /api/user/:id
@@ -328,5 +343,6 @@ export default {
     single,
 		update,
     uploadAvatar,
-		uploadAvatarMulter
+		uploadAvatarMulter,
+		updateDefaultAvatar
 };

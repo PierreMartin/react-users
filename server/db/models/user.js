@@ -21,11 +21,11 @@ const UserSchema = new mongoose.Schema({
   gender: { type: String, default: '' },
   website: { type: String, default: '' },
 	avatarsSrc: [{
-		avatarId: String,
+		avatarId: { type: Number },
 		thumbnail1: String,
 		mainProfil: String
 	}],
-	avatarMainSelected: { type: String, default: '0' },
+	avatarMainSelected: { type: Number, default: 0 },
 
   resetPasswordToken: String,
   resetPasswordExpires: Date,

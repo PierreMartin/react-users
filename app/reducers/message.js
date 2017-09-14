@@ -12,9 +12,11 @@ export default function message(state = {message: '', type: 'SUCCESS'}, action =
         case types.SIGNUP_SUCCESS_USER:
         case types.UPDATE_USER_SUCCESS:
         case types.AVATAR_UPDATE_USER_SUCCESS:
+        case types.AVATAR_MAIN_SELECTED_SUCCESS:
             return {...state, message: action.message, type: 'SUCCESS'};
 				case types.UPDATE_USER_FAILURE:
 				case types.AVATAR_UPDATE_USER_FAILURE:
+				case types.AVATAR_MAIN_SELECTED_FAILURE:
 				return {...state, message: action.message, type: 'ERROR'};
         case types.DISMISS_MESSAGE:
             return {...state, message: '', type: 'SUCCESS'};

@@ -77,3 +77,13 @@ export const createAvatarUser = (data, params) => {
 			return Promise.reject(err);
 		});
 };
+
+export const updateDefaultAvatarUser = (avatarId, idUser) => {
+	return apiUsers().updateDefaultAvatarUser(avatarId, idUser)
+		.then((res) => {
+			return res;
+		})
+		.catch(err => {
+			return Promise.reject(err);
+		});
+};

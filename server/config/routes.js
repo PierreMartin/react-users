@@ -16,6 +16,7 @@ export default (app) => {
         app.get('/api/user/:id',    usersController.single);
         app.put('/api/user/:id',    usersController.update);
         app.post('/api/user/avatar/:id/:avatarId', usersController.uploadAvatarMulter, usersController.uploadAvatar);
+        app.put('/api/user/avatar/:idUser/', usersController.updateDefaultAvatar);
     } else {
         console.warn(unsupportedMessage('users routes'));
     }

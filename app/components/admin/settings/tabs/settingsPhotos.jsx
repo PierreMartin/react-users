@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import { uploadAvatarUserAction, avatarUploadModalIsOpenAction, avatarUploadImagePreviewAction } from '../../../../actions/userAuth';
+import { uploadAvatarUserAction, avatarUploadModalIsOpenAction, avatarUploadImagePreviewAction, avatarMainSelectedAction } from '../../../../actions/userAuth';
 import Dropzone from 'react-dropzone';
 import Cropper from 'react-cropper';
 
@@ -17,10 +17,12 @@ const cx = classNames.bind(styles);
 class SettingsProfil extends Component {
   constructor(props) {
     super(props);
-    this.dropHandler 		    = this.dropHandler.bind(this);
-    this.handleClose 		    = this.handleClose.bind(this);
-    this.uploadAvatarAction = this.uploadAvatarAction.bind(this);
-    this.getAvatarById 			= this.getAvatarById.bind(this);
+    this.dropHandler 		    	= this.dropHandler.bind(this);
+    this.handleClose 		    	= this.handleClose.bind(this);
+    this.uploadAvatarAction 	= this.uploadAvatarAction.bind(this);
+    this.handleDefaultAvatar 	= this.handleDefaultAvatar.bind(this);
+    this.renderItemsAvatar 		= this.renderItemsAvatar.bind(this);
+    this.getAvatarById 				= this.getAvatarById.bind(this);
 		this.numberTryingLoadImg = 0;
   }
 
@@ -46,12 +48,11 @@ class SettingsProfil extends Component {
 
 	/**
 	 * To load the image immediately after the upload - because the resizer BE side is very long :
-	 * @param {string} avatarIdParam - the id of the avatar we want find
+	 * @param {string} avatarId - the id of the avatar we want find
 	 * @return {void}
 	 * */
-	reloadImage(avatarIdParam) {
-		const image = this.refs['avatar_' + avatarIdParam];
-		const avatarId = parseInt(avatarIdParam, 10) || 0;
+	reloadImage(avatarId) {
+		const image = this.refs['avatar_' + avatarId];
 		var that = this;
 
 		if (this.getAvatarById(avatarId) && this.getAvatarById(avatarId).mainProfil) {
@@ -66,7 +67,7 @@ class SettingsProfil extends Component {
 		}
 	};
 
-	/* Upload - step 1 - open the modal with us image selected */
+	/** Upload - step 1 - open the modal with us image selected **/
 	dropHandler(avatarId) {
 		const { avatarUploadImagePreviewAction, avatarUploadModalIsOpenAction } = this.props;
 		function dropHandlerFile(file) {
@@ -84,7 +85,7 @@ class SettingsProfil extends Component {
 		return dropHandlerFile;
 	};
 
-  /* Upload - step 2 - close the modal and call the API */
+  /** Upload - step 2 - close the modal and call the API **/
   uploadAvatarAction() {
     const { userAuth, uploadAvatarUserAction, avatarUploadModalIsOpenAction, avatarUploadImagePreviewState } = this.props;
     const _id = userAuth.userObj._id;
@@ -117,13 +118,50 @@ class SettingsProfil extends Component {
     });
   }
 
+  /**
+	 * Clode the resizer popup
+	 * */
   handleClose() {
     const { avatarUploadModalIsOpenAction } = this.props;
     avatarUploadModalIsOpenAction(false);
   };
 
+  /**
+	 * Update the default avatar id
+	 * */
+	handleDefaultAvatar(avatarId) {
+		const { userAuth, avatarMainSelectedAction } = this.props;
+		const _id = userAuth.userObj._id;
+		return function() {
+			avatarMainSelectedAction(avatarId, _id);
+		};
+	};
+
+	/**
+	 * render the HTML elementsd dropzone
+	 * */
+	renderItemsAvatar() {
+		const { avatarMainSelected } = this.props;
+		let nodeItemsAvatar = [];
+		const numberItems = 4;
+
+		for (var i = 1; i <= numberItems; i++) {
+			nodeItemsAvatar.push(
+				<div className={cx('dropzone-container')} key={i}>
+					<div className={cx('dropzone-text')}><strong>Image 2</strong><br/></div>
+					<Dropzone onDrop={this.dropHandler(i)} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
+						<img src={this.getAvatarById(i) ? `/uploads/${this.getAvatarById(i).mainProfil}` : ''} alt="avatar" ref={'avatar_' + i} />
+					</Dropzone>
+					{(this.getAvatarById(i) && i !== avatarMainSelected)? <RaisedButton label="Mettre comme avatar de profil" className={cx('dropzone-button')} onClick={this.handleDefaultAvatar(i)} /> : ''}
+				</div>
+			);
+		}
+
+		return nodeItemsAvatar;
+	}
+
   render() {
-    const { userAuth, avatarUploadModalIsOpenState, avatarUploadImagePreviewState } = this.props;
+    const { userAuth, avatarUploadModalIsOpenState, avatarUploadImagePreviewState, avatarMainSelected } = this.props;
     const message = userAuth.message;
 
     const actions = [
@@ -134,7 +172,8 @@ class SettingsProfil extends Component {
     return (
       <div>
         <h2>Ajouter une image</h2>
-				<p>Drag and drop une image ici ou clique pour selectionner une image.</p>
+				<p>Drag and drop une image ou clique pour selectionner une image.</p>
+				<img src={this.getAvatarById(avatarMainSelected) ? `/uploads/${this.getAvatarById(avatarMainSelected).mainProfil}` : ''} alt="avatar" ref={'avatar_main'} />
 
         {/* MODALE CROPPER */}
         <div>
@@ -156,30 +195,8 @@ class SettingsProfil extends Component {
           </Dialog>
         </div>
 
-        <div>
-					<div className={cx('dropzone-container')}>
-						<div className={cx('dropzone-text')}><strong>Image 1</strong><br/></div>
-						<Dropzone onDrop={this.dropHandler('0')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
-							<img src={this.getAvatarById(0) ? `/uploads/${this.getAvatarById(0).mainProfil}` : ''} alt="avatar" ref={'avatar_0'} />
-						</Dropzone>
-						<RaisedButton label="Mettre comme avatar de profil" className={cx('dropzone-button')} />
-					</div>
-
-					<div className={cx('dropzone-container')}>
-						<div className={cx('dropzone-text')}><strong>Image 2</strong><br/></div>
-						<Dropzone onDrop={this.dropHandler('1')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
-							<img src={this.getAvatarById(1) ? `/uploads/${this.getAvatarById(1).mainProfil}` : ''} alt="avatar" ref={'avatar_1'} />
-						</Dropzone>
-						<RaisedButton label="Mettre comme avatar de profil" className={cx('dropzone-button')} />
-					</div>
-
-					<div className={cx('dropzone-container')}>
-						<div className={cx('dropzone-text')}><strong>Image 3</strong><br/></div>
-						<Dropzone onDrop={this.dropHandler('2')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
-							<img src={this.getAvatarById(2) ? `/uploads/${this.getAvatarById(2).mainProfil}` : ''} alt="avatar" ref={'avatar_2'} />
-						</Dropzone>
-						<RaisedButton label="Mettre comme avatar de profil" className={cx('dropzone-button')} />
-					</div>
+        <div id="formAvatar">
+					{ this.renderItemsAvatar() }
 
           <p className={cx('message', {'message-show': message && message.length > 0})}>{message}</p>
         </div>
@@ -194,16 +211,19 @@ SettingsProfil.propTypes = {
   avatarUploadModalIsOpenAction: PropTypes.func,
   avatarUploadModalIsOpenState: PropTypes.bool,
   avatarUploadImagePreviewAction: PropTypes.func,
-  avatarUploadImagePreviewState: PropTypes.object
+  avatarUploadImagePreviewState: PropTypes.object,
+	avatarMainSelectedAction: PropTypes.func,
+	avatarMainSelected: PropTypes.number
 };
 
 function mapStateToProps(state) {
   return {
     userAuth: state.userAuth,
     avatarUploadModalIsOpenState: state.userAuth.avatarUploadModalIsOpenState,
-    avatarUploadImagePreviewState: state.userAuth.avatarUploadImagePreviewState
+    avatarUploadImagePreviewState: state.userAuth.avatarUploadImagePreviewState,
+		avatarMainSelected: state.userAuth.userObj.avatarMainSelected,
   };
 }
 
 
-export default connect(mapStateToProps, {uploadAvatarUserAction, avatarUploadModalIsOpenAction, avatarUploadImagePreviewAction})(SettingsProfil);
+export default connect(mapStateToProps, {uploadAvatarUserAction, avatarUploadModalIsOpenAction, avatarUploadImagePreviewAction, avatarMainSelectedAction})(SettingsProfil);
