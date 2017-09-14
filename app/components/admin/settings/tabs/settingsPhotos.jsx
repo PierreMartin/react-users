@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import { uploadAvatarUserAction, avatarUploadModalIsOpenAction, avatarUploadImagePreviewAction } from '../../../../actions/userAuth';
 import Dropzone from 'react-dropzone';
 import Cropper from 'react-cropper';
@@ -157,24 +158,27 @@ class SettingsProfil extends Component {
 
         <form id="formAvatar" className={cx('form-horizontal')} >
 					<div className={cx('dropzone-container')}>
+						<div className={cx('dropzone-text')}><strong>Image 1</strong><br/></div>
 						<Dropzone onDrop={this.dropHandler('0')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
 							<img src={this.getAvatarById(0) ? `/uploads/${this.getAvatarById(0).mainProfil}` : ''} alt="avatar" ref={'avatar_0'} />
 						</Dropzone>
-						<div className={cx('dropzone-text')}><strong>Image 1</strong><br/></div>
+						<RaisedButton label="Mettre comme avatar de profil" className={cx('dropzone-button')} />
 					</div>
 
 					<div className={cx('dropzone-container')}>
+						<div className={cx('dropzone-text')}><strong>Image 2</strong><br/></div>
 						<Dropzone onDrop={this.dropHandler('1')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
 							<img src={this.getAvatarById(1) ? `/uploads/${this.getAvatarById(1).mainProfil}` : ''} alt="avatar" ref={'avatar_1'} />
 						</Dropzone>
-						<div className={cx('dropzone-text')}><strong>Image 2</strong><br/></div>
+						<RaisedButton label="Mettre comme avatar de profil" className={cx('dropzone-button')} />
 					</div>
 
 					<div className={cx('dropzone-container')}>
+						<div className={cx('dropzone-text')}><strong>Image 3</strong><br/></div>
 						<Dropzone onDrop={this.dropHandler('2')} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
 							<img src={this.getAvatarById(2) ? `/uploads/${this.getAvatarById(2).mainProfil}` : ''} alt="avatar" ref={'avatar_2'} />
 						</Dropzone>
-						<div className={cx('dropzone-text')}><strong>Image 3</strong><br/></div>
+						<RaisedButton label="Mettre comme avatar de profil" className={cx('dropzone-button')} />
 					</div>
 
           <p className={cx('message', {'message-show': message && message.length > 0})}>{message}</p>

@@ -20,19 +20,34 @@
 }
 
 .dropzone-container {
-    width: 150px;
+    width: 250px;
+    height: 250px;
+    text-align: center;
+    border-width: 1px;
+    border-color: rgb(102, 102, 102);
+    border-style: solid;
+    margin-bottom: 8px;
 }
 
 .dropzone-container .dropzone-input {
+    display: inline-block;
     cursor: pointer;
-    height: 150px;
-    width: 150px;
+    height: 155px;
+    width: 155px;
     border-width: 2px;
     border-color: rgb(102, 102, 102);
     border-style: dashed;
 }
 
 .dropzone-container .dropzone-text {
-    margin-top: 12px;
+    margin: 12px;
     text-align: center;
+}
+
+.dropzone-container .dropzone-button {
+    margin-top: 12px;
+}
+
+.dropzone-container .dropzone-button span {
+    font-size: 10px !important;
 }
