@@ -198,7 +198,7 @@ export function uploadAvatar(req, res) {
 	const filename = req.file.filename;
 	const newFilenameMain = '150_' + req.file.filename;
 	const newFilenameThumbnail1 = '80_' + req.file.filename;
-	const avatarId = req.params.avatarId;
+	const avatarId = parseInt(req.params.avatarId, 10);
 
 	let avatarsSrc = {
 			avatarId: avatarId,
