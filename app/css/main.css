@@ -41,6 +41,11 @@ h2 {
   font-size: 26px;
 }
 
+h3 {
+  color: var(--colorPrimaryGray);
+  font-size: 20px;
+}
+
 ul, ol, dl {
   padding: 0;
   margin: 0;

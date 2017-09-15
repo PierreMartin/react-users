@@ -45,3 +45,11 @@ li.user-container {
 	margin: 0 28px;
 	color: #fff;
 }
+
+.thumbnail-container {
+    margin-top: 20px;
+}
+
+.thumbnail-container a {
+    margin: 8px;
+}

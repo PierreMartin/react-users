@@ -28,3 +28,20 @@ export function getAvatarById(avatarId, avatarsList) {
 
 	return avatarSelected;
 }
+
+/**
+ * Check if a file / image exist on the disk
+ * @pram {string} url - the url of the file to check
+ * @return {boolean} true if file exist
+ * */
+export function fileExists(url) {
+	if (url) {
+		var req = new XMLHttpRequest();
+		req.open('GET', url, false);
+		req.send();
+
+		return req.status === 200;
+	} else {
+		return false;
+	}
+}

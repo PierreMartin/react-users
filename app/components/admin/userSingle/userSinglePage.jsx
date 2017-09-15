@@ -24,11 +24,15 @@ class userSinglePage extends Component {
             <div>
                 {buttonEditNode}
 
+								<hr/>
+								<h2>Profil de l'utilisateur</h2>
                 <User
 									userSingle={userSingle}
 									userObj={userObj}
 								/>
 
+								<hr/>
+								<h2>Cours de l'utilisateur</h2>
                 {/*<AddCour
                     newCoursValue={newCoursValue}
                     typing={typing}
