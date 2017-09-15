@@ -55,7 +55,7 @@ class SettingsProfil extends Component {
 		const image = this.refs['avatar_' + avatarId];
 		var that = this;
 
-		if (this.getAvatarById(avatarId) && this.getAvatarById(avatarId).mainProfil) {
+		if (image) {
 			image.onerror = function () {
 				that.numberTryingLoadImg++;
 				if (that.numberTryingLoadImg < 10) {
