@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
 import User from './user';
 import styles from '../../../../css/common/main-section';
@@ -15,6 +14,8 @@ const UsersList = ({ usersList }) => {
                 id={user._id}
                 key={key}
                 email={user.email}
+								avatarMainSelected={user.avatarMainSelected}
+								avatarsList={user.avatarsSrc}
             />
         );
     });

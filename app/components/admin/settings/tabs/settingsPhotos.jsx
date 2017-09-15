@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { uploadAvatarUserAction, avatarUploadModalIsOpenAction, avatarUploadImagePreviewAction, avatarMainSelectedAction } from '../../../../actions/userAuth';
 import Dropzone from 'react-dropzone';
 import Cropper from 'react-cropper';
+import { getAvatarById } from '../../../../../toolbox/toolbox';
 
 import classNames from 'classnames/bind';
 import stylesMain from '../../../../css/main';
@@ -22,29 +23,8 @@ class SettingsProfil extends Component {
     this.uploadAvatarAction 	= this.uploadAvatarAction.bind(this);
     this.handleDefaultAvatar 	= this.handleDefaultAvatar.bind(this);
     this.renderItemsAvatar 		= this.renderItemsAvatar.bind(this);
-    this.getAvatarById 				= this.getAvatarById.bind(this);
 		this.numberTryingLoadImg = 0;
   }
-
-  /**
-	 * get the avatar by the id given by parameter
-	 * @param {number} avatarId - the id of the avatar we want find
-	 * @return {object} the avatar find in the list
-	 * */
-  getAvatarById(avatarId) {
-		const { userAuth } = this.props;
-		var avatarSelected;
-
-		for (var i = 0; i < userAuth.userObj.avatarsSrc.length; i++) {
-			var avatar = userAuth.userObj.avatarsSrc[i];
-			if (parseInt(avatar.avatarId, 10) === avatarId) {
-				avatarSelected = avatar;
-				break;
-			}
-		}
-
-		return avatarSelected;
-	};
 
 	/**
 	 * To load the image immediately after the upload - because the resizer BE side is very long :
@@ -52,6 +32,7 @@ class SettingsProfil extends Component {
 	 * @return {void}
 	 * */
 	reloadImage(avatarId) {
+		const avatarsList = this.props.userAuth.userObj.avatarsSrc;
 		const image = this.refs['avatar_' + avatarId];
 		var that = this;
 
@@ -60,7 +41,7 @@ class SettingsProfil extends Component {
 				that.numberTryingLoadImg++;
 				if (that.numberTryingLoadImg < 10) {
 					setTimeout(function () {
-						image.src = `/uploads/${that.getAvatarById(avatarId).mainProfil}`;
+						image.src = `/uploads/${getAvatarById(avatarId, avatarsList).mainProfil}`;
 					}, 1000);
 				}
 			};
@@ -141,18 +122,19 @@ class SettingsProfil extends Component {
 	 * render the HTML elementsd dropzone
 	 * */
 	renderItemsAvatar() {
-		const { avatarMainSelected } = this.props;
+		const { avatarMainSelected, userAuth } = this.props;
+		const avatarsList = userAuth.userObj.avatarsSrc;
 		let nodeItemsAvatar = [];
-		const numberItems = 4;
+		const numberItems = 6;
 
 		for (var i = 1; i <= numberItems; i++) {
 			nodeItemsAvatar.push(
 				<div className={cx('dropzone-container')} key={i}>
-					<div className={cx('dropzone-text')}><strong>Image 2</strong><br/></div>
+					<div className={cx('dropzone-text')}><strong>Image {i}</strong><br/></div>
 					<Dropzone onDrop={this.dropHandler(i)} multiple={false} accept={'image/*'} className={cx('dropzone-input')} >
-						<img src={this.getAvatarById(i) ? `/uploads/${this.getAvatarById(i).mainProfil}` : ''} alt="avatar" ref={'avatar_' + i} />
+						<img src={getAvatarById(i, avatarsList) ? `/uploads/${getAvatarById(i, avatarsList).mainProfil}` : ''} alt="avatar" ref={'avatar_' + i} />
 					</Dropzone>
-					{(this.getAvatarById(i) && i !== avatarMainSelected)? <RaisedButton label="Mettre comme avatar de profil" className={cx('dropzone-button')} onClick={this.handleDefaultAvatar(i)} /> : ''}
+					{(getAvatarById(i, avatarsList) && i !== avatarMainSelected)? <RaisedButton label="Mettre comme avatar de profil" className={cx('dropzone-button')} onClick={this.handleDefaultAvatar(i)} /> : ''}
 				</div>
 			);
 		}
@@ -162,6 +144,7 @@ class SettingsProfil extends Component {
 
   render() {
     const { userAuth, avatarUploadModalIsOpenState, avatarUploadImagePreviewState, avatarMainSelected } = this.props;
+		const avatarsList = userAuth.userObj.avatarsSrc;
     const message = userAuth.message;
 
     const actions = [
@@ -173,7 +156,7 @@ class SettingsProfil extends Component {
       <div>
         <h2>Ajouter une image</h2>
 				<p>Drag and drop une image ou clique pour selectionner une image.</p>
-				<img src={this.getAvatarById(avatarMainSelected) ? `/uploads/${this.getAvatarById(avatarMainSelected).mainProfil}` : ''} alt="avatar" ref={'avatar_main'} />
+				<img src={getAvatarById(avatarMainSelected, avatarsList) ? `/uploads/${getAvatarById(avatarMainSelected, avatarsList).mainProfil}` : ''} alt="avatar" ref={'avatar_main'} />
 
         {/* MODALE CROPPER */}
         <div>

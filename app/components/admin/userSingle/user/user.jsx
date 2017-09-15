@@ -1,14 +1,18 @@
 import React, { PropTypes } from 'react';
+import { getAvatarById } from '../../../../../toolbox/toolbox';
+
 import classNames from 'classnames/bind';
 import styles from './css/user';
-import avatar from '../../../../images/apple-ninja152-precomposed.png';
-
 const cx = classNames.bind(styles);
 
-const User = ({ userSingle }) => {
+
+const User = ({ userSingle, userObj }) => {
+		const avatarMainSelected = userObj.avatarMainSelected;
+		const avatarsList = userObj.avatarsSrc;
+
     return (
         <div>
-            <img src={avatar} alt="" className={cx('img-item')}/>
+						<img src={getAvatarById(avatarMainSelected, avatarsList) ? `/uploads/${getAvatarById(avatarMainSelected, avatarsList).mainProfil}` : ''} alt="avatar" />
             <div><strong>Email : {userSingle.email}</strong></div>
             <div>prénom : {userSingle.firstName}</div>
             <div>Nom : {userSingle.lastName}</div>
@@ -22,7 +26,8 @@ const User = ({ userSingle }) => {
 };
 
 User.propTypes = {
-		userSingle: PropTypes.object
+		userSingle: PropTypes.object,
+		userObj: PropTypes.object
 };
 
 export default User;

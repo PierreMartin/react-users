@@ -24,7 +24,10 @@ class userSinglePage extends Component {
             <div>
                 {buttonEditNode}
 
-                <User userSingle={userSingle}/>
+                <User
+									userSingle={userSingle}
+									userObj={userObj}
+								/>
 
                 {/*<AddCour
                     newCoursValue={newCoursValue}

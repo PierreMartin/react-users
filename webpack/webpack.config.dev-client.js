@@ -14,7 +14,10 @@ var commonLoaders = [
             presets: ['react-hmre', 'es2015', 'react', 'stage-0'],
             plugins: ['transform-decorators-legacy']
         },
-        include: path.join(__dirname, '..', 'app'),              // normalement ici on charge .babelrc
+				include: [ // normalement ici on charge .babelrc
+					path.join(__dirname, '..', 'app'),
+					path.join(__dirname, '..', 'toolbox'),
+				],
         exclude: path.join(__dirname, '..', 'node_modules')
     },
 
