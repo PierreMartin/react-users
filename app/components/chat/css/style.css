@@ -3,6 +3,7 @@
 @import '../../../css/mixins/typography';
 
 .chatbox-container {
+    color: white;
     display: none;
     height: 330px;
     width: 260px;
@@ -15,4 +16,32 @@
 
 .show {
     display: block;
+}
+
+/** HEADER **/
+.chatbox-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chatbox-header-title {
+    margin-left: 10px;
+}
+
+.chatbox-header-close {
+    padding: 10px;
+    cursor: pointer;
+}
+
+
+/** INPUT **/
+.chatbox-input-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.chatbox-input-container input {
+    width: 100%;
 }

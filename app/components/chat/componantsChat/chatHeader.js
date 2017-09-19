@@ -5,17 +5,19 @@ import styles from '../css/style';
 const cx = classNames.bind(styles);
 
 
-const ChatHeader = ({ test }) => {
+const ChatHeader = ({ title, handleClickCloseChatBox }) => {
 	return (
-		<div className={cx('test')}>
-			{test}
+		<div className={cx('chatbox-header-container')} >
+			<div className={cx('chatbox-header-title')}>{title}</div>
+			<div className={cx('chatbox-header-close')} onClick={handleClickCloseChatBox}>X</div>
 		</div>
 	);
 };
 
-
 ChatHeader.propTypes = {
-	test: PropTypes.string
+	title: PropTypes.string,
+	handleClickCloseChatBox: PropTypes.func
 };
+
 
 export default ChatHeader;

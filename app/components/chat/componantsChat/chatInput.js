@@ -5,10 +5,10 @@ import styles from '../css/style';
 const cx = classNames.bind(styles);
 
 
-const ChatInput = ({ test }) => {
+const ChatInput = () => {
 	return (
-		<div className={cx('test')}>
-			{test}
+		<div className={cx('chatbox-input-container')}>
+			<input type="text"/>
 		</div>
 	);
 };

@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { chatBoxOpenAction } from '../../actions/chat';
-import { ChatHeader } from './componantsChat/chatHeader';
-import { ChatMessages } from './componantsChat/chatMessages';
-import { ChatInput } from './componantsChat/chatInput';
+import ChatHeader from './componantsChat/chatHeader';
+import ChatMessages from './componantsChat/chatMessages';
+import ChatInput from './componantsChat/chatInput';
 
 import styles from './css/style';
 import classNames from 'classnames/bind';
@@ -25,12 +25,10 @@ class ChatContainer extends Component {
 		const { chatBoxOpenState } = this.props;
 
 		return (
-			<div className={cx('chatbox-container', {show: chatBoxOpenState})} onClick={this.handleClickCloseChatBox}>
-					{/*
-					<ChatHeader test="test" />
-					<ChatMessages test="test"  />
-					<ChatInput test="test" />
-					*/}
+			<div className={cx('chatbox-container', {show: chatBoxOpenState})} >
+					<ChatHeader title="Pierre" handleClickCloseChatBox={this.handleClickCloseChatBox} />
+					<ChatMessages test="test" />
+					<ChatInput />
 			</div>
 		);
 	}
@@ -38,7 +36,7 @@ class ChatContainer extends Component {
 
 ChatContainer.propTypes = {
 		chatBoxOpenAction: PropTypes.func,
-		chatBoxOpenState: PropTypes.boolean
+		chatBoxOpenState: PropTypes.bool
 };
 
 function mapStateToProps(state) {
