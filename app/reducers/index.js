@@ -3,6 +3,7 @@ import userAuth from './userAuth';
 import user from './user';
 import cours from './cours';
 import message from './message';
+import chat from './chat';
 import { routerReducer as routing } from 'react-router-redux';
 import * as types from '../types';
 
@@ -28,7 +29,8 @@ const rootReducer = combineReducers({
     userAuth,
     user,
     message,
-    routing
+    routing,
+		chat
 });
 
 export default rootReducer;

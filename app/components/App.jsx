@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import Navigation from '../components/navigation/mainMenu/mainMenu';
 import Message from '../components/message/component';
+import Chat from '../components/chat/chatContainer';
 import classNames from 'classnames/bind';
 import styles from '../css/main';
 
@@ -12,6 +13,7 @@ const App = ({children}) => {
         <div className={cx('app')}>
             <Navigation />
             <Message />
+            <Chat />
             {children}
         </div>
     );

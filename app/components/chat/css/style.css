@@ -1,0 +1,18 @@
+@import '../../../css/settings';
+@import '../../../css/mixins/colors';
+@import '../../../css/mixins/typography';
+
+.chatbox-container {
+    display: none;
+    height: 330px;
+    width: 260px;
+    background-color: #7c7c7c;
+
+    position: fixed;
+    bottom: 0;
+    right: 30px;
+}
+
+.show {
+    display: block;
+}
