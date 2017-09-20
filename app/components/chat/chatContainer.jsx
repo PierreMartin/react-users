@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { chatBoxOpenAction } from '../../actions/chat';
+import { chatBoxOpenAction, receiveSocketAction } from '../../actions/chat';
 import ChatHeader from './componantsChat/chatHeader';
 import ChatMessages from './componantsChat/chatMessages';
 import ChatInput from './componantsChat/chatInput';
@@ -14,6 +14,15 @@ class ChatContainer extends Component {
 	constructor(props) {
 		super(props);
 		this.handleClickCloseChatBox = this.handleClickCloseChatBox.bind(this);
+	}
+
+	componentDidMount() {
+		const { socket, receiveSocketAction } = this.props;
+		socket.emit('chatMounted');
+
+		socket.on('receiveSocket', function (socketID) {
+			receiveSocketAction(socketID);
+		});
 	}
 
 	handleClickCloseChatBox() {
@@ -36,7 +45,9 @@ class ChatContainer extends Component {
 
 ChatContainer.propTypes = {
 		chatBoxOpenAction: PropTypes.func,
-		chatBoxOpenState: PropTypes.bool
+		receiveSocketAction: PropTypes.func,
+		chatBoxOpenState: PropTypes.bool,
+		socket: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
@@ -45,4 +56,4 @@ function mapStateToProps(state) {
 		};
 }
 
-export default connect(mapStateToProps, { chatBoxOpenAction })(ChatContainer);
+export default connect(mapStateToProps, { chatBoxOpenAction, receiveSocketAction })(ChatContainer);

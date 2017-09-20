@@ -68,3 +68,5 @@ export const AVATAR_MAIN_SELECTED_FAILURE = 'AVATAR_MAIN_SELECTED_FAILURE';
 /***************************************** Chat ********************************************/
 export const CHATBOX_MODAL_ISOPEN_ACTION = 'CHATBOX_MODAL_ISOPEN_ACTION';
 export const CHATBOX_MODAL_ISCLOSE_ACTION = 'CHATBOX_MODAL_ISCLOSE_ACTION';
+
+export const RECEIVE_SOCKET = 'RECEIVE_SOCKET';

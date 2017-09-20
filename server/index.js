@@ -1,10 +1,12 @@
 import express from 'express';
 import webpack from 'webpack';
+import SocketIo from 'socket.io';
 import { ENV } from './config/appConfig';
 import { connect } from './db';
 import passportConfig from './config/passport';
 import expressConfig from './config/express';
 import routesConfig from './config/routes';
+import socketEvents from './config/socketEvents';
 const App = require('../public/assets/server');
 const app = express();
 
@@ -39,4 +41,8 @@ routesConfig(app);
 
 app.get('*', App.default);
 
-app.listen(app.get('port'));
+const server = app.listen(app.get('port'));
+
+// socket Io
+const io = new SocketIo(server, {path: '/api/chat'});
+socketEvents(io);

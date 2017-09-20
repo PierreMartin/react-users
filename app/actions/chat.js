@@ -13,3 +13,10 @@ export function chatBoxOpenAction(isOpen) {
 		isOpen
 	};
 }
+
+export function receiveSocketAction(socketID) {
+	return {
+		type: types.RECEIVE_SOCKET,
+		socketID
+	};
+}
