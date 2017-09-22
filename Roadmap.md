@@ -172,8 +172,31 @@ GET auth        => GET usersMe(auth._id)                -> userMe
 
 - 42
 
-- ajouter 'socketID' dans 'userSingle' + 'userAuth.userObj'
-- essayer d'utiliser   socket.broadcast.to(targeted_socketID).emit('new bc message', param.newMessage);    ||     socket.broadcast.to(channelID).emit('new bc message', param.newMessage);
+- [pas utile] ajouter 'socketID' dans 'userSingle' + 'userAuth.userObj'
+- [pas utile] essayer d'utiliser   socket.broadcast.to(targeted_socketID).emit('new bc message', param.newMessage);    ||     socket.broadcast.to(channelID).emit('new bc message', param.newMessage);
+- utiliser channelID et enlever socketID
+
+- user [
+    {id: '123488', socketID: 'AA789456', username: 'PierreMrt'},
+    {id: '874446', socketID: 'BB789456', username: 'PaulMrt'},
+    {id: '584566', socketID: 'CC789456', username: 'PierreMrt'}
+]
+
+// creer une fonction   getChannelByTargetedUserID(userID_of_Paul, myFixUserID)  avant de cliquer sur 'contact'
+- channel: [
+    {id: '123456', between: [userID, userID]},
+    {id: '789456', between: ['123488', '874446']}
+]
+
+// creer une fonction   getMessagesByChannelID(channelXX.id) avant de cliquer sur 'contact'
+- message: [
+    {id: '523476', channelID: '123456', authorID: '123488', message: 'Salut', time: ''},
+    {id: '523476', channelID: '123456', authorID: '874446', message: 'ca va?', time: ''}}
+]
+- table : 'channel', 'message', 'user' `collections avec 'jointures'`
+
+
+
 
 - page 'mon profil' -> ajouter des champs (pseudo unique, check email unique)
 

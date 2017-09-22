@@ -17,6 +17,7 @@ export default (io) => {
 
 			socket.join(channelID); // ??
 			socket.broadcast.to(channelID).emit('new bc message', param.newMessage);
+			// OU // socket.broadcast.to(targeted_socketID).emit('new bc message', param.newMessage);
 		});
 
 		socket.on('typing', function (data) {
