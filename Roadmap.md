@@ -172,6 +172,9 @@ GET auth        => GET usersMe(auth._id)                -> userMe
 
 - 42
 
+- ajouter 'socketID' dans 'userSingle' + 'userAuth.userObj'
+- essayer d'utiliser   socket.broadcast.to(targeted_socketID).emit('new bc message', param.newMessage);    ||     socket.broadcast.to(channelID).emit('new bc message', param.newMessage);
+
 - page 'mon profil' -> ajouter des champs (pseudo unique, check email unique)
 
 - cours => page single - et renomer dans reducer :
