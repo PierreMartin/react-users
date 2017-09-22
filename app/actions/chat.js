@@ -14,9 +14,9 @@ export function chatBoxOpenAction(isOpen) {
 	};
 }
 
-export function receiveSocketAction(socketID) {
+export function receiveSocketAction(datas) {
 	return {
 		type: types.RECEIVE_SOCKET,
-		socketID
+		datas
 	};
 }

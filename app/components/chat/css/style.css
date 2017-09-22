@@ -114,4 +114,5 @@
 
 .chatbox-input-container input {
     width: 100%;
+    color: var(--colorPrimaryGray);
 }

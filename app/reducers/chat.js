@@ -13,7 +13,16 @@ const chatBoxOpenState = (state = false, action) => {
 const socketID = (state = '', action) => {
 	switch (action.type) {
 		case types.RECEIVE_SOCKET:
-			return action.socketID;
+			return action.datas.socketID;
+		default:
+			return state;
+	}
+};
+
+const userName = (state = '', action) => {
+	switch (action.type) {
+		case types.RECEIVE_SOCKET:
+			return action.datas.userName;
 		default:
 			return state;
 	}
@@ -22,7 +31,8 @@ const socketID = (state = '', action) => {
 
 const chatReducer = combineReducers({
 	chatBoxOpenState,
-	socketID
+	socketID,
+	userName
 });
 
 export default chatReducer;

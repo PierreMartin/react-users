@@ -1,9 +1,17 @@
 export default (io) => {
+	var users  = {};
+
 	io.on('connection', function(socket) {
 		socket.join('Lobby');
+		console.log('User '+ socket.id + ' connected');
 
-		socket.on('chatMounted', function() {
-			socket.emit('receiveSocket', socket.id)
+		socket.on('login', function(userName) {
+			// users[socket.id] = userName;
+			socket.emit('receiveSocket', { socketID: socket.id, userName })
+		});
+
+		socket.on('newMessage', function(msg) {
+			socket.broadcast.to(msg.channelID).emit('new bc message', msg);
 		});
 
 		/*
