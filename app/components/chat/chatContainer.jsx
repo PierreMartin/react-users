@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { chatBoxOpenAction, receiveSocketAction } from '../../actions/chat';
+import { chatBoxOpenAction, receiveSocketAction, createNewMessageAction, receiveNewMessageAction } from '../../actions/chat';
 import ChatHeader from './componantsChat/chatHeader';
 import ChatMessages from './componantsChat/chatMessages';
 import ChatInput from './componantsChat/chatInput';
@@ -16,7 +16,7 @@ class ChatContainer extends Component {
 		this.handleClickCloseChatBox 	= this.handleClickCloseChatBox.bind(this);
 		this.handleChangeSendMessage 	= this.handleChangeSendMessage.bind(this);
 		this.handleSubmitSendMessage 	= this.handleSubmitSendMessage.bind(this);
-		this.createChannelID 					= this.createChannelID.bind(this);
+		this.getChannelByUserID 			= this.getChannelByUserID.bind(this);
 
 		this.state = {
 			text: '',
@@ -26,28 +26,31 @@ class ChatContainer extends Component {
 
 	/**
 	 * Create a channel id from the usersnames
-	 * @pram {string} currentUserName - the current username
-	 * @pram {string} targetedUserName - the target username
+	 * @pram {string} currentUserID - the current user id
+	 * @pram {string} targetedUserID - the target user id
 	 * @return {string} A unique id of the channel
 	 * */
-	createChannelID(currentUserName, targetedUserName) {
-		return 'chann-' + currentUserName + "-" + targetedUserName;
+	getChannelByUserID(currentUserID, targetedUserID) {
+		return 'chann-' + currentUserID + "-" + targetedUserID;
 	}
 
 	componentDidMount() {
-		const { socket, receiveSocketAction, user } = this.props;
-		const userName = user.firstName + '_' + user.lastName; // TODO change here to unique userName
+		const { socket, userObj, receiveSocketAction, receiveNewMessageAction } = this.props;
 
-		socket.emit('login', userName);
+		socket.emit('login', userObj.firstName + '_' + userObj.lastName);
 
+		// TODO remove it if all ok :
+		/*
 		socket.on('receiveSocket', function (datas) {
 			receiveSocketAction(datas);
 		});
+		*/
 
-		socket.on('new bc message', function (newMessage) {
-			console.log(newMessage);
-			debugger;
-			// newMessageAction(newMessage);
+		socket.on('new bc message', function (data) {
+			debugger; // todo voir pk on passe pas ici... a cause du componentDidMount() ??
+			if (data.text) {
+				receiveNewMessageAction(data.text);
+			}
 		});
 
 	}
@@ -64,66 +67,48 @@ class ChatContainer extends Component {
 		this.setState({ text: event.target.value });
 
 		if (event.target.value.length > 0 && !this.state.typing) {
-			// socket.emit('typing', { user: user.username, channel: 'ezeze' });
+			// socket.emit('typing', { user: userObj.username, channel: 'ezeze' });
 			this.setState({ typing: true});
 		}
 
 		if (event.target.value.length === 0 && this.state.typing) {
-			// socket.emit('stop typing', { user: user.username, channel: 'dsdssd' });
+			// socket.emit('stop typing', { user: userObj.username, channel: 'dsdssd' });
 			this.setState({ typing: false});
 		}
 	}
 
 	handleSubmitSendMessage(event) {
-		const { socket, user } = this.props;
-		const userName = user.firstName + '_' + user.lastName; // TODO change here to unique userName
-		const text = event.target.value.trim();
-		const channelID = this.createChannelID(userName, 'Paul').trim();
-
-		// setCurrentChannelAction(channelID); // TODO => send to store ??
+		const { socket, userObj, userSingle, createNewMessageAction } = this.props;
 
 		if (event.which === 13) {
 			event.preventDefault();
 
-			var newMessage = {
+			const text = event.target.value.trim();
+			const channelID = this.getChannelByUserID(userObj._id, userSingle._id);
+
+			var data = {
 				id: `${Date.now()}`,
 				channelID: channelID,
 				text: text,
-				user: userName,
+				authorID: userObj._id,
+				targetedUserID: userSingle._id
 				// time: moment.utc().format('lll')
 			};
 
-			socket.emit('new message', {
-				newMessage,
-				currentUserName: userName,
-				targetedUserName: 'Paul'
-			});
-
-			/*
-			var newMessage = {
-				id: `${Date.now()}${uuid.v4()}`,
-				channelID: this.props.activeChannel,
-				text: text,
-				user: user,
-				// time: moment.utc().format('lll')
-			};
-
-			socket.emit('new message', newMessage);
-			socket.emit('stop typing', { user: user.username, channel: activeChannel });
-			this.props.onSave(newMessage);
-			*/
-
+			socket.emit('new message', data); // send to sockets
+			createNewMessageAction(data.text); // send to state redux - for the re-render React
+			// setCurrentChannelAction(channelID); // todo a faire au moment de cliquer sur 'contacter' handleClickOnUser ?
 			this.setState({ text: '', typing: false });
 		}
 	}
 
 	render() {
-		const { chatBoxOpenState } = this.props;
+		const { chatBoxOpenState, newMessageState } = this.props;
 
 		return (
 			<div className={cx('chatbox-container', {show: chatBoxOpenState})} >
 					<ChatHeader title="Pierre" handleClickCloseChatBox={this.handleClickCloseChatBox} />
-					<ChatMessages test="test" />
+					<ChatMessages newMessageState={newMessageState} />
 					<ChatInput handleChangeSendMessage={this.handleChangeSendMessage} handleSubmitSendMessage={this.handleSubmitSendMessage} value={this.state.text} />
 			</div>
 		);
@@ -133,16 +118,22 @@ class ChatContainer extends Component {
 ChatContainer.propTypes = {
 		chatBoxOpenAction: PropTypes.func,
 		receiveSocketAction: PropTypes.func,
+		createNewMessageAction: PropTypes.func,
+		receiveNewMessageAction: PropTypes.func,
+		newMessageState: PropTypes.string,
 		chatBoxOpenState: PropTypes.bool,
-		user: PropTypes.object,
+		userObj: PropTypes.object,
+		userSingle: PropTypes.object,
 		socket: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
     return {
 			chatBoxOpenState: state.chat.chatBoxOpenState,
-			user: state.userAuth.userObj
+			newMessageState: state.chat.newMessage,
+			userObj: state.userAuth.userObj,
+			userSingle: state.user.userSingle
 		};
 }
 
-export default connect(mapStateToProps, { chatBoxOpenAction, receiveSocketAction })(ChatContainer);
+export default connect(mapStateToProps, { chatBoxOpenAction, receiveSocketAction, createNewMessageAction, receiveNewMessageAction })(ChatContainer);

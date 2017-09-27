@@ -20,3 +20,18 @@ export function receiveSocketAction(datas) {
 		datas
 	};
 }
+
+// sert normalement à rien par la suite car le BE utilisera receiveNewMessageAction() mais utile pour update le componant react ?
+export function createNewMessageAction(message) {
+	return {
+		type: types.CREATE_NEW_MESSAGE,
+		message
+	};
+}
+
+export function receiveNewMessageAction(message) {
+	return {
+		type: types.RECEIVE_NEW_MESSAGE,
+		message
+	};
+}

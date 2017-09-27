@@ -28,11 +28,23 @@ const userName = (state = '', action) => {
 	}
 };
 
+const newMessage = (state = '', action) => {
+	// TODO do call back-end here
+	switch (action.type) {
+		case types.CREATE_NEW_MESSAGE:
+		case types.RECEIVE_NEW_MESSAGE:
+			return action.message;
+		default:
+			return state;
+	}
+};
+
 
 const chatReducer = combineReducers({
 	chatBoxOpenState,
 	socketID,
-	userName
+	userName,
+	newMessage
 });
 
 export default chatReducer;

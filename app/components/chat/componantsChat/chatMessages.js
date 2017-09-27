@@ -21,7 +21,7 @@ const renderItemsMessage = () => {
 	return nodeItemsMessages;
 };
 
-const ChatMessages = ({ test }) => {
+const ChatMessages = ({ newMessageState }) => {
 	return (
 		<div className={cx('chatbox-messages-container')}  >
 
@@ -33,7 +33,7 @@ const ChatMessages = ({ test }) => {
 			</div>
 
 			<div className={cx('message-content', 'sent')} >
-				<div className={cx('message-text')}>Hello ! Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</div>
+				<div className={cx('message-text')}>{ newMessageState }</div>
 				<div className={cx('message-avatar')}></div>
 			</div>
 
@@ -43,7 +43,7 @@ const ChatMessages = ({ test }) => {
 
 
 ChatMessages.propTypes = {
-	test: PropTypes.string
+	newMessageState: PropTypes.string
 };
 
 export default ChatMessages;
