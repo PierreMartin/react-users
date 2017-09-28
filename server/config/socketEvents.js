@@ -28,7 +28,7 @@ export default (io) => {
 		 * */
 		socket.on('new message', function(param) {
 			var channelID = param.channelID;
-			console.log('channelID = ', channelID);
+			console.log('channelID ', channelID);
 
 			socket.join(channelID);
 			socket.broadcast.to(channelID).emit('new bc message', param);

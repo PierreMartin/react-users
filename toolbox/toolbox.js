@@ -45,3 +45,27 @@ export function fileExists(url) {
 		return false;
 	}
 }
+
+/**
+ * Get a channel id from the channelsList in the state
+ * @param {string} currentUserID - the current user id to find
+ * @param {string} targetedUserID - the target user id to find
+ * @param {object} channelsList - the list of the channels to check
+ * @return {string} A unique id of the channel IF exist
+ * */
+export function getChannelByUserID(currentUserID, targetedUserID, channelsList) {
+	if (!currentUserID || !targetedUserID || Object.keys(channelsList).length === 0) {
+		return false;
+	}
+
+	var channelID = '';
+	for (var i = 0; i < channelsList.length; i++) {
+		var chan = channelsList[i];
+		if ((currentUserID === chan.between[0] || targetedUserID === chan.between[0]) && (currentUserID === chan.between[1] || targetedUserID === chan.between[1])) {
+			channelID = chan.id;
+			break;
+		}
+	}
+
+	return (channelID === '') ? false : channelID;
+}

@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { chatBoxOpenAction } from '../../../actions/chat';
+import { chatBoxOpenAction, createNewChannelAction } from '../../../actions/chat';
 import User from './user/user';
 import RaisedButton from 'material-ui/RaisedButton';
+import { getChannelByUserID } from '../../../../toolbox/toolbox';
 // import AddCour from './actions/addCours/add';
 // import CoursListByUser from '../../front/home/coursList/coursList';
 
@@ -19,8 +20,21 @@ class userSinglePage extends Component {
 		}
 
 		handleClickOpenChatBox() {
-				const { chatBoxOpenAction } = this.props;
-				chatBoxOpenAction(true);
+			const { chatBoxOpenAction, createNewChannelAction, userSingle, userObj, channelsList } = this.props;
+
+			const channelObj = {
+				id: 'chan-' + userSingle._id + '-' + userObj._id,
+				between: [userSingle._id, userObj._id]
+			};
+
+			const channelID = getChannelByUserID(userObj._id, userSingle._id, channelsList);
+
+			// we create a new channel if not alreay create :
+			if (!channelID) {
+				createNewChannelAction(channelObj);
+			}
+
+			chatBoxOpenAction(true);
 		}
 
     render() {
@@ -70,16 +84,19 @@ class userSinglePage extends Component {
 userSinglePage.propTypes = {
   userSingle: PropTypes.object.isRequired,
 	userObj: PropTypes.object,
-	chatBoxOpenAction: PropTypes.func
+	channelsList: PropTypes.object,
+	chatBoxOpenAction: PropTypes.func,
+	createNewChannelAction: PropTypes.func
 };
 
 
 function mapStateToProps(state) {
     return {
       userSingle: state.user.userSingle,
-			userObj: state.userAuth.userObj
+			userObj: state.userAuth.userObj,
+			channelsList: state.chat.channelsList
     };
 }
 
 
-export default connect(mapStateToProps, { chatBoxOpenAction })(userSinglePage);
+export default connect(mapStateToProps, { chatBoxOpenAction, createNewChannelAction })(userSinglePage);

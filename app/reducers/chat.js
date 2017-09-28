@@ -39,12 +39,22 @@ const newMessage = (state = '', action) => {
 	}
 };
 
+const channelsList = (state = [], action) => {
+	switch (action.type) {
+		case types.CREATE_NEW_CHANNEL:
+			return [...state, action.datas ];
+		default:
+			return state;
+	}
+};
+
 
 const chatReducer = combineReducers({
 	chatBoxOpenState,
 	socketID,
 	userName,
-	newMessage
+	newMessage,
+	channelsList
 });
 
 export default chatReducer;
