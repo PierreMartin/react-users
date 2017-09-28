@@ -1,5 +1,5 @@
 import { polyfill } from 'es6-promise';
-// import {  } from './../fetch-data';
+import { createChannel } from './../fetch-data';
 import * as types from 'types';
 
 polyfill();
@@ -14,12 +14,36 @@ export function chatBoxOpenAction(isOpen) {
 	};
 }
 
-/****** Create new channel *******/
-export function createNewChannelAction(datas) {
-	// + persister en base de donnée
+
+/****** CREATE channel *******/
+export function createChannelError(message) {
 	return {
-		type: types.CREATE_NEW_CHANNEL,
+		type: types.CREATE_NEW_CHANNEL_FAILURE,
+		message
+	};
+}
+
+export function createChannelSuccess(datas) {
+	return {
+		type: types.CREATE_NEW_CHANNEL_SUCCESS,
 		datas
+	};
+}
+
+export function createNewChannelAction(datas) {
+	return dispatch => {
+		return createChannel(datas)
+			.then(response => {
+				if (response.status === 200) {
+					debugger;
+					dispatch(createChannelSuccess(response.data));
+				} else {
+					dispatch(createChannelError(response.data.message));
+				}
+			})
+			.catch(err => {
+				dispatch(createChannelError(getMessage(err)));
+			});
 	};
 }
 

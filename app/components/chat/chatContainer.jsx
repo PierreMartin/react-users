@@ -122,7 +122,7 @@ ChatContainer.propTypes = {
 		createNewMessageAction: PropTypes.func,
 		receiveNewMessageAction: PropTypes.func,
 		newMessageState: PropTypes.string,
-		channelsList: PropTypes.object,
+		channelsList: PropTypes.array,
 		chatBoxOpenState: PropTypes.bool,
 		userObj: PropTypes.object,
 		userSingle: PropTypes.object,

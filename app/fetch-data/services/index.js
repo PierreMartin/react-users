@@ -69,3 +69,15 @@ export function apiUsers() {
         */
     };
 }
+
+export function apiChat() {
+    const client = createRestApiClient().withConfig({ baseURL: 'http://localhost:3000' });
+
+    return {
+				createChannel: (data) => client.request({
+            method: 'POST',
+            url: '/api/chat/channel',
+						data: JSON.stringify(data)
+        })
+    };
+}

@@ -2,8 +2,9 @@ import passport from 'passport';
 import unsupportedMessage from '../db/unsupportedMessage';
 import { controllers, passport as passportConfig } from '../db';
 
-const usersController       = controllers && controllers.users;
-const coursesController     = controllers && controllers.courses;
+const usersController				= controllers && controllers.users;
+const coursesController			= controllers && controllers.courses;
+const chatController				= controllers && controllers.chat;
 
 export default (app) => {
 
@@ -54,6 +55,14 @@ export default (app) => {
         app.put('/api/cours/:id',       coursesController.update);
         app.delete('/api/cours/:id',    coursesController.remove);
     } else {
-        console.warn(unsupportedMessage('topics routes'));
+        console.warn(unsupportedMessage('cours routes'));
     }
+
+		/** ROUTING CHAT : **/
+		if (chatController) {
+				app.post('/api/chat/channel',   chatController.addChannel);
+		} else {
+				console.warn(unsupportedMessage('chat routes'));
+		}
+
 };

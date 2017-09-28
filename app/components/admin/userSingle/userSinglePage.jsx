@@ -84,7 +84,7 @@ class userSinglePage extends Component {
 userSinglePage.propTypes = {
   userSingle: PropTypes.object.isRequired,
 	userObj: PropTypes.object,
-	channelsList: PropTypes.object,
+	channelsList: PropTypes.array,
 	chatBoxOpenAction: PropTypes.func,
 	createNewChannelAction: PropTypes.func
 };

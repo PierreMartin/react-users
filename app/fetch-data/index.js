@@ -1,4 +1,4 @@
-import { apiCours, apiUsers } from './services';
+import { apiCours, apiUsers, apiChat } from './services';
 import * as types from 'types';
 
 /********************************************** COURS ***********************************************/
@@ -80,6 +80,17 @@ export const createAvatarUser = (data, params) => {
 
 export const updateDefaultAvatarUser = (avatarId, idUser) => {
 	return apiUsers().updateDefaultAvatarUser(avatarId, idUser)
+		.then((res) => {
+			return res;
+		})
+		.catch(err => {
+			return Promise.reject(err);
+		});
+};
+
+/********************************************** CHAT - CHANNELS ***********************************************/
+export const createChannel = (data) => {
+	return apiChat().createChannel(data)
 		.then((res) => {
 			return res;
 		})
