@@ -74,6 +74,10 @@ export function apiChat() {
     const client = createRestApiClient().withConfig({ baseURL: 'http://localhost:3000' });
 
     return {
+				getChannels: () => client.request({
+            method: 'GET',
+            url: '/api/tchat/channel/all'
+        }),
 				createChannel: (data) => client.request({
             method: 'POST',
             url: '/api/tchat/channel',

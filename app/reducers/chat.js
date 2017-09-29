@@ -43,6 +43,9 @@ const channelsList = (state = [], action) => {
 	switch (action.type) {
 		case types.CREATE_NEW_CHANNEL_SUCCESS:
 			return [...state, action.datas ];
+		case types.GET_CHANNELS_SUCCESS:
+			return action.datas;
+		case types.GET_CHANNELS_FAILURE:
 		case types.CREATE_NEW_CHANNEL_FAILURE:
 			return state;
 		default:

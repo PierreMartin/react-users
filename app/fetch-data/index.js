@@ -89,6 +89,27 @@ export const updateDefaultAvatarUser = (avatarId, idUser) => {
 };
 
 /********************************************** CHAT - CHANNELS ***********************************************/
+export const getChannels = (params, store) => {
+	return apiChat().getChannels()
+		.then((res) => {
+			store.dispatch({
+				type: types.GET_CHANNELS_SUCCESS,
+				message: res.data.message,
+				datas: res.data.channels
+			});
+
+			return res.data;
+		})
+		.catch(err => {
+			store.dispatch({
+				type: types.GET_CHANNELS_FAILURE,
+				message: err.response.data.message
+			});
+
+			return Promise.reject(err);
+		});
+};
+
 export const createChannel = (data) => {
 	return apiChat().createChannel(data)
 		.then((res) => {

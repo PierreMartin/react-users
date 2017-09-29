@@ -36,7 +36,6 @@ export function createNewChannelAction(datas) {
 		return createChannel(datas)
 			.then(response => {
 				if (response.status === 200) {
-					debugger;
 					dispatch(createChannelSuccess(response.data));
 				} else {
 					dispatch(createChannelError(response.data.message));

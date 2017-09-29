@@ -1,10 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { chatBoxOpenAction, receiveSocketAction, createNewMessageAction, receiveNewMessageAction, createNewChannelAction } from '../../actions/chat';
+import { getChannels } from './../../fetch-data';
 import ChatHeader from './componantsChat/chatHeader';
 import ChatMessages from './componantsChat/chatMessages';
 import ChatInput from './componantsChat/chatInput';
 import { getChannelByUserID } from '../../../toolbox/toolbox';
+import { browserHistory } from 'react-router';
+import configureStore from 'store/configureStore';
 
 import styles from './css/style';
 import classNames from 'classnames/bind';
@@ -26,6 +29,9 @@ class ChatContainer extends Component {
 
 	componentDidMount() {
 		const { socket, userObj, receiveSocketAction, receiveNewMessageAction } = this.props;
+		const store = configureStore(window.__INITIAL_STATE__, browserHistory);
+
+		getChannels(null, store);
 
 		socket.emit('login', userObj.firstName + '_' + userObj.lastName);
 
