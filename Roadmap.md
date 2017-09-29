@@ -175,7 +175,10 @@ GET auth        => GET usersMe(auth._id)                -> userMe
 - [pas utile] ajouter 'socketID' dans 'userSingle' + 'userAuth.userObj'
 - [pas utile] essayer d'utiliser   socket.broadcast.to(targeted_socketID).emit('new bc message', param.newMessage);    ||     socket.broadcast.to(channelID).emit('new bc message', param.newMessage);
 - utiliser channelID et enlever socketID
-- persister en base de donnée les channelsList
+
+
+- TODO : deplacer getChannels() à l'ouverture de la chatbox
+- keep data in state redux
 
 - user [
     {id: '123488', socketID: 'AA789456', username: 'PierreMrt'},
