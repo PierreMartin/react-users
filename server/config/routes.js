@@ -60,7 +60,7 @@ export default (app) => {
 
 		/** ROUTING CHAT : **/
 		if (chatController) {
-				app.post('/api/chat/channel',   chatController.addChannel);
+				app.post('/api/tchat/channel',   chatController.addChannel);
 		} else {
 				console.warn(unsupportedMessage('chat routes'));
 		}

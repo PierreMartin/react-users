@@ -76,8 +76,8 @@ export function apiChat() {
     return {
 				createChannel: (data) => client.request({
             method: 'POST',
-            url: '/api/chat/channel',
-						data: JSON.stringify(data)
+            url: '/api/tchat/channel',
+						data: data
         })
     };
 }

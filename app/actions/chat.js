@@ -23,10 +23,11 @@ export function createChannelError(message) {
 	};
 }
 
-export function createChannelSuccess(datas) {
+export function createChannelSuccess(res) {
 	return {
 		type: types.CREATE_NEW_CHANNEL_SUCCESS,
-		datas
+		message: res.message,
+		datas: res.newChannel
 	};
 }
 
